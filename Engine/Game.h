@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "Brick.h"
 #include "Ball.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -36,16 +37,13 @@ public:
 private:
 	void ComposeFrame();
 	void UpdateModel();
-	/********************************/
-	/*  User Functions              */
-	/********************************/
+
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	/********************************/
-	/*  User Variables              */
-	/********************************/
 
+	FrameTimer ft;
+	Ball ball{ Vec2(400.0f, 300.0f), Vec2(150.0f, 150.0f) };
 	
 
 };

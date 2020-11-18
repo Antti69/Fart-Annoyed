@@ -38,9 +38,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	const float dt = ft.Mark();
+	ball.Movement(dt);
 }
 
 void Game::ComposeFrame()
 {
-	
+	ball.Draw(gfx);
 }
