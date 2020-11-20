@@ -1,25 +1,35 @@
 #include "RectF.h"
 
-RectF::RectF(float left_in, float top_in, float right_in, float bottom_in)		//neljällä
+RectF::RectF(float left_in, float right_in, float top_in, float bottom_in)
 	:
 	left(left_in),
-	top(top_in),
 	right(right_in),
+	top(top_in),
 	bottom(bottom_in)
-{}
-
-RectF::RectF(const Vec2& topleft, const Vec2& bottomright)						//kahdella
 {
-	RectF(topleft.x, bottomright.x, topleft.y, bottomright.y);
 }
 
-RectF::RectF(const Vec2& topleft, float width, float height)					//kolmella
+RectF::RectF(const Vec2& topLeft, const Vec2& bottomRight)
+	:
+	RectF(topLeft.x, bottomRight.x, topLeft.y, bottomRight.y)
 {
-	RectF(topleft, topleft + Vec2 (width, height));
 }
 
-bool RectF::Overlap(const RectF& other) const
+RectF::RectF(const Vec2& topLeft, float width, float height)
+	:
+	RectF(topLeft, topLeft + Vec2(width, height))
 {
-	return left < other.right && right > other.left &&
-		   top < other.bottom && bottom > other.top;
 }
+
+bool RectF::IsOverlappingWith(const RectF& other) const
+{
+	return right > other.left && left < other.right
+		&& bottom > other.top && top < other.bottom;
+}
+
+RectF RectF::FromCenter(const Vec2& center, float halfWidth, float halfHeight)
+{
+	const Vec2 half(halfWidth, halfHeight);
+	return RectF(center - half, center + half);
+}
+

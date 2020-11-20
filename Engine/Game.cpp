@@ -24,7 +24,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	walls(0.0f, float(gfx.ScreenWidth), 0.0f, float(gfx.ScreenHeight))
 {
 }
 
@@ -40,6 +41,7 @@ void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
 	ball.Movement(dt);
+	ball.DoWallCollision(walls);
 }
 
 void Game::ComposeFrame()

@@ -14,33 +14,37 @@ void Ball::Draw(Graphics& gfx) const
 void Ball::Movement(float dt)
 {
 	pos += vel * dt;
+}
 
-	const float left = pos.x - radius;
-	const float right = pos.x + radius;
-	const float top = pos.y - radius;
-	const float bottom = pos.y + radius;
-
-	if (left <= 0)
+bool Ball::DoWallCollision(const RectF& walls)
+{
+	bool collided = false;
+	const RectF rect = GetRect();
+	if (rect.left < walls.left)
 	{
-		pos.x += radius;
+		pos.x += walls.left - rect.left;
 		ReboundX();
+		collided = true;
 	}
-	if (right >= (float)Graphics::ScreenWidth - 1)
+	else if (rect.right > walls.right)
 	{
-		pos.x -= radius;
+		pos.x -= rect.right - walls.right;
 		ReboundX();
+		collided = true;
 	}
-	if (top <= 0)
+	if (rect.top < walls.top)
 	{
-		pos.y += radius;
+		pos.y += walls.top - rect.top;
 		ReboundY();
+		collided = true;
 	}
-	if (bottom >= (float)Graphics::ScreenHeight - 1)
+	else if (rect.bottom > walls.bottom)
 	{
-		pos.y -= radius;
+		pos.y -= rect.bottom - walls.bottom;
 		ReboundY();
+		collided = true;
 	}
-
+	return collided;
 }
 
 void Ball::ReboundX()
@@ -51,4 +55,9 @@ void Ball::ReboundX()
 void Ball::ReboundY()
 {
 	vel.y = -vel.y;
+}
+
+RectF Ball::GetRect() const
+{
+	return RectF::FromCenter(pos, radius, radius);
 }

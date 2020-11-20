@@ -44,6 +44,7 @@ private:
 
 	FrameTimer ft;
 	Ball ball{ Vec2(400.0f, 300.0f), Vec2(150.0f, 150.0f) };
+	RectF walls;
 	
 
 };
