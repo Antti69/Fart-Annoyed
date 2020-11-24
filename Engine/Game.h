@@ -42,8 +42,12 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
+	static constexpr float brickWidth = 44.0;
+	static constexpr float brickHeight = 20.0f;
+	static constexpr int BrickViisto = 15;
+	static constexpr int BrickPysty = 4;
+	static constexpr int BrickTotal = BrickViisto * BrickPysty;
 
-	
 	FrameTimer ft;
 	Ball ball{ Vec2(400.0f, 300.0f), Vec2(150.0f, 150.0f) };
 	Paddle pad{ Vec2(400.0f, 500), 60.0f, 20.0f };
