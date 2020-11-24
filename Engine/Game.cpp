@@ -46,6 +46,7 @@ void Game::UpdateModel()
 	pad.Movement(wnd.kbd, dt);
 	pad.WallCollision(walls);
 	pad.BallCollision(ball);
+	brick.BallCollision(ball);
 	
 }
 
@@ -53,4 +54,5 @@ void Game::ComposeFrame()
 {
 	ball.Draw(gfx);
 	pad.Draw(gfx);
+	brick.Draw(gfx);
 }

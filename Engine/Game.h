@@ -47,6 +47,7 @@ private:
 	FrameTimer ft;
 	Ball ball{ Vec2(400.0f, 300.0f), Vec2(150.0f, 150.0f) };
 	Paddle pad{ Vec2(400.0f, 500), 60.0f, 20.0f };
+	Brick brick{ RectF( 200.0f, 250.0f, 200.0f, 220.0f), Colors::Red };
 	RectF walls;
 	
 };
