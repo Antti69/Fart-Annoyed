@@ -41,10 +41,16 @@ void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
 	ball.Movement(dt);
-	ball.DoWallCollision(walls);
+	ball.DoWallCollision(walls);					//muista katsoa AINA mit‰ p‰ivitt‰‰ ja piirt‰‰ ekana!!!
+
+	pad.Movement(wnd.kbd, dt);
+	pad.WallCollision(walls);
+	pad.BallCollision(ball);
+	
 }
 
 void Game::ComposeFrame()
 {
 	ball.Draw(gfx);
+	pad.Draw(gfx);
 }

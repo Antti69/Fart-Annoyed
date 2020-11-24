@@ -26,6 +26,7 @@
 #include "Brick.h"
 #include "Ball.h"
 #include "FrameTimer.h"
+#include "Paddle.h"
 
 class Game
 {
@@ -42,9 +43,10 @@ private:
 	MainWindow& wnd;
 	Graphics gfx;
 
+	
 	FrameTimer ft;
 	Ball ball{ Vec2(400.0f, 300.0f), Vec2(150.0f, 150.0f) };
+	Paddle pad{ Vec2(400.0f, 500), 60.0f, 20.0f };
 	RectF walls;
 	
-
 };
