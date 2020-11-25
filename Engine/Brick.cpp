@@ -10,7 +10,7 @@ void Brick::Draw(Graphics& gfx) const
 {
 	if (!destroyed)
 	{
-		gfx.DrawRect(rect, c);
+		gfx.DrawRect(rect.Expand( -padding), c);
 	}
 }
 

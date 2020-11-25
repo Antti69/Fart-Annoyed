@@ -18,8 +18,10 @@ public:
 	RectF GetRect() const;
 
 private:
-	Color c = Colors::White;
-	float speed = 350.0f;
+	Color color = Colors::White;
+	Color WingColor = Colors::Red;
+	float WingWidth = 10.0f;
+	float speed = 300.0f;
 	float halfWidth;
 	float halfHeight;
 	Vec2 pos;
