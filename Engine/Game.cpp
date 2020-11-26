@@ -29,7 +29,7 @@ Game::Game( MainWindow& wnd )
 {
 	const Color colors[4] = { Colors::Blue, Colors::Green, Colors::Red, Colors::Yellow };
 
-	const Vec2 topleft = { 30.0f, 50.0f };
+	const Vec2 topleft = { 70.0f, 80.0f };
 
 	int i = 0;
 	for (int y = 0; y < BrickPysty; y++)

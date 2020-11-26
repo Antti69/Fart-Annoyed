@@ -21,7 +21,16 @@ bool Paddle::BallCollision(Ball& ball)
 {
 	if (ball.GetVel().y > 0.0f && GetRect().IsOverlappingWith(ball.GetRect()))
 	{
-		ball.ReboundY();
+		const Vec2 ballpos = ball.GetPos();
+
+		if (ballpos.x >= GetRect().left && ballpos.x <= GetRect().right)
+		{
+			ball.ReboundY();
+		}
+		else
+		{
+			ball.ReboundX();
+		}
 		return true;
 	}
 	return false;
