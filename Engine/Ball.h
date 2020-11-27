@@ -15,6 +15,8 @@ public:
 	RectF GetRect() const;
 	Vec2 GetVel();
 	Vec2 GetPos();
+	void SetReboundY();
+	void SetReboundX();
 private:
 	static constexpr float radius = 7.0f;
 	Vec2 pos;

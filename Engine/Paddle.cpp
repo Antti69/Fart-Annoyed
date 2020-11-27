@@ -26,6 +26,7 @@ bool Paddle::BallCollision(Ball& ball)
 		if (ballpos.x >= GetRect().left && ballpos.x <= GetRect().right)
 		{
 			ball.ReboundY();
+			ball.SetReboundX();
 		}
 		else
 		{
