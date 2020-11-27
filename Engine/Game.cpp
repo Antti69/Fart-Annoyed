@@ -27,7 +27,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	walls(0.0f, float(gfx.ScreenWidth), 0.0f, float(gfx.ScreenHeight))
 {
-	const Color colors[4] = { Colors::Blue, Colors::Green, Colors::Red, Colors::Yellow };
+	const Color colors[5] = { Colors::Blue, Colors::Green, Colors::Red, Colors::Yellow, Colors::Gray };
 
 	const Vec2 topleft = { 70.0f, 80.0f };
 
@@ -62,12 +62,35 @@ void Game::UpdateModel()
 	pad.WallCollision(walls);
 	pad.BallCollision(ball);
 	
-	for (Brick& b : bricks)
+	bool Collisionhappend = false;
+	float CurColDist;
+	int CurColIndex;
+
+	for (int i = 0; i < BrickTotal; i++)
 	{
-		if (b.BallCollision(ball))
+		
+		if (bricks[i].CheckBallCollision(ball))
 		{
-			break;
+			const float newColDist = (ball.GetPos() - bricks[i].GetCenter()).GetLengthSq();
+			if (Collisionhappend)
+			{
+				if (newColDist < CurColDist)
+				{
+					CurColDist = newColDist;
+					CurColIndex = i;
+				}
+			}
+			else
+			{
+				CurColDist = newColDist;
+				CurColIndex = i;
+				Collisionhappend = true;
+			}
 		}
+	}
+	if (Collisionhappend)
+	{
+		bricks[CurColIndex].ExecuteBallCollision(ball);
 	}
 	
 }
