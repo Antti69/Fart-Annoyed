@@ -25,8 +25,8 @@ bool Paddle::BallCollision(Ball& ball)
 
 		if (ballpos.x >= GetRect().left && ballpos.x <= GetRect().right)
 		{
-			ball.ReboundY();
-			ball.SetReboundX();
+		
+			SetReboundSpeed(ball);
 		}
 		else
 		{
@@ -35,6 +35,51 @@ bool Paddle::BallCollision(Ball& ball)
 		return true;
 	}
 	return false;
+}
+
+void Paddle::SetReboundSpeed(Ball& ball)
+{
+	const Vec2 ballpos = ball.GetPos();
+	
+	if (ballpos.x < pos.x - 40.0f && ballpos.x > pos.x - 50.0f)
+	{
+		ball.vel.x = -200.0f;
+	}
+	if (ballpos.x < pos.x - 30.0f && ballpos.x > pos.x - 40.0f)
+	{
+		ball.vel.x = -150.0f;
+	}
+	if (ballpos.x < pos.x - 20.0f && ballpos.x > pos.x - 30.0f)
+	{
+		ball.vel.x = -100.0f;
+	}
+	if (ballpos.x < pos.x - 10.0f && ballpos.x > pos.x - 20.0f)
+	{
+		ball.vel.x = -50.0f;
+	}
+
+	if (ballpos.x > pos.x - 10.0f && ballpos.x < pos.x + 10.0f)			//törmäys keskelle paddlea
+	{
+		ball.vel.x = 0.0f;
+	}
+
+	if (ballpos.x > pos.x + 10.0f && ballpos.x < pos.x + 20.0f)
+	{
+		ball.vel.x = 50.0f;
+	}
+	if (ballpos.x > pos.x + 20.0f && ballpos.x < pos.x + 30.0f)
+	{
+		ball.vel.x = 100.0f;
+	}
+	if (ballpos.x > pos.x + 30.0f && ballpos.x < pos.x + 40.0f)
+	{
+		ball.vel.x = 150.0f;
+	}
+	if (ballpos.x > pos.x + 40.0f && ballpos.x < pos.x + 50.0f)
+	{
+		ball.vel.x = 200.0f;
+	}
+	ball.SetReboundY();
 }
 
 void Paddle::WallCollision(const RectF& walls)
@@ -66,3 +111,4 @@ RectF Paddle::GetRect() const
 {
 	return RectF::FromCenter(pos, halfWidth, halfHeight);
 }
+

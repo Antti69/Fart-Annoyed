@@ -13,9 +13,11 @@ public:
 	Paddle(const Vec2& pos_in, float halfWidth_in, float halfHeight_in);
 	void Draw(Graphics& gfx);
 	bool BallCollision(Ball& ball);
+	void SetReboundSpeed(Ball& ball);
 	void WallCollision(const RectF& walls);
 	void Movement(Keyboard& kbd, float dt);
 	RectF GetRect() const;
+	
 
 private:
 	Color color = Colors::White;
@@ -25,5 +27,6 @@ private:
 	float halfWidth;
 	float halfHeight;
 	Vec2 pos;
+	
 
 };

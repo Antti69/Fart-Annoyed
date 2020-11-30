@@ -74,10 +74,17 @@ Vec2 Ball::GetPos()
 
 void Ball::SetReboundY()
 {
-	vel.y = -vel.y - 30.0f;
+	vel.y = -300.0f;
 }
 
 void Ball::SetReboundX()
 {
-	vel.x += 100.0f;
+	SetReboundY();
+	vel.x = 200.0f;
+}
+
+void Ball::SetReboundXN()
+{
+	SetReboundY();
+	vel.x = -200.0f;
 }
