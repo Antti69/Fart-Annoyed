@@ -4,7 +4,7 @@ Ball::Ball(const Vec2& pos_in, const Vec2& dir_in)
 	:
 	pos(pos_in)
 {
-	
+	SetDirection(dir_in);
 }
 
 void Ball::Draw(Graphics& gfx) const
@@ -63,12 +63,12 @@ RectF Ball::GetRect() const
 	return RectF::FromCenter(pos, radius, radius);
 }
 
-Vec2 Ball::GetVel()
+Vec2 Ball::GetVel() const
 {
 	return vel;
 }
 
-Vec2 Ball::GetPos()
+Vec2 Ball::GetPos() const
 {
 	return pos;
 }

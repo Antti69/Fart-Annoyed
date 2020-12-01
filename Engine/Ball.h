@@ -14,8 +14,8 @@ public:
 	void ReboundX();
 	void ReboundY();
 	RectF GetRect() const;
-	Vec2 GetVel();
-	Vec2 GetPos();
+	Vec2 GetVel() const;
+	Vec2 GetPos() const;
 	void SetDirection(const Vec2& dir);
 	void SetReboundY();
 	void SetReboundX();
