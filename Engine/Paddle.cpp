@@ -1,11 +1,14 @@
 #include "Paddle.h"
+#include <cmath>
 
 Paddle::Paddle(const Vec2& pos_in, float halfWidth_in, float halfHeight_in)
 	:
 	pos(pos_in),
 	halfWidth(halfWidth_in),
 	halfHeight(halfHeight_in)
-{}
+{
+	eXitFactor = MaxExitRation / halfWidth;
+}
 
 void Paddle::Draw(Graphics& gfx)
 {
@@ -19,14 +22,18 @@ void Paddle::Draw(Graphics& gfx)
 
 bool Paddle::BallCollision(Ball& ball)
 {
-	if (ball.GetVel().y > 0.0f && GetRect().IsOverlappingWith(ball.GetRect()))
-	{
-		const Vec2 ballpos = ball.GetPos();
+	const Vec2 ballpos = ball.GetPos();
+	const RectF rect = GetRect();
 
-		if (ballpos.x >= GetRect().left && ballpos.x <= GetRect().right)
+	if (GetRect().IsOverlappingWith(ball.GetRect()))
+	{
+		if (std::signbit(ball.GetVel().x) == std::signbit((ballpos - rect.GetCenter()).x))
 		{
-		
-			SetReboundSpeed(ball);
+			ball.ReboundY();
+		}
+		else if (ballpos.x >= rect.left && ballpos.x <= rect.right)
+		{
+			ball.ReboundY();
 		}
 		else
 		{
