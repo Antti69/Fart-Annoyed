@@ -42,6 +42,7 @@ Game::Game( MainWindow& wnd )
 			i++;
 		}
 	}
+	
 }
 
 void Game::Go()
@@ -64,8 +65,16 @@ void Game::UpdateModel(float dt)
 	{
 		ball.Movement(dt);
 	}
+	else
+	{
+		ball.SetPos(pad);
+	}
+	if (wnd.kbd.KeyIsPressed(VK_SPACE))
+	{
+		ResetBall = false;
+	}
 	
-	if (ball.DoWallCollision(walls))					//muista katsoa AINA mit‰ p‰ivitt‰‰ ja piirt‰‰ ekana!!!
+	if (ball.DoWallCollision(walls))					
 	{
 		pad.ResetCooldown();
 	}
@@ -105,14 +114,6 @@ void Game::UpdateModel(float dt)
 		pad.ResetCooldown();
 	}
 	
-}
-
-void Game::BallsOnPaddle(const Paddle& pad, Ball& ball)
-{
-	if (ResetBall)
-	{
-		Ball ball{ Vec2(400.0f, 200.0f), Vec2(200.0f, 200.0f) };
-	}
 }
 
 void Game::ComposeFrame()

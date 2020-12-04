@@ -79,3 +79,9 @@ void Ball::SetDirection(const Vec2& dir)
 {
 	vel = dir.GetNormalized() * speed;
 }
+
+void Ball::SetPos(Paddle& pad)
+{
+	pos.x = pad.GetRect().GetCenter().x;
+}
+

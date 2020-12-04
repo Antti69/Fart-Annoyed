@@ -17,7 +17,7 @@ public:
 	Vec2 GetVel() const;
 	Vec2 GetPos() const;
 	void SetDirection(const Vec2& dir);
-
+	void SetPos(class Paddle& pad);
 private:
 	float speed = 400.0f;
 	static constexpr float radius = 7.0f;
