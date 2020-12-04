@@ -29,7 +29,7 @@ Game::Game( MainWindow& wnd )
 {
 	const Color colors[5] = { Colors::Blue, Colors::Green, Colors::Red, Colors::Yellow, Colors::Gray };
 
-	const Vec2 topleft = { 70.0f, 80.0f };
+	const Vec2 topleft = { 70.0f, 80.0f };		//koordinaatit mistä grid alkaa
 
 	int i = 0;
 	for (int y = 0; y < BrickPysty; y++)

@@ -77,20 +77,3 @@ void Ball::SetDirection(const Vec2& dir)
 {
 	vel = dir.GetNormalized() * speed;
 }
-
-void Ball::SetReboundY()
-{
-	vel.y = -300.0f;
-}
-
-void Ball::SetReboundX()
-{
-	SetReboundY();
-	vel.x = 200.0f;
-}
-
-void Ball::SetReboundXN()
-{
-	SetReboundY();
-	vel.x = -200.0f;
-}

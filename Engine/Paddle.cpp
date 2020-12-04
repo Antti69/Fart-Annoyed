@@ -27,13 +27,13 @@ bool Paddle::BallCollision(Ball& ball)
 
 	if (GetRect().IsOverlappingWith(ball.GetRect()))
 	{
-		if (std::signbit(ball.GetVel().x) == std::signbit((ballpos - rect.GetCenter()).x))
+		if (std::signbit(ball.GetVel().x) == std::signbit((ballpos - rect.GetCenter()).x)
+			|| ballpos.x >= rect.left && ballpos.x <= rect.right)
 		{
-			ball.ReboundY();
-		}
-		else if (ballpos.x >= rect.left && ballpos.x <= rect.right)
-		{
-			ball.ReboundY();
+			Vec2 dir;
+			const float xDiffrence = ballpos.x - pos.x;
+			dir = Vec2(xDiffrence * eXitFactor, -1.0f);
+			ball.SetDirection(dir);
 		}
 		else
 		{
@@ -42,51 +42,6 @@ bool Paddle::BallCollision(Ball& ball)
 		return true;
 	}
 	return false;
-}
-
-void Paddle::SetReboundSpeed(Ball& ball)
-{
-	const Vec2 ballpos = ball.GetPos();
-	
-	if (ballpos.x < pos.x - 40.0f && ballpos.x > pos.x - 50.0f)
-	{
-		ball.vel.x = -200.0f;
-	}
-	if (ballpos.x < pos.x - 30.0f && ballpos.x > pos.x - 40.0f)
-	{
-		ball.vel.x = -150.0f;
-	}
-	if (ballpos.x < pos.x - 20.0f && ballpos.x > pos.x - 30.0f)
-	{
-		ball.vel.x = -100.0f;
-	}
-	if (ballpos.x < pos.x - 10.0f && ballpos.x > pos.x - 20.0f)
-	{
-		ball.vel.x = -50.0f;
-	}
-
-	if (ballpos.x > pos.x - 10.0f && ballpos.x < pos.x + 10.0f)			//törmäys keskelle paddlea
-	{
-		ball.vel.x = 0.0f;
-	}
-
-	if (ballpos.x > pos.x + 10.0f && ballpos.x < pos.x + 20.0f)
-	{
-		ball.vel.x = 50.0f;
-	}
-	if (ballpos.x > pos.x + 20.0f && ballpos.x < pos.x + 30.0f)
-	{
-		ball.vel.x = 100.0f;
-	}
-	if (ballpos.x > pos.x + 30.0f && ballpos.x < pos.x + 40.0f)
-	{
-		ball.vel.x = 150.0f;
-	}
-	if (ballpos.x > pos.x + 40.0f && ballpos.x < pos.x + 50.0f)
-	{
-		ball.vel.x = 200.0f;
-	}
-	ball.SetReboundY();
 }
 
 void Paddle::WallCollision(const RectF& walls)

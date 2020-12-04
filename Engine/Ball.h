@@ -5,7 +5,6 @@
 
 class Ball
 {
-	friend class Paddle;
 public:
 	Ball(const Vec2& pos_in, const Vec2& dir_in);
 	void Draw(Graphics& gfx) const;
@@ -17,11 +16,9 @@ public:
 	Vec2 GetVel() const;
 	Vec2 GetPos() const;
 	void SetDirection(const Vec2& dir);
-	void SetReboundY();
-	void SetReboundX();
-	void SetReboundXN();
+
 private:
-	float speed = 300.0f;
+	float speed = 400.0f;
 	static constexpr float radius = 7.0f;
 	Vec2 pos;
 	Vec2 vel;
