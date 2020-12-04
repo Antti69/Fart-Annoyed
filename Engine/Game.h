@@ -39,21 +39,23 @@ public:
 private:
 	void ComposeFrame();
 	void UpdateModel(float dt);
+	void BallsOnPaddle(const Paddle& pad, Ball& ball);
 
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	static constexpr float brickWidth = 44.0;
+	static constexpr float brickWidth = 44.0;			//Brickkien arvot ja säädöt
 	static constexpr float brickHeight = 20.0f;
 	static constexpr int BrickViisto = 15;
 	static constexpr int BrickPysty = 5;
 	static constexpr int BrickTotal = BrickViisto * BrickPysty;
 
 	FrameTimer ft;
-	Ball ball{ Vec2(400.0f, 200.0f), Vec2(200.0f, 200.0f) };
+	Ball ball;		//objektit
 	Paddle pad{ Vec2(400.0f, 500), 50.0f, 15.0f };
 	Brick bricks[BrickTotal];
 	RectF walls;
 
+	bool ResetBall = true;
 	
 };

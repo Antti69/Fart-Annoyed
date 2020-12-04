@@ -60,8 +60,11 @@ void Game::Go()
 
 void Game::UpdateModel(float dt)
 {
+	if (!ResetBall)
+	{
+		ball.Movement(dt);
+	}
 	
-	ball.Movement(dt);
 	if (ball.DoWallCollision(walls))					//muista katsoa AINA mit‰ p‰ivitt‰‰ ja piirt‰‰ ekana!!!
 	{
 		pad.ResetCooldown();
@@ -102,6 +105,14 @@ void Game::UpdateModel(float dt)
 		pad.ResetCooldown();
 	}
 	
+}
+
+void Game::BallsOnPaddle(const Paddle& pad, Ball& ball)
+{
+	if (ResetBall)
+	{
+		Ball ball{ Vec2(400.0f, 200.0f), Vec2(200.0f, 200.0f) };
+	}
 }
 
 void Game::ComposeFrame()
