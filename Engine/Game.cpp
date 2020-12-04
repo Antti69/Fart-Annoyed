@@ -56,8 +56,10 @@ void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
 	ball.Movement(dt);
-	ball.DoWallCollision(walls);					//muista katsoa AINA mit‰ p‰ivitt‰‰ ja piirt‰‰ ekana!!!
-
+	if (ball.DoWallCollision(walls))					//muista katsoa AINA mit‰ p‰ivitt‰‰ ja piirt‰‰ ekana!!!
+	{
+		pad.ResetCooldown();
+	}
 	pad.Movement(wnd.kbd, dt);
 	pad.WallCollision(walls);
 	pad.BallCollision(ball);
@@ -91,6 +93,7 @@ void Game::UpdateModel()
 	if (Collisionhappend)
 	{
 		bricks[CurColIndex].ExecuteBallCollision(ball);
+		pad.ResetCooldown();
 	}
 	
 }

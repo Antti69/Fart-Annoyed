@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include "Paddle.h"
 
 Ball::Ball(const Vec2& pos_in, const Vec2& dir_in)
 	:
@@ -45,6 +46,7 @@ bool Ball::DoWallCollision(const RectF& walls)
 		ReboundY();
 		collided = true;
 	}
+	
 	return collided;
 }
 

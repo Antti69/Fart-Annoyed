@@ -16,8 +16,8 @@ public:
 	void WallCollision(const RectF& walls);
 	void Movement(Keyboard& kbd, float dt);
 	RectF GetRect() const;
+	void ResetCooldown();
 	
-
 private:
 	Color color = Colors::White;
 	Color WingColor = Colors::Red;
@@ -29,5 +29,5 @@ private:
 	float halfHeight;
 	Vec2 pos;
 	
-
+	bool Cooldown = false;
 };
