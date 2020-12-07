@@ -117,17 +117,18 @@ void Game::UpdateModel(float dt)
 	}
  	if (Collisionhappend)
 	{
-		pad.ResetCooldown();
-		bricks[CurColIndex].ExecuteBallCollision(ball);
 		if (bricks[CurColIndex].GetFirstcol())
 		{
+			bricks[CurColIndex].ExecuteBallCollision(ball);
+			pad.ResetCooldown();
 			bricks[CurColIndex].SetDestr();
 		}
 		else
 		{
+			bricks[CurColIndex].ExecuteBallCollision(ball);
 			bricks[CurColIndex].Setfirstcol();
+			pad.ResetCooldown();
 		}
-
 	}
 }
 
