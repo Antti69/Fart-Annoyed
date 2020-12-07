@@ -10,9 +10,13 @@ Brick::Brick(const RectF& rect_in, Color c_in)
 
 void Brick::Draw(Graphics& gfx) const
 {
-	if (!destroyed)
+	if (!destroyed && !firstcol)
 	{
 		gfx.DrawRect(rect.Expand( -padding), c);
+	}
+	if (!destroyed && firstcol)
+	{
+		gfx.DrawRectSpacec(rect.Expand(-padding), c);
 	}
 }
 
@@ -26,11 +30,8 @@ void Brick::ExecuteBallCollision(Ball& ball)
 	assert(CheckBallCollision(ball));
 	const Vec2 ballpos = ball.GetPos();
 
-	if (std::signbit(ball.GetVel().x) == std::signbit((ballpos - GetCenter()).x))
-	{
-		ball.ReboundY();
-	}
-	else if (ballpos.x >= rect.left && ballpos.x <= rect.right)
+	if (std::signbit(ball.GetVel().x) == std::signbit((ballpos - GetCenter()).x)
+		|| ballpos.x >= rect.left && ballpos.x <= rect.right)
 	{
 		ball.ReboundY();
 	}
@@ -39,7 +40,6 @@ void Brick::ExecuteBallCollision(Ball& ball)
 		ball.ReboundX();
 	}
 	
-	destroyed = true;
 }
 
 RectF Brick::GetRect() const
@@ -51,3 +51,19 @@ Vec2 Brick::GetCenter() const
 {
 	return Vec2(rect.GetCenter());
 }
+
+bool Brick::GetFirstcol()
+{
+	return firstcol;
+}
+
+void Brick::SetDestr()
+{
+	destroyed = true;
+}
+
+void Brick::Setfirstcol()
+{
+	firstcol = true;
+}
+
