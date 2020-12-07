@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "Colors.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -28,7 +29,7 @@ Game::Game( MainWindow& wnd )
 	walls(0.0f, float(gfx.ScreenWidth), 0.0f, float(gfx.ScreenHeight))
 {
 	const Color colors[5] = { Colors::Blue, Colors::Green, Colors::Red, Colors::Yellow, Colors::Gray };
-
+	
 	const Vec2 topleft = { 70.0f, 80.0f };		//koordinaatit mistä grid alkaa
 
 	int i = 0;
@@ -85,11 +86,13 @@ void Game::UpdateModel(float dt)
 	bool Collisionhappend = false;
 	float CurColDist;
 	int CurColIndex;
+	
+	
 
 	for (int i = 0; i < BrickTotal; i++)
 	{
 		
-		if (bricks[i].CheckBallCollision(ball))
+ 		if (bricks[i].CheckBallCollision(ball))
 		{
 			const float newColDist = (ball.GetPos() - bricks[i].GetCenter()).GetLengthSq();
 			if (Collisionhappend)
@@ -106,14 +109,27 @@ void Game::UpdateModel(float dt)
 				CurColIndex = i;
 				Collisionhappend = true;
 			}
+			if (CurColIndex < 60)
+			{
+				bricks[CurColIndex].Setfirstcol();
+			}
 		}
 	}
-	if (Collisionhappend)
+ 	if (Collisionhappend)
 	{
-		bricks[CurColIndex].ExecuteBallCollision(ball);
-		pad.ResetCooldown();
+		if (bricks[CurColIndex].GetFirstcol())
+		{
+			bricks[CurColIndex].ExecuteBallCollision(ball);
+			pad.ResetCooldown();
+			bricks[CurColIndex].SetDestr();
+		}
+		else
+		{
+			bricks[CurColIndex].ExecuteBallCollision(ball);
+			bricks[CurColIndex].Setfirstcol();
+			pad.ResetCooldown();
+		}
 	}
-	
 }
 
 void Game::ComposeFrame()

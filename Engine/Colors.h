@@ -24,6 +24,7 @@ class Color
 {
 public:
 	unsigned int dword;
+
 public:
 	constexpr Color() : dword() {}
 	constexpr Color( const Color& col )

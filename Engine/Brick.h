@@ -14,9 +14,13 @@ public:
 	void ExecuteBallCollision(Ball& ball);
 	RectF GetRect() const;
 	Vec2 GetCenter() const;
+	bool GetFirstcol();
+	void SetDestr();
+	void Setfirstcol();
 private:
 	static constexpr float padding = 1.0f;
 	RectF rect;
 	Color c;
 	bool destroyed = false;
+	bool firstcol = false;
 };

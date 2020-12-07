@@ -62,6 +62,11 @@ public:
 	{
 		DrawRect((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom, c);
 	}
+	void DrawRectSpacec(int x0, int y0, int x1, int y1, Color c);
+	void DrawRectSpacec(const RectF& rect, Color c)
+	{
+		DrawRectSpacec((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom, c);
+	}
 	void DrawCircle( int x,int y,int radius,Color c );
 	~Graphics();
 private:
