@@ -38,6 +38,10 @@ Game::Game( MainWindow& wnd )
 		const Color c = colors[y];
 		for (int x = 0; x < BrickViisto; x++)
 		{
+			if (y >= 2 && x >= 2 && x <= 12)
+			{
+				continue;
+			}
 			bricks[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 				brickWidth, brickHeight), c);
 			i++;
@@ -87,11 +91,8 @@ void Game::UpdateModel(float dt)
 	float CurColDist;
 	int CurColIndex;
 	
-	
-
 	for (int i = 0; i < BrickTotal; i++)
 	{
-		
  		if (bricks[i].CheckBallCollision(ball))
 		{
 			const float newColDist = (ball.GetPos() - bricks[i].GetCenter()).GetLengthSq();
@@ -117,17 +118,16 @@ void Game::UpdateModel(float dt)
 	}
  	if (Collisionhappend)
 	{
+		bricks[CurColIndex].ExecuteBallCollision(ball);
+		pad.ResetCooldown();
+
 		if (bricks[CurColIndex].GetFirstcol())
 		{
-			bricks[CurColIndex].ExecuteBallCollision(ball);
-			pad.ResetCooldown();
 			bricks[CurColIndex].SetDestr();
 		}
 		else
 		{
-			bricks[CurColIndex].ExecuteBallCollision(ball);
 			bricks[CurColIndex].Setfirstcol();
-			pad.ResetCooldown();
 		}
 	}
 }
