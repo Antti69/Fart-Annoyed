@@ -32,16 +32,6 @@
 class Game
 {
 public:
-	enum class State
-	{
-		Basic,
-		Broken,
-		Destroyed,
-		indestructible,
-		SpeedUp
-	};
-
-public:
 	Game( class MainWindow& wnd );
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
@@ -62,7 +52,7 @@ private:
 	FrameTimer ft;											//objektit
 	Paddle pad{ Vec2(400.0f, 500), 50.0f, 15.0f };
 	Ball ball = { Vec2(pad.GetRect().GetCenter().x, pad.GetRect().GetCenter().y - 25.0f), Vec2(200.0f, 200.0f) };
-	Brick bricks[BrickTotal] = { State::Basic };
+	Brick bricks[BrickTotal];
 	RectF walls;
 
 	bool ResetBall = true;
