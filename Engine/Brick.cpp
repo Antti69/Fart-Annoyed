@@ -8,6 +8,10 @@ Brick::Brick(const RectF& rect_in, Color c_in)
 	c(c_in)
 {}
 
+Brick::Brick(const RectF & rect_in, Color c_in, Game::State state_in)
+{
+}
+
 void Brick::Draw(Graphics& gfx) const
 {
 	if (!destroyed && !firstcol)

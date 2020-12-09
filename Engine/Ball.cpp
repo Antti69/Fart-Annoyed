@@ -85,3 +85,8 @@ void Ball::SetPos(Paddle& pad)
 	pos.x = pad.GetRect().GetCenter().x;
 }
 
+void Ball::SetVel()
+{
+	vel.y += 70.0f;
+}
+

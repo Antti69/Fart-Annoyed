@@ -28,19 +28,28 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	walls(0.0f, float(gfx.ScreenWidth), 0.0f, float(gfx.ScreenHeight))
 {
-	const Color colors[5] = { Colors::Blue, Colors::Green, Colors::Red, Colors::Yellow, Colors::Gray };
+	Color colors[BrickPysty] = { Colors::Blue, Colors::Green, Colors::Red,		//asettaa lähtövärit y akseliin
+		Colors::Yellow, Colors::Cyan, Colors::Gray};
 	
-	const Vec2 topleft = { 70.0f, 80.0f };		//koordinaatit mistä grid alkaa
+	const Vec2 topleft = { 70.0f, 80.0f };				//koordinaatit mistä grid alkaa
 
 	int i = 0;
 	for (int y = 0; y < BrickPysty; y++)
 	{
-		const Color c = colors[y];
+		 Color c = colors[y];
 		for (int x = 0; x < BrickViisto; x++)
 		{
-			if (y >= 2 && x >= 2 && x <= 12)
+			if (y >= 2 && x >= 2 && x <= 12)			//tyhjien paikkojen hallinta   toistaiseksi
 			{
 				continue;
+			}
+			if (y == 5 && (x == 0 || 1))						//värien säätö ainakin toistaseksi
+			{
+				c = Colors::Cyan;
+			}
+			else
+			{
+				c = colors[y];
 			}
 			bricks[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 				brickWidth, brickHeight), c);

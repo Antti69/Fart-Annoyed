@@ -7,8 +7,12 @@
 class Brick
 {
 public:
+
+
+public:
 	Brick() = default;
 	Brick(const RectF& rect_in, Color c_in);
+	Brick(const RectF& rect_in, Color c_in, Game::State::state_in);
 	void Draw(Graphics& gfx) const;
 	bool CheckBallCollision(const Ball& ball) const;
 	void ExecuteBallCollision(Ball& ball);
@@ -23,4 +27,5 @@ private:
 	Color c;
 	bool destroyed = false;
 	bool firstcol = false;
+	int State;
 };

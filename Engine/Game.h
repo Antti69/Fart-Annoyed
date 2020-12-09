@@ -32,6 +32,16 @@
 class Game
 {
 public:
+	enum class State
+	{
+		Basic,
+		Broken,
+		Destroyed,
+		indestructible,
+		SpeedUp
+	};
+
+public:
 	Game( class MainWindow& wnd );
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
@@ -46,13 +56,13 @@ private:
 	static constexpr float brickWidth = 44.0;			//Brickkien arvot ja säädöt
 	static constexpr float brickHeight = 20.0f;
 	static constexpr int BrickViisto = 15;
-	static constexpr int BrickPysty = 5;
+	static constexpr int BrickPysty = 6;
 	static constexpr int BrickTotal = BrickViisto * BrickPysty;
 
 	FrameTimer ft;											//objektit
 	Paddle pad{ Vec2(400.0f, 500), 50.0f, 15.0f };
 	Ball ball = { Vec2(pad.GetRect().GetCenter().x, pad.GetRect().GetCenter().y - 25.0f), Vec2(200.0f, 200.0f) };
-	Brick bricks[BrickTotal];
+	Brick bricks[BrickTotal] = { State::Basic };
 	RectF walls;
 
 	bool ResetBall = true;
