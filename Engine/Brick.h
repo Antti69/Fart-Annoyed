@@ -13,7 +13,8 @@ public:
 		Broken,
 		TwoHit,
 		indestructible,
-		SpeedUp
+		SpeedUp,
+		SpeedDown
 	};
 
 public:

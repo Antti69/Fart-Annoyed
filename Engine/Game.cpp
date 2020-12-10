@@ -159,6 +159,11 @@ void Game::UpdateModel(float dt)
 			ball.SetSpeedUp();
 			bricks[CurColIndex].SetDestr();
 		}
+		else if (state[CurColIndex] == Brick::State::SpeedDown)
+		{
+			ball.SetSpeedDown();
+			bricks[CurColIndex].SetDestr();
+		}
 	}
 }
 

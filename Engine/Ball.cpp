@@ -90,4 +90,9 @@ void Ball::SetSpeedUp()
 	speed += 20;
 }
 
+void Ball::SetSpeedDown()
+{
+	speed -= 20;
+}
+
 
