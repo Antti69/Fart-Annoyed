@@ -85,8 +85,9 @@ void Ball::SetPos(Paddle& pad)
 	pos.x = pad.GetRect().GetCenter().x;
 }
 
-void Ball::SetVel()
+void Ball::SetSpeedUp()
 {
-	vel.y += 70.0f;
+	speed += 20;
 }
+
 

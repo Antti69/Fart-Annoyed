@@ -54,7 +54,7 @@ private:
 	Ball ball = { Vec2(pad.GetRect().GetCenter().x, pad.GetRect().GetCenter().y - 25.0f), Vec2(200.0f, 200.0f) };
 	Brick bricks[BrickTotal];
 	RectF walls;
-
+	Brick::State state[BrickTotal] = { Brick::State::Basic };
 	bool ResetBall = true;
 	
 };

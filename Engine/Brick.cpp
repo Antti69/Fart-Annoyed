@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <cmath>
 
+
 Brick::Brick(const RectF& rect_in, Color c_in)
 	:
 	rect(rect_in),
@@ -11,6 +12,7 @@ Brick::Brick(const RectF& rect_in, Color c_in)
 
 void Brick::Draw(Graphics& gfx) const
 {
+	
 	if (!destroyed && !firstcol)
 	{
 		gfx.DrawRect(rect.Expand( -padding), c);

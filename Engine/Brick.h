@@ -11,7 +11,7 @@ public:
 	{
 		Basic,
 		Broken,
-		Destroyed,
+		TwoHit,
 		indestructible,
 		SpeedUp
 	};

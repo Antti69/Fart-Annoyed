@@ -29,32 +29,38 @@ Game::Game( MainWindow& wnd )
 	walls(0.0f, float(gfx.ScreenWidth), 0.0f, float(gfx.ScreenHeight))
 {
 	Color colors[BrickPysty] = { Colors::Blue, Colors::Green, Colors::Red,		//asettaa lähtövärit y akseliin
-		Colors::Yellow, Colors::Cyan, Colors::Gray};
+								 Colors::Yellow, Colors::Cyan, Colors::Gray};
 	
-	Brick::State state[BrickTotal] = { Brick::State::Basic };
-
 	const Vec2 topleft = { 70.0f, 80.0f };										//koordinaatit mistä grid alkaa
 
 	int i = 0;
 	for (int y = 0; y < BrickPysty; y++)
 	{
-		
 		Color c = colors[y];
 		for (int x = 0; x < BrickViisto; x++)
 		{
-			if (y >= 2 && x >= 2 && x <= 12)									//tyhjien paikkojen hallinta   toistaiseksi
+			/*if (y >= 2 && x >= 2 && x <= 12)									//tyhjien paikkojen hallinta   toistaiseksi
 			{
 				continue;
-			}
-			if (y == 5 && (x == 0 || 1))										//värien säätö ainakin toistaseksi
+			}*/	
+			if (x == 14 )												//värien säätö ainakin toistaseksi
 			{
 				c = Colors::Cyan;
-				Brick::State::indestructible;
+				state[i] = Brick::State::indestructible;
+			}
+			else if (y == 5 && x <= 13 )
+			{
+				c = Colors::Gray;
+				state[i] = Brick::State::TwoHit;
+			}
+			else if (y == 3 && x <= 13)
+			{
+				state[i] = Brick::State::SpeedUp;
 			}
 			else
 			{
 				c = colors[y];
-				Brick::State::Basic;
+				state[i] = Brick::State::Basic;
 			}
 			bricks[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 				brickWidth, brickHeight), c);
@@ -124,10 +130,6 @@ void Game::UpdateModel(float dt)
 				CurColIndex = i;
 				Collisionhappend = true;
 			}
-			if (CurColIndex < 60)
-			{
-				bricks[CurColIndex].Setfirstcol();
-			}
 		}
 	}
  	if (Collisionhappend)
@@ -135,13 +137,27 @@ void Game::UpdateModel(float dt)
 		bricks[CurColIndex].ExecuteBallCollision(ball);
 		pad.ResetCooldown();
 
-		if (bricks[CurColIndex].GetFirstcol())
+		if (state[CurColIndex] == Brick::State::indestructible)
+		{
+
+		}
+		else if (state[CurColIndex] == Brick::State::Basic)
 		{
 			bricks[CurColIndex].SetDestr();
 		}
-		else
+		else if (state[CurColIndex] == Brick::State::Broken)
+		{
+			bricks[CurColIndex].SetDestr();
+		}
+		else if (state[CurColIndex] == Brick::State::TwoHit)
 		{
 			bricks[CurColIndex].Setfirstcol();
+			state[CurColIndex] = Brick::State::Broken;
+		}
+		else if (state[CurColIndex] == Brick::State::SpeedUp)
+		{
+			ball.SetSpeedUp();
+			bricks[CurColIndex].SetDestr();
 		}
 	}
 }
