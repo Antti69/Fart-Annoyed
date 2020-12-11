@@ -3,11 +3,11 @@
 #include "RectF.h"
 #include "Colors.h"
 
-class Walls
+class Area
 {
 public:
-	Walls() = default;
-	Walls(const RectF& rect_in, Color c_in);
+	Area() = default;
+	Area(const RectF& rect_in, Color c_in);
 	void Draw(Graphics& gfx) const;
 	RectF GetRect() const;
 

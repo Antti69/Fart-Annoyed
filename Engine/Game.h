@@ -28,7 +28,7 @@
 #include "FrameTimer.h"
 #include "Paddle.h"
 #include "Sound.h"
-#include "Walls.h"
+#include "Area.h"
 
 class Game
 {
@@ -56,9 +56,9 @@ private:
 	Brick bricks[BrickTotal];
 	Brick::State state[BrickTotal] = { Brick::State::Basic };
 
-	Walls leftwall = { RectF(110.0f, 120.0f, 30.0f, gfx.ScreenHeight), Colors::Blue };		//pelialueen säätö
-	Walls rightwall = { RectF(680.0f, 690.0f, 30.0f, gfx.ScreenHeight), Colors::Blue };
-	Walls topwall = { RectF(110.0f, 690.0f, 20.0f, 30.0f), Colors::Blue };
+	Area leftwall = { RectF(110.0f, 120.0f, 30.0f, gfx.ScreenHeight), Colors::Blue };		//pelialueen säätö
+	Area rightwall = { RectF(680.0f, 690.0f, 30.0f, gfx.ScreenHeight), Colors::Blue };
+	Area topwall = { RectF(110.0f, 690.0f, 20.0f, 30.0f), Colors::Blue };
 
 	RectF walls = { RectF(leftwall.GetRect().right, rightwall.GetRect().left, topwall.GetRect().bottom, float(gfx.ScreenHeight)) };
 	bool ResetBall = true;

@@ -75,7 +75,7 @@
     <ClInclude Include="Paddle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Walls.h">
+    <ClInclude Include="Area.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,7 +125,7 @@
     <ClCompile Include="Paddle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Walls.cpp">
+    <ClCompile Include="Area.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

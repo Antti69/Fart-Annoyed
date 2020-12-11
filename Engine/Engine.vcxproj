@@ -155,7 +155,7 @@
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="SpriteCodex.h" />
     <ClInclude Include="Vec2.h" />
-    <ClInclude Include="Walls.h" />
+    <ClInclude Include="Area.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
@@ -173,7 +173,7 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SpriteCodex.cpp" />
     <ClCompile Include="Vec2.cpp" />
-    <ClCompile Include="Walls.cpp" />
+    <ClCompile Include="Area.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">
