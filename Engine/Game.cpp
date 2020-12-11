@@ -25,8 +25,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd ),
-	walls(0.0f, float(gfx.ScreenWidth), 0.0f, float(gfx.ScreenHeight))
+	gfx( wnd )
+	
 {
 	Color colors[BrickPysty] = { Colors::Blue, Colors::Green, Colors::Red,		//asettaa lähtövärit y akseliin
 								 Colors::Yellow, Colors::Cyan, Colors::Gray};

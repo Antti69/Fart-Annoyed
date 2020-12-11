@@ -54,11 +54,13 @@ private:
 	Paddle pad{ Vec2(400.0f, 500), 50.0f, 15.0f };
 	Ball ball = { Vec2(pad.GetRect().GetCenter().x, pad.GetRect().GetCenter().y - 25.0f), Vec2(200.0f, 200.0f) };
 	Brick bricks[BrickTotal];
-	RectF walls;
 	Brick::State state[BrickTotal] = { Brick::State::Basic };
-	Walls leftwall = { RectF(110.0f, 120.0f, 30.0f, gfx.ScreenHeight), Colors::Blue };
+
+	Walls leftwall = { RectF(110.0f, 120.0f, 30.0f, gfx.ScreenHeight), Colors::Blue };		//pelialueen säätö
 	Walls rightwall = { RectF(680.0f, 690.0f, 30.0f, gfx.ScreenHeight), Colors::Blue };
 	Walls topwall = { RectF(110.0f, 690.0f, 20.0f, 30.0f), Colors::Blue };
+
+	RectF walls = { RectF(leftwall.GetRect().right, rightwall.GetRect().left, topwall.GetRect().bottom, float(gfx.ScreenHeight)) };
 	bool ResetBall = true;
 	
 };
