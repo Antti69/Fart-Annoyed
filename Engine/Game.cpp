@@ -31,7 +31,7 @@ Game::Game( MainWindow& wnd )
 	Color colors[BrickPysty] = { Colors::Blue, Colors::Green, Colors::Red,		//asettaa lähtövärit y akseliin
 								 Colors::Yellow, Colors::Cyan, Colors::Gray};
 	
-	const Vec2 topleft = { 70.0f, 80.0f };										//koordinaatit mistä grid alkaa
+	const Vec2 topleft = { 130.0f, 80.0f };										//koordinaatit mistä grid alkaa
 
 	int i = 0;
 	for (int y = 0; y < BrickPysty; y++)
@@ -56,6 +56,10 @@ Game::Game( MainWindow& wnd )
 			else if (y == 3 && x <= 13)
 			{
 				state[i] = Brick::State::SpeedUp;
+			}
+			else if (y == 2)
+			{
+				state[i] = Brick::State::SpeedDown;
 			}
 			else
 			{
@@ -169,6 +173,9 @@ void Game::UpdateModel(float dt)
 
 void Game::ComposeFrame()
 {
+	leftwall.Draw(gfx);
+	rightwall.Draw(gfx);
+	topwall.Draw(gfx);
 	ball.Draw(gfx);
 	pad.Draw(gfx);
 	

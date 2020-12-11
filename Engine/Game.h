@@ -28,6 +28,7 @@
 #include "FrameTimer.h"
 #include "Paddle.h"
 #include "Sound.h"
+#include "Walls.h"
 
 class Game
 {
@@ -45,7 +46,7 @@ private:
 	Graphics gfx;
 	static constexpr float brickWidth = 44.0;			//Brickkien arvot ja säädöt
 	static constexpr float brickHeight = 20.0f;
-	static constexpr int BrickViisto = 15;
+	static constexpr int BrickViisto = 8;
 	static constexpr int BrickPysty = 6;
 	static constexpr int BrickTotal = BrickViisto * BrickPysty;
 
@@ -55,6 +56,9 @@ private:
 	Brick bricks[BrickTotal];
 	RectF walls;
 	Brick::State state[BrickTotal] = { Brick::State::Basic };
+	Walls leftwall = { RectF(110.0f, 120.0f, 30.0f, gfx.ScreenHeight), Colors::Blue };
+	Walls rightwall = { RectF(680.0f, 690.0f, 30.0f, gfx.ScreenHeight), Colors::Blue };
+	Walls topwall = { RectF(110.0f, 690.0f, 20.0f, 30.0f), Colors::Blue };
 	bool ResetBall = true;
 	
 };
