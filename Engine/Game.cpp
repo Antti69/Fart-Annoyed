@@ -28,50 +28,18 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd )
 	
 {
-	Color colors[BrickPysty] = { Colors::Blue, Colors::Green, Colors::Red,		//asettaa lähtövärit y akseliin
-								 Colors::Yellow, Colors::Cyan, Colors::Gray};
-	
-	const Vec2 topleft = { 120.0f, 80.0f };										//koordinaatit mistä grid alkaa
-
+	/*const Vec2 topleft = { 120.0f, 30.0f };										//koordinaatit mistä grid alkaa
 	int i = 0;
 	for (int y = 0; y < BrickPysty; y++)
 	{
-		Color c = colors[y];
+		Color c = Colors::White;
 		for (int x = 0; x < BrickViisto; x++)
 		{
-			/*if (y >= 2 && x >= 2 && x <= 12)									//tyhjien paikkojen hallinta   toistaiseksi
-			{
-				continue;
-			}*/	
-			if (x == 14 )												//värien säätö ainakin toistaseksi
-			{
-				c = Colors::Cyan;
-				state[i] = Brick::State::indestructible;
-			}
-			else if (y == 5 && x <= 13 )
-			{
-				c = Colors::Gray;
-				state[i] = Brick::State::TwoHit;
-			}
-			else if (y == 3 && x <= 13)
-			{
-				state[i] = Brick::State::SpeedUp;
-			}
-			else if (y == 2)
-			{
-				state[i] = Brick::State::SpeedDown;
-			}
-			else
-			{
-				c = colors[y];
-				state[i] = Brick::State::Basic;
-			}
 			bricks[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 				brickWidth, brickHeight), c);
 			i++;
 		}
-	}
-	
+	}*/
 }
 
 void Game::Go()
@@ -110,12 +78,14 @@ void Game::UpdateModel(float dt)
 	pad.Movement(wnd.kbd, dt);
 	pad.WallCollision(walls);
 	pad.BallCollision(ball);
+
+	//BrickCollision(BrickTotal_lvl1);
 	
 	bool Collisionhappend = false;
 	float CurColDist;
 	int CurColIndex;
 	
-	for (int i = 0; i < BrickTotal; i++)
+	for (int i = 0; i < BrickTotal_lvl1; i++)
 	{
  		if (bricks[i].CheckBallCollision(ball))
 		{
@@ -140,6 +110,7 @@ void Game::UpdateModel(float dt)
 	{
 		bricks[CurColIndex].ExecuteBallCollision(ball);
 		pad.ResetCooldown();
+		bricks[CurColIndex].SetDestr();
 
 		if (state[CurColIndex] == Brick::State::indestructible)
 		{
@@ -171,6 +142,7 @@ void Game::UpdateModel(float dt)
 	}
 }
 
+
 void Game::ComposeFrame()
 {
 	leftwall.Draw(gfx);
@@ -179,8 +151,110 @@ void Game::ComposeFrame()
 	ball.Draw(gfx);
 	pad.Draw(gfx);
 	
-	for (const Brick& b : bricks)
+
+
+	
+	Color colors[BrickViisto_lvl1] = { Colors::Blue, Colors::Green, Colors::Red,		//asettaa lähtövärit y akseliin
+							 Colors::Yellow, Colors::Cyan, Colors::Gray };
+
+	const Vec2 topleftlvl1 = { 120.0f, 30.0f };										//koordinaatit mistä grid alkaa
+
+	int i = 0;
+	for (int y = 0; y < BrickViisto_lvl1; y++)
 	{
-		b.Draw(gfx);
+		Color c = colors[y];
+		for (int x = 0; x < BrickPysty_lvl1; x++)
+		{
+			if (x == 7)												//värien säätö ainakin toistaseksi
+			{
+				c = Colors::Cyan;
+				state[i] = Brick::State::indestructible;
+			}
+			else if (y >= 5 && x <= 13)
+			{
+				c = Colors::Gray;
+				state[i] = Brick::State::TwoHit;
+			}
+			else if (y == 3 && x <= 13)
+			{
+				state[i] = Brick::State::SpeedUp;
+			}
+			else if (y == 2)
+			{
+				state[i] = Brick::State::SpeedDown;
+			}
+			else
+			{
+				c = colors[y];
+				state[i] = Brick::State::Basic;
+			}
+			bricks[i] = Brick(RectF(topleftlvl1 + Vec2(x * brickWidth, y * brickHeight),
+				brickWidth, brickHeight), c);
+			bricks[i].Draw(gfx);
+			i++;
+			
+		}
+	}
+}
+
+void Game::BrickCollision(int BrickTotal)
+{
+	bool Collisionhappend = false;
+	float CurColDist;
+	int CurColIndex;
+
+	for (int i = 0; i < BrickTotal; i++)
+	{
+		if (bricks[i].CheckBallCollision(ball))
+		{
+			const float newColDist = (ball.GetPos() - bricks[i].GetCenter()).GetLengthSq();
+			if (Collisionhappend)
+			{
+				if (newColDist < CurColDist)
+				{
+					CurColDist = newColDist;
+					CurColIndex = i;
+				}
+			}
+			else
+			{
+				CurColDist = newColDist;
+				CurColIndex = i;
+				Collisionhappend = true;
+			}
+		}
+	}
+	if (Collisionhappend)
+	{
+		bricks[CurColIndex].ExecuteBallCollision(ball);
+		pad.ResetCooldown();
+
+		if (state[CurColIndex] == Brick::State::indestructible)
+		{
+
+		}
+		else if (state[CurColIndex] == Brick::State::Basic)
+		{
+			bricks[CurColIndex].SetDestr();
+		}
+		else if (state[CurColIndex] == Brick::State::Broken)
+		{
+			bricks[CurColIndex].SetDestr();
+		}
+		else if (state[CurColIndex] == Brick::State::TwoHit)
+		{
+			bricks[CurColIndex].Setfirstcol();
+			state[CurColIndex] = Brick::State::Broken;
+		}
+		else if (state[CurColIndex] == Brick::State::SpeedUp)
+		{
+			ball.SetSpeedUp();
+			bricks[CurColIndex].SetDestr();
+		}
+		else if (state[CurColIndex] == Brick::State::SpeedDown)
+		{
+			ball.SetSpeedDown();
+			bricks[CurColIndex].SetDestr();
+		}
 	}
 }

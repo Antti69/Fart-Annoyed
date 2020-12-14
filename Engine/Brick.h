@@ -26,6 +26,7 @@ public:
 	RectF GetRect() const;
 	Vec2 GetCenter() const;
 	bool GetFirstcol();
+	bool GetDestr();
 	void SetDestr();
 	void Setfirstcol();
 private:
