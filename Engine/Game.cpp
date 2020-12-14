@@ -28,7 +28,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd )
 	
 {
-	/*const Vec2 topleft = { 120.0f, 30.0f };										//koordinaatit mistä grid alkaa
+	const Vec2 topleft = { 120.0f, 30.0f };										//koordinaatit mistä grid alkaa
 	int i = 0;
 	for (int y = 0; y < BrickPysty; y++)
 	{
@@ -39,7 +39,7 @@ Game::Game( MainWindow& wnd )
 				brickWidth, brickHeight), c);
 			i++;
 		}
-	}*/
+	}
 }
 
 void Game::Go()
@@ -108,6 +108,7 @@ void Game::UpdateModel(float dt)
 	}
  	if (Collisionhappend)
 	{
+		
 		bricks[CurColIndex].ExecuteBallCollision(ball);
 		pad.ResetCooldown();
 		bricks[CurColIndex].SetDestr();
