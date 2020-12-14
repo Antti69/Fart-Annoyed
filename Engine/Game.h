@@ -44,15 +44,15 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	static constexpr float brickWidth = 44.0;			//Brickkien arvot ja säädöt
-	static constexpr float brickHeight = 20.0f;
+	static constexpr float brickWidth = 40.0;			//Brickkien arvot ja säädöt
+	static constexpr float brickHeight = 18.0f;
 	static constexpr int BrickViisto = 8;
 	static constexpr int BrickPysty = 6;
 	static constexpr int BrickTotal = BrickViisto * BrickPysty;
 
 	FrameTimer ft;											//objektit
-	Paddle pad{ Vec2(400.0f, 500), 50.0f, 15.0f };
-	Ball ball = { Vec2(pad.GetRect().GetCenter().x, pad.GetRect().GetCenter().y - 25.0f), Vec2(200.0f, 200.0f) };
+	Paddle pad{ Vec2(400.0f, 520.0f), 40.0f, 10.0f };
+	Ball ball = { Vec2(pad.GetRect().GetCenter().x, pad.GetRect().GetCenter().y - 20.0f), Vec2(200.0f, 200.0f) };
 	Brick bricks[BrickTotal];
 	Brick::State state[BrickTotal] = { Brick::State::Basic };
 

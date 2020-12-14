@@ -31,7 +31,7 @@ Game::Game( MainWindow& wnd )
 	Color colors[BrickPysty] = { Colors::Blue, Colors::Green, Colors::Red,		//asettaa lähtövärit y akseliin
 								 Colors::Yellow, Colors::Cyan, Colors::Gray};
 	
-	const Vec2 topleft = { 130.0f, 80.0f };										//koordinaatit mistä grid alkaa
+	const Vec2 topleft = { 120.0f, 80.0f };										//koordinaatit mistä grid alkaa
 
 	int i = 0;
 	for (int y = 0; y < BrickPysty; y++)
