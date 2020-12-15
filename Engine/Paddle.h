@@ -23,7 +23,7 @@ private:
 	Color WingColor = Colors::Red;
 	float WingWidth = 10.0f;
 	float speed = 450.0f;		
-	float MaxExitRation = 2.5f; 
+	float MaxExitRation = 2.8f; 
 	float eXitFactor;
 	float halfWidth;
 	float halfHeight;

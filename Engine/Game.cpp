@@ -28,14 +28,14 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd )
 	
 {
-	const Vec2 topleft = { 120.0f, 30.0f };	
+	const Vec2 topleft = { GridStartX, GridStartY };
+	{
 
+	
 	Color colors[BrickPysty_lvl1] = { Colors::Blue, Colors::Green, Colors::Red,
 									  Colors::Yellow, Colors::Cyan, Colors::Gray };
 
-
 	int i = 0;
-	
 	for (int y = 0; y < BrickPysty_lvl1; y++)
 	{
 		Color c = colors[y];
@@ -69,6 +69,7 @@ Game::Game( MainWindow& wnd )
 			i++;
 		}
 	}
+	}
 
 	{
 		Color colors2[BrickPysty_lvl2] = { Colors::Blue, Colors::Green, Colors::Red,
@@ -83,11 +84,11 @@ Game::Game( MainWindow& wnd )
 			if (y == 4)
 			{
 				c = Colors::Cyan;
-				state2[i] = Brick::State::SpeedUp;
+				state2[i] = Brick::State::TwoHit;
 			}
 			else
 			{
-				c = colors[y];
+				c = colors2[y];
 				state2[i] = Brick::State::Basic;
 			}
 			bricks2[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
@@ -139,75 +140,17 @@ void Game::UpdateModel(float dt)
 	pad.Movement(wnd.kbd, dt);
 	pad.WallCollision(walls);
 	pad.BallCollision(ball);
-	BrickCollision(bricks2, BrickTotal_lvl2);
-	/*if (Lvl1)
+
+	if (Lvl1)
 	{
-		BrickCollision(BrickTotal_lvl1);
+		BrickCollision(bricks, state, BrickTotal_lvl1);
 	}
-	if (Lvl2)
+	else if (Lvl2)
 	{
-		BrickCollision(BrickTotal_lvl2);
-	}*/
+		BrickCollision(bricks2, state2, BrickTotal_lvl2);
+	}
 	
 
-	/*bool Collisionhappend = false;
-	float CurColDist;
-	int CurColIndex;
-	
-	for (int i = 0; i < BrickTotal_lvl1; i++)
-	{
- 		if (bricks[i].CheckBallCollision(ball))
-		{
-			const float newColDist = (ball.GetPos() - bricks[i].GetCenter()).GetLengthSq();
-			if (Collisionhappend)
-			{
-				if (newColDist < CurColDist)
-				{
-					CurColDist = newColDist;
-					CurColIndex = i;
-				}
-			}
-			else
-			{
-				CurColDist = newColDist;
-				CurColIndex = i;
-				Collisionhappend = true;
-			}
-		}
-	}
- 	if (Collisionhappend)
-	{
-		bricks[CurColIndex].ExecuteBallCollision(ball);
-		pad.ResetCooldown();
-
-		if (state[CurColIndex] == Brick::State::indestructible)
-		{
-
-		}
-		else if (state[CurColIndex] == Brick::State::Basic)
-		{
-			bricks[CurColIndex].SetDestr();
-		}
-		else if (state[CurColIndex] == Brick::State::Broken)
-		{
-			bricks[CurColIndex].SetDestr();
-		}
-		else if (state[CurColIndex] == Brick::State::TwoHit)
-		{
-			bricks[CurColIndex].Setfirstcol();
-			state[CurColIndex] = Brick::State::Broken;
-		}
-		else if (state[CurColIndex] == Brick::State::SpeedUp)
-		{
-			ball.SetSpeedUp();
-			bricks[CurColIndex].SetDestr();
-		}
-		else if (state[CurColIndex] == Brick::State::SpeedDown)
-		{
-			ball.SetSpeedDown();
-			bricks[CurColIndex].SetDestr();
-		}
-	}*/
 }
 
 
@@ -219,30 +162,24 @@ void Game::ComposeFrame()
 	topwall.Draw(gfx);
 	ball.Draw(gfx);
 	pad.Draw(gfx);
-
-
-		for (const Brick& b : bricks2)
-		{
-			b.Draw(gfx);
-		}
 	
-	/*if (Lvl1)
+	if (Lvl1)
 	{
 		for (const Brick& b : bricks)
 		{
 			b.Draw(gfx);
 		}
 	}
-	if (!Lvl1 && Lvl2)
+	else if (Lvl2)
 	{
 		for (const Brick& b : bricks2)
 		{
 			b.Draw(gfx);
 		}
-	}*/
+	}
 }
 
-void Game::BrickCollision(Brick *bricks, int BrickTotal_lvl1)
+void Game::BrickCollision(Brick *bricks, Brick::State* state, int BrickTotal_lvl1)
 {
 
 	bool Collisionhappend = false;
