@@ -115,6 +115,7 @@ void Game::Go()
 
 void Game::UpdateModel(float dt)
 {
+	
 	if (!ResetBall)
 	{
 		ball.Movement(dt);
@@ -132,9 +133,11 @@ void Game::UpdateModel(float dt)
 		Lvl1 = false;
 		Lvl2 = true;
 	}
-	if (wnd.kbd.KeyIsPressed(VK_LSHIFT))
+	if (ball.GetFail())
 	{
-		Life.SetLife(+);
+		Life.SetLife('-');
+		ResetBall = true;
+		ball.SetFail();
 	}
 	
 	if (ball.DoWallCollision(walls))					
@@ -164,7 +167,7 @@ void Game::ComposeFrame()
 	leftwall.DrawWall(gfx);
 	rightwall.DrawWall(gfx);
 	topwall.DrawWall(gfx);
-	life.DrawLife(gfx);
+	Life.DrawLife(gfx);
 	ball.Draw(gfx);
 	pad.Draw(gfx);
 	
@@ -236,12 +239,12 @@ void Game::BrickCollision(Brick *bricks, Brick::State* state, int BrickTotal_lvl
 		}
 		else if (state[CurColIndex] == Brick::State::SpeedUp)
 		{
-			ball.SetSpeedUp();
+			ball.SetSpeed('+');
 			bricks[CurColIndex].SetDestr();
 		}
 		else if (state[CurColIndex] == Brick::State::SpeedDown)
 		{
-			ball.SetSpeedDown();
+			ball.SetSpeed('-');
 			bricks[CurColIndex].SetDestr();
 		}
 	}

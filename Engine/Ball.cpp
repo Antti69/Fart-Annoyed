@@ -20,6 +20,7 @@ void Ball::Movement(float dt)
 
 bool Ball::DoWallCollision(const RectF& walls)
 {
+	
 	bool collided = false;
 	const RectF rect = GetRect();
 	if (rect.left < walls.left)
@@ -44,7 +45,8 @@ bool Ball::DoWallCollision(const RectF& walls)
 	{
 		pos.y -= rect.bottom - walls.bottom;
 		ReboundY();
-		collided = true;
+		fail = true;
+		
 	}
 	
 	return collided;
@@ -83,16 +85,31 @@ void Ball::SetDirection(const Vec2& dir)
 void Ball::SetPos(Paddle& pad)
 {
 	pos.x = pad.GetRect().GetCenter().x;
+	pos.y = pad.GetRect().GetCenter().y - 20.0f;
 }
 
-void Ball::SetSpeedUp()
+void Ball::SetSpeed(char merkki)
 {
-	speed += 20;
+	if (merkki == '+')
+	{
+		speed += 20;
+	}
+	if (merkki == '-')
+	{
+		speed -= 20;
+	}
 }
 
-void Ball::SetSpeedDown()
+bool Ball::GetFail()
 {
-	speed -= 20;
+	return fail;
 }
+
+void Ball::SetFail()
+{
+	fail = false;
+}
+
+
 
 
