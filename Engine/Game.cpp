@@ -132,6 +132,10 @@ void Game::UpdateModel(float dt)
 		Lvl1 = false;
 		Lvl2 = true;
 	}
+	if (wnd.kbd.KeyIsPressed(VK_LSHIFT))
+	{
+		Life.SetLife(+);
+	}
 	
 	if (ball.DoWallCollision(walls))					
 	{
@@ -157,9 +161,10 @@ void Game::UpdateModel(float dt)
 
 void Game::ComposeFrame()
 {
-	leftwall.Draw(gfx);
-	rightwall.Draw(gfx);
-	topwall.Draw(gfx);
+	leftwall.DrawWall(gfx);
+	rightwall.DrawWall(gfx);
+	topwall.DrawWall(gfx);
+	life.DrawLife(gfx);
 	ball.Draw(gfx);
 	pad.Draw(gfx);
 	

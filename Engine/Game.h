@@ -33,9 +33,9 @@
 class Game
 {
 public:
-	Game( class MainWindow& wnd );
-	Game( const Game& ) = delete;
-	Game& operator=( const Game& ) = delete;
+	Game(class MainWindow& wnd);
+	Game(const Game&) = delete;
+	Game& operator=(const Game&) = delete;
 	void Go();
 private:
 	void ComposeFrame();
@@ -63,6 +63,7 @@ private:
 	FrameTimer ft;											//objektit
 	Paddle pad{ Vec2(400.0f, 520.0f), 40.0f, 10.0f };
 	Ball ball = { Vec2(pad.GetRect().GetCenter().x, pad.GetRect().GetCenter().y - 20.0f), Vec2(200.0f, 200.0f) };
+	Area Life;
 	Brick bricks[BrickTotal_lvl1];
 	Brick bricks2[BrickTotal_lvl2];
 	Brick::State state[BrickTotal_lvl1] = { Brick::State::Basic };
@@ -73,7 +74,14 @@ private:
 	Area topwall = { RectF(110.0f, 690.0f, 50.0f, GridStartY), Colors::Blue };
 
 	RectF walls = { RectF(leftwall.GetRect().right, rightwall.GetRect().left, topwall.GetRect().bottom, float(gfx.ScreenHeight)) };
+
 	bool ResetBall = true;
+	bool Started = false;
+	bool GameOver = false;
 	bool Lvl1 = true;
 	bool Lvl2 = false;
+	bool Lvl3 = false;
+	bool Lvl4 = false;
+	bool Lvl5 = false;
+
 };
