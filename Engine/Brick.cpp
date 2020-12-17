@@ -60,6 +60,11 @@ bool Brick::GetFirstcol()
 	return firstcol;
 }
 
+bool Brick::GetDestroyed()
+{
+	return destroyed;
+}
+
 void Brick::SetDestr()
 {
 	destroyed = true;

@@ -32,9 +32,9 @@ Game::Game( MainWindow& wnd )
 	{
 
 	
-	Color colors[BrickPysty_lvl1] = { Colors::Blue, Colors::Green, Colors::Red,
-									  Colors::Yellow, Colors::Cyan, Colors::Gray };
-
+	//Color colors[BrickPysty_lvl1] = { Colors::Blue, Colors::Green, Colors::Red,
+									 // Colors::Yellow, Colors::Cyan, Colors::Gray };
+		Color colors[BrickPysty_lvl1] = { Colors::Blue, Colors::Green };
 	int i = 0;
 	for (int y = 0; y < BrickPysty_lvl1; y++)
 	{
@@ -128,10 +128,10 @@ void Game::UpdateModel(float dt)
 	{
 		ResetBall = false;
 	}
-	if (wnd.kbd.KeyIsPressed(VK_CONTROL))
+	if (allDestroyed)
 	{
-		Lvl1 = false;
-		Lvl2 = true;
+		//Lvl1 = false;
+		//Lvl2 = true;
 	}
 	if (ball.GetFail())
 	{
@@ -187,7 +187,7 @@ void Game::ComposeFrame()
 	}
 }
 
-void Game::BrickCollision(Brick *bricks, Brick::State* state, int BrickTotal_lvl1)
+void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl1)
 {
 
 	bool Collisionhappend = false;
@@ -196,6 +196,8 @@ void Game::BrickCollision(Brick *bricks, Brick::State* state, int BrickTotal_lvl
 
 	for (int i = 0; i < BrickTotal_lvl1; i++)
 	{
+		allDestroyed = allDestroyed && bricks[i].GetDestroyed() == true;
+
 		if (bricks[i].CheckBallCollision(ball))
 		{
 			const float newColDist = (ball.GetPos() - bricks[i].GetCenter()).GetLengthSq();
@@ -249,4 +251,8 @@ void Game::BrickCollision(Brick *bricks, Brick::State* state, int BrickTotal_lvl
 		}
 	}
 
+}
+
+void Game::CheckBrickDestr(Brick* bricks, Brick::State* state, int BrickTotal_lvl1)
+{
 }
