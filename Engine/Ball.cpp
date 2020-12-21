@@ -46,9 +46,7 @@ bool Ball::DoWallCollision(const RectF& walls)
 		pos.y -= rect.bottom - walls.bottom;
 		ReboundY();
 		fail = true;
-		
 	}
-	
 	return collided;
 }
 

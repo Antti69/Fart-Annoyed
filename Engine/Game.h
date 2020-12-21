@@ -46,7 +46,6 @@ private:
 	Graphics gfx;
 
 	void BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl1);
-	void CheckBrickDestr(Brick* bricks, Brick::State* state, int BrickTotal_lvl1);
 
 	static constexpr float brickWidth = 40.0;			//Brickkien arvot ja säädöt
 	static constexpr float brickHeight = 18.0f;
@@ -82,7 +81,7 @@ private:
 	bool ResetBall = true;
 	bool Started = false;
 	bool GameOver = false;
-	bool allDestroyed = true;
+	bool LvlUp = false;
 
 	bool Lvl1 = true;
 	bool Lvl2 = false;

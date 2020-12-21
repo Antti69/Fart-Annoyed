@@ -128,11 +128,8 @@ void Game::UpdateModel(float dt)
 	{
 		ResetBall = false;
 	}
-	if (allDestroyed)
-	{
-		//Lvl1 = false;
-		//Lvl2 = true;
-	}
+
+
 	if (ball.GetFail())
 	{
 		Life.SetLife('-');
@@ -151,6 +148,13 @@ void Game::UpdateModel(float dt)
 	if (Lvl1)
 	{
 		BrickCollision(bricks, state, BrickTotal_lvl1);
+		if (LvlUp)
+		{
+			Lvl1 = false;
+			Lvl2 = true;
+			ResetBall = true;
+			LvlUp = false;
+		}
 	}
 	else if (Lvl2)
 	{
@@ -193,7 +197,7 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 	bool Collisionhappend = false;
 	float CurColDist;
 	int CurColIndex;
-
+	bool allDestroyed = true;
 	for (int i = 0; i < BrickTotal_lvl1; i++)
 	{
 		allDestroyed = allDestroyed && bricks[i].GetDestroyed() == true;
@@ -216,6 +220,10 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 				Collisionhappend = true;
 			}
 		}
+	}
+	if (allDestroyed)
+	{
+		LvlUp = true;
 	}
 	if (Collisionhappend)
 	{
@@ -253,6 +261,3 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 
 }
 
-void Game::CheckBrickDestr(Brick* bricks, Brick::State* state, int BrickTotal_lvl1)
-{
-}
