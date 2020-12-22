@@ -115,50 +115,66 @@ void Game::Go()
 
 void Game::UpdateModel(float dt)
 {
-	
-	if (!ResetBall)
+	if (Started && !GameOver)
 	{
-		ball.Movement(dt);
+
+		if (!ResetBall)
+		{
+			ball.Movement(dt);
+		}
+		else
+		{
+			ball.SetPos(pad);
+
+		}
+		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		{
+			ResetBall = false;
+		}
+
+
+		if (ball.GetFail())
+		{
+			Life.SetLife('-');
+			ResetBall = true;
+			ball.SetFail();
+
+			if (Life.GetLife() == 0)
+			{
+				GameOver = true;
+			}
+		}
+
+		if (ball.DoWallCollision(walls))
+		{
+			pad.ResetCooldown();
+		}
+		pad.Movement(wnd.kbd, dt);
+		pad.WallCollision(walls);
+		pad.BallCollision(ball);
+
+		if (Lvl1)
+		{
+			BrickCollision(bricks, state, BrickTotal_lvl1);
+			if (LvlUp)
+			{
+				Lvl1 = false;
+				Lvl2 = true;
+				ResetBall = true;
+				LvlUp = false;
+			}
+		}
+		else if (Lvl2)
+		{
+			BrickCollision(bricks2, state2, BrickTotal_lvl2);
+		}
 	}
 	else
 	{
-		ball.SetPos(pad);
-	}
-	if (wnd.kbd.KeyIsPressed(VK_SPACE))
-	{
-		ResetBall = false;
-	}
-
-
-	if (ball.GetFail())
-	{
-		Life.SetLife('-');
-		ResetBall = true;
-		ball.SetFail();
-	}
-	
-	if (ball.DoWallCollision(walls))					
-	{
-		pad.ResetCooldown();
-	}
-	pad.Movement(wnd.kbd, dt);
-	pad.WallCollision(walls);
-	pad.BallCollision(ball);
-
-	if (Lvl1)
-	{
-		BrickCollision(bricks, state, BrickTotal_lvl1);
-		if (LvlUp)
+		if (wnd.kbd.KeyIsPressed(VK_RETURN))
 		{
-			Lvl1 = false;
-			Lvl2 = true;
-			ResetBall = true;
-			LvlUp = false;
+			Started = true;
 		}
-	}
-	else if (Lvl2)
-	{
-		BrickCollision(bricks2, state2, BrickTotal_lvl2);
 	}
 	
 
@@ -168,25 +184,37 @@ void Game::UpdateModel(float dt)
 
 void Game::ComposeFrame()
 {
-	leftwall.DrawWall(gfx);
-	rightwall.DrawWall(gfx);
-	topwall.DrawWall(gfx);
-	Life.DrawLife(gfx);
-	ball.Draw(gfx);
-	pad.Draw(gfx);
-	
-	if (Lvl1)
+	if (!Started)
 	{
-		for (const Brick& b : bricks)
-		{
-			b.Draw(gfx);
-		}
+		DrawTitle();
 	}
-	else if (Lvl2)
+	else
 	{
-		for (const Brick& b : bricks2)
+
+		leftwall.DrawWall(gfx);
+		rightwall.DrawWall(gfx);
+		topwall.DrawWall(gfx);
+		Life.DrawLife(gfx);
+		ball.Draw(gfx);
+		pad.Draw(gfx);
+	
+		if (Lvl1)
 		{
-			b.Draw(gfx);
+			for (const Brick& b : bricks)
+			{
+				b.Draw(gfx);
+			}
+		}
+		else if (Lvl2)
+		{
+			for (const Brick& b : bricks2)
+			{
+				b.Draw(gfx);
+			}
+		}
+		if (GameOver)
+		{
+			DrawOver();
 		}
 	}
 }
@@ -259,5 +287,15 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 		}
 	}
 
+}
+
+void Game::DrawTitle()
+{
+	gfx.DrawRect(370, 280, 430, 350, Colors::Blue);
+}
+
+void Game::DrawOver()
+{
+	gfx.DrawRect(370, 280, 430, 350, Colors::Red);
 }
 

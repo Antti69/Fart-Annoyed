@@ -84,6 +84,9 @@ void Ball::SetPos(Paddle& pad)
 {
 	pos.x = pad.GetRect().GetCenter().x;
 	pos.y = pad.GetRect().GetCenter().y - 20.0f;
+
+	const Vec2 Dir = Vec2(0.2f, -1.0f);
+	SetDirection(Dir);
 }
 
 void Ball::SetSpeed(char merkki)
@@ -98,7 +101,7 @@ void Ball::SetSpeed(char merkki)
 	}
 }
 
-bool Ball::GetFail()
+bool Ball::GetFail() const
 {
 	return fail;
 }

@@ -20,7 +20,7 @@ public:
 	void SetDirection(const Vec2& dir);
 	void SetPos(class Paddle& pad);
 	void SetSpeed(char merkki);
-	bool GetFail();
+	bool GetFail() const;
 	void SetFail();
 private:
 	float speed = 500.0f;

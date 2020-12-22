@@ -46,6 +46,8 @@ private:
 	Graphics gfx;
 
 	void BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl1);
+	void DrawTitle();
+	void DrawOver();
 
 	static constexpr float brickWidth = 40.0;			//Brickkien arvot ja säädöt
 	static constexpr float brickHeight = 18.0f;
