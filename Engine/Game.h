@@ -51,13 +51,17 @@ private:
 
 	static constexpr float brickWidth = 40.0;			//Brickkien arvot ja säädöt
 	static constexpr float brickHeight = 18.0f;
-	static constexpr int BrickViisto_lvl1 = 4;					//14 max
-	static constexpr int BrickPysty_lvl1 = 2;
+	static constexpr int BrickViisto_lvl1 = 8;					//14 max
+	static constexpr int BrickPysty_lvl1 = 5;
 	static constexpr int BrickTotal_lvl1 = BrickViisto_lvl1 * BrickPysty_lvl1;
 
-	static constexpr int BrickViisto_lvl2 = 9;
-	static constexpr int BrickPysty_lvl2 = 5;
+	static constexpr int BrickViisto_lvl2 = 10;
+	static constexpr int BrickPysty_lvl2 = 6;
 	static constexpr int BrickTotal_lvl2 = BrickViisto_lvl2 * BrickPysty_lvl2;
+
+	static constexpr int BrickViisto_lvl3 = 10;
+	static constexpr int BrickPysty_lvl3 = 6;
+	static constexpr int BrickTotal_lvl3 = BrickViisto_lvl2 * BrickPysty_lvl2;
 
 	static constexpr float GridStartX = 120.0f;
 	static constexpr float GridStartY = 60.0f;
@@ -69,8 +73,11 @@ private:
 
 	Brick bricks[BrickTotal_lvl1];
 	Brick bricks2[BrickTotal_lvl2];
+	Brick bricks3[BrickTotal_lvl3];
+
 	Brick::State state[BrickTotal_lvl1] = { Brick::State::Basic };
 	Brick::State state2[BrickTotal_lvl2] = { Brick::State::Basic };
+	Brick::State state3[BrickTotal_lvl3] = { Brick::State::Basic };
 
 
 

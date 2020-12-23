@@ -21,11 +21,23 @@ void Brick::Draw(Graphics& gfx) const
 	{
 		gfx.DrawRectSpacec(rect.Expand(-padding), c);
 	}
+	if (destroyed && indestructible)
+	{
+		gfx.DrawRect(rect.Expand(-padding), c);
+	}
 }
 
 bool Brick::CheckBallCollision(const Ball& ball) const
 {
-	return !destroyed && GetRect().IsOverlappingWith(ball.GetRect());
+	if (indestructible && GetRect().IsOverlappingWith(ball.GetRect()))
+	{
+		return true;
+	}
+	if (!destroyed && GetRect().IsOverlappingWith(ball.GetRect()))
+	{
+		return true;
+	}
+	return false;
 }
 
 void Brick::ExecuteBallCollision(Ball& ball)

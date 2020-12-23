@@ -29,7 +29,7 @@ public:
 	bool GetDestroyed();
 	void SetDestr();
 	void Setfirstcol();
-
+	bool indestructible = false;
 	
 private:
 	static constexpr float padding = 1.0f;
