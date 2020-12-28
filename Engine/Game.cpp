@@ -48,6 +48,7 @@ Game::Game( MainWindow& wnd )
 				bricks[i].indestructible = true;
 				bricks[i].SetDestr();
 			}
+
 			i++;
 		}
 	}
@@ -65,6 +66,9 @@ Game::Game( MainWindow& wnd )
 		Color c = colors[y];
 		for (int x = 0; x < BrickViisto_lvl2; x++)
 		{
+			bricks2[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+				brickWidth, brickHeight), c);
+
 			if (y == 5)
 			{
 				state2[i] = Brick::State::TwoHit;
@@ -73,36 +77,77 @@ Game::Game( MainWindow& wnd )
 			{
 				state2[i] = Brick::State::Basic;
 			}
-			bricks2[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
-				brickWidth, brickHeight), c);
 			i++;
 		}
 	}
 	}
 
 	{	//Level 3
-		Color colors[BrickPysty_lvl3] = { Colors::Blue, Colors::White, Colors::Red,
-									   Colors::Cyan, Colors::Blue, Colors::Gray };
+		
 
-		const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY + (brickHeight * 3) };
+		const Vec2 topleft = { GridStartX, GridStartY };
 
 		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl3; y++)
 		{
-			Color c = colors[y];
+			Color c = Colors::Cyan;
 			for (int x = 0; x < BrickViisto_lvl3; x++)
 			{
-				if (y == 5)
+				bricks3[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
+
+				state3[i] = Brick::State::Basic;
+
+				i++;
+			}
+		}
+	}
+	//level 3.1
+	{
+		const Vec2 topleft = { GridStartX + (brickWidth * 10), GridStartY + (brickHeight * 4) };
+		Color colors[BrickTotal_lvl3_1] = { Colors::Orange };
+		
+		int i = 0;
+		for (int y = 0; y < BrickPysty_lvl3_1; y++)
+		{
+			
+			for (int x = 0; x < BrickViisto_lvl3_1; x++)
+			{
+				Color c = colors[BrickTotal_lvl3_1];
+
+				bricks3_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+				brickWidth, brickHeight), c);
+				
+
+				if (y == 2 && x == 1)
 				{
-					state3[i] = Brick::State::TwoHit;
+					c = Colors::Magenta;
+					state3_1[i] = Brick::State::Basic;
 				}
 				else
 				{
-					state3[i] = Brick::State::Basic;
+					state3_1[i] = Brick::State::indestructible;
+					bricks3_1[i].indestructible = true;
+					bricks3_1[i].SetDestr();
+					
 				}
-				bricks3[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
-					brickWidth, brickHeight), c);
+				
+
+				if (y == 1 && x < 2)
+				{
+					continue;
+				}
+				if (y == 2 && x == 0)
+				{
+					continue;
+				}
+				if (y == 3 && x < 2)
+				{
+					continue;
+				}
 				i++;
+
+				
 			}
 		}
 	}
@@ -176,6 +221,18 @@ void Game::UpdateModel(float dt)
 		else if (Lvl2)
 		{
 			BrickCollision(bricks2, state2, BrickTotal_lvl2);
+			if (LvlUp)
+			{
+				Lvl2 = false;
+				Lvl3 = true;
+				ResetBall = true;
+				LvlUp = false;
+			}
+		}
+		else if (Lvl3)
+		{
+			BrickCollision(bricks3, state3, BrickTotal_lvl3);
+			BrickCollision(bricks3_1, state3_1, BrickTotal_lvl3_1);
 		}
 	}
 	else
@@ -184,10 +241,17 @@ void Game::UpdateModel(float dt)
 		{
 			Started = true;
 		}
-		if (wnd.kbd.KeyIsPressed(VK_TAB))
+		if (wnd.kbd.KeyIsPressed(VK_F2))			//Level oikotie "testiä"
 		{
 			Lvl1 = false;
 			Lvl2 = true;
+			ResetBall = true;
+		}
+		if (wnd.kbd.KeyIsPressed(VK_F3))
+		{
+			Lvl1 = false;
+			Lvl2 = false;
+			Lvl3 = true;
 			ResetBall = true;
 		}
 	}
@@ -223,6 +287,17 @@ void Game::ComposeFrame()
 		else if (Lvl2)
 		{
 			for (const Brick& b : bricks2)
+			{
+				b.Draw(gfx);
+			}
+		}
+		else if (Lvl3)
+		{
+			for (const Brick& b : bricks3)
+			{
+				b.Draw(gfx);
+			}
+			for (const Brick& b : bricks3_1)
 			{
 				b.Draw(gfx);
 			}
