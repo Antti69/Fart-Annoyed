@@ -11,6 +11,7 @@ public:
 	Area(const RectF& rect_in, Color c_in);
 	void DrawWall(Graphics& gfx) const;
 	void DrawLife(Graphics& gfx) const;
+	void DrawBlueMeter(Graphics& gfx) const;
 	void SetLife(char merkki);
 	int GetLife() const;
 	RectF GetRect() const;

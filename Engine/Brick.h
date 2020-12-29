@@ -14,7 +14,8 @@ public:
 		TwoHit,
 		indestructible,
 		SpeedUp,
-		SpeedDown
+		SpeedDown,
+		LifeUp
 	};
 
 public:

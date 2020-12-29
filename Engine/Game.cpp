@@ -83,10 +83,7 @@ Game::Game( MainWindow& wnd )
 	}
 
 	{	//Level 3
-		
-
 		const Vec2 topleft = { GridStartX, GridStartY };
-
 		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl3; y++)
 		{
@@ -105,7 +102,7 @@ Game::Game( MainWindow& wnd )
 	//level 3.1
 	{
 		const Vec2 topleft = { GridStartX + (brickWidth * 10), GridStartY + (brickHeight * 4) };
-		Color colors[BrickTotal_lvl3_1] = { Colors::Orange };
+		Color c = Colors::Orange;
 		
 		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl3_1; y++)
@@ -113,26 +110,20 @@ Game::Game( MainWindow& wnd )
 			
 			for (int x = 0; x < BrickViisto_lvl3_1; x++)
 			{
-				Color c = colors[BrickTotal_lvl3_1];
-
-				bricks3_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
-				brickWidth, brickHeight), c);
-				
-
 				if (y == 2 && x == 1)
 				{
 					c = Colors::Magenta;
-					state3_1[i] = Brick::State::Basic;
+					state3_1[i] = Brick::State::LifeUp;
 				}
 				else
 				{
 					state3_1[i] = Brick::State::indestructible;
 					bricks3_1[i].indestructible = true;
 					bricks3_1[i].SetDestr();
-					
+					c = Colors::Orange;
 				}
-				
-
+				bricks3_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
 				if (y == 1 && x < 2)
 				{
 					continue;
@@ -146,8 +137,6 @@ Game::Game( MainWindow& wnd )
 					continue;
 				}
 				i++;
-
-				
 			}
 		}
 	}
@@ -233,6 +222,13 @@ void Game::UpdateModel(float dt)
 		{
 			BrickCollision(bricks3, state3, BrickTotal_lvl3);
 			BrickCollision(bricks3_1, state3_1, BrickTotal_lvl3_1);
+			if (LvlUp)
+			{
+				Lvl3 = false;
+				Lvl4 = true;
+				ResetBall = true;
+				LvlUp = false;
+			}
 		}
 	}
 	else
@@ -276,6 +272,7 @@ void Game::ComposeFrame()
 		Life.DrawLife(gfx);
 		ball.Draw(gfx);
 		pad.Draw(gfx);
+		Meter.DrawBlueMeter(gfx);
 	
 		if (Lvl1)
 		{
@@ -301,6 +298,10 @@ void Game::ComposeFrame()
 			{
 				b.Draw(gfx);
 			}
+		}
+		else if (Lvl4)
+		{
+			DrawTitle();
 		}
 		if (GameOver)
 		{
@@ -374,6 +375,11 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 		{
 			ball.SetSpeed('-');
 			bricks[CurColIndex].SetDestr();
+		}
+		else if (state[CurColIndex] == Brick::State::LifeUp)
+		{
+			bricks[CurColIndex].SetDestr();
+			Life.SetLife('+');
 		}
 	}
 

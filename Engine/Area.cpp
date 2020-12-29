@@ -55,6 +55,15 @@ void Area::DrawLife(Graphics& gfx) const
 	}
 }
 
+void Area::DrawBlueMeter(Graphics& gfx) const
+{
+	gfx.DrawCircle(60, 560, 10, Colors::Blue);
+
+	const RectF pohja = { Vec2(50.0f, 260.0f), Vec2(70.0f, 550.0f) };
+	gfx.DrawRect(pohja, Colors::White);
+
+}
+
 void Area::SetLife(char merkki)
 {
 	if (merkki == '+')
