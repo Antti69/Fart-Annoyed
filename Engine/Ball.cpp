@@ -99,6 +99,18 @@ void Ball::SetSpeed(char merkki)
 	{
 		speed -= 20;
 	}
+	if (merkki == 's')
+	{
+		speed = 200.0f;
+
+		vel = vel.GetNormalized() * speed;
+	}
+	if (merkki == 'r')
+	{
+		speed = 500.0f;
+
+		vel = vel.GetNormalized() * speed;
+	}
 }
 
 bool Ball::GetFail() const

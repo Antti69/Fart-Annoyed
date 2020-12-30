@@ -48,6 +48,10 @@ Game::Game( MainWindow& wnd )
 				bricks[i].indestructible = true;
 				bricks[i].SetDestr();
 			}
+			if (y == 0)
+			{
+				state[i] = Brick::State::BlueMeterUp;
+			}
 
 			i++;
 		}
@@ -173,6 +177,20 @@ void Game::UpdateModel(float dt)
 		if (wnd.kbd.KeyIsPressed(VK_SPACE))
 		{
 			ResetBall = false;
+		}
+
+		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && Meter.GetBlueMeter() <= Meter.GetMeterMin())
+		{
+			Meter.SetBlueM('-');
+			ball.SetSpeed('s');
+		}
+		else
+		{
+			ball.SetSpeed('r');
+		}
+		if (wnd.kbd.KeyIsPressed(VK_TAB))
+		{
+			Meter.SetBlueM('+');
 		}
 
 
@@ -378,8 +396,13 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 		}
 		else if (state[CurColIndex] == Brick::State::LifeUp)
 		{
-			bricks[CurColIndex].SetDestr();
 			Life.SetLife('+');
+			bricks[CurColIndex].SetDestr();
+		}
+		else if (state[CurColIndex] == Brick::State::BlueMeterUp)
+		{
+			Meter.SetBlueM('+');
+			bricks[CurColIndex].SetDestr();
 		}
 	}
 

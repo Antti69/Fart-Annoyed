@@ -15,11 +15,15 @@ public:
 	void SetLife(char merkki);
 	int GetLife() const;
 	RectF GetRect() const;
+	void SetBlueM(char merkki);
+	float GetBlueMeter() const;
+	float GetMeterMin() const;
 	
 private:
 	RectF rect;
 	Color c;
 	int life = 4;
-
-	
+	float b_meterY = 530.0f;
+	static constexpr float MeterMax = 260.0f;
+	static constexpr float MeterMin = 550.0f;
 };

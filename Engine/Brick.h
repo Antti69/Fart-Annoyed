@@ -15,7 +15,8 @@ public:
 		indestructible,
 		SpeedUp,
 		SpeedDown,
-		LifeUp
+		LifeUp,
+		BlueMeterUp
 	};
 
 public:
