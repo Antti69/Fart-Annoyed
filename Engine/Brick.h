@@ -16,7 +16,8 @@ public:
 		SpeedUp,
 		SpeedDown,
 		LifeUp,
-		BlueMeterUp
+		BlueMeterUp,
+		RedMeterUp
 	};
 
 public:

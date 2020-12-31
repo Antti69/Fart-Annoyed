@@ -67,6 +67,10 @@ private:
 	static constexpr int BrickPysty_lvl3_1 = 5;
 	static constexpr int BrickTotal_lvl3_1 = BrickViisto_lvl3_1 * BrickPysty_lvl3_1;
 
+	static constexpr int BrickViisto_lvl4 = 14;
+	static constexpr int BrickPysty_lvl4 = 9;
+	static constexpr int BrickTotal_lvl4 = BrickViisto_lvl4 * BrickPysty_lvl4;
+
 	static constexpr float GridStartX = 120.0f;
 	static constexpr float GridStartY = 60.0f;
 
@@ -80,12 +84,13 @@ private:
 	Brick bricks2[BrickTotal_lvl2];
 	Brick bricks3[BrickTotal_lvl3];
 	Brick bricks3_1[BrickTotal_lvl3_1];
+	Brick bricks4[BrickTotal_lvl4];
 
 	Brick::State state[BrickTotal_lvl1] = { Brick::State::Basic };
 	Brick::State state2[BrickTotal_lvl2] = { Brick::State::Basic };
 	Brick::State state3[BrickTotal_lvl3] = { Brick::State::Basic };
 	Brick::State state3_1[BrickTotal_lvl3_1] = { Brick::State::Basic };
-
+	Brick::State state4[BrickTotal_lvl4] = { Brick::State::Basic };
 
 
 	Area leftwall = { RectF(110.0f, GridStartX , GridStartY, gfx.ScreenHeight), Colors::Blue };		//pelialueen säätö
@@ -97,6 +102,7 @@ private:
 	bool ResetBall = true;
 	bool Started = false;
 	bool GameOver = false;
+	bool ChoiceState = false;
 	bool LvlUp = false;
 
 	bool Lvl1 = true;

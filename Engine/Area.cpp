@@ -66,9 +66,20 @@ void Area::DrawBlueMeter(Graphics& gfx) const
 	gfx.DrawRect(BlueM, Colors::Blue);
 }
 
+void Area::DrawRedMeter(Graphics& gfx) const
+{
+	const RectF pohja = { Vec2(740.0f, MeterMax), Vec2(760.0f, MeterMin) };
+	gfx.DrawRect(pohja, Colors::White);
+
+	gfx.DrawCircle(750, 560, 20, Colors::Red);
+
+	RectF RedM = { Vec2(740.0f, r_meterY), Vec2(760.0f, MeterMin) };
+	gfx.DrawRect(RedM, Colors::Red);
+}
+
 void Area::SetLife(char merkki)
 {
-	if (merkki == '+')
+	if (merkki == '+' && life < 7)
 	{
 		life += 1;
 	}
@@ -91,15 +102,36 @@ RectF Area::GetRect() const
 
 void Area::SetBlueM(char merkki)
 {
-	if (merkki == '+' && b_meterY > MeterMax)
+	if (BlueMeter)
 	{
-		b_meterY -= 10.0f;
+		if (merkki == '+' && b_meterY > MeterMax)
+		{
+			b_meterY -= 10.0f;
 
+		}
+		if (merkki == '-' && b_meterY < MeterMin)
+		{
+			b_meterY += 0.1f;
+		}
 	}
-	if (merkki == '-' && b_meterY < MeterMin)
+}
+
+void Area::SetRedM()
+{
+	if (RedMeter)
 	{
-		b_meterY += 0.1f;
+		r_meterY -= 10.0f;
+
+		if (r_meterY <= MeterMax)
+		{
+			r_meterY = MeterMin;
+			if (life < 7)
+			{
+				life += 1;
+			}
+		}
 	}
+
 }
 
 float Area::GetBlueMeter() const

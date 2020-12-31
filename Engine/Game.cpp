@@ -28,8 +28,8 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd )
 	
 {
-	
-	{	//Level 1
+	//Level 1
+	{	
 	const Vec2 topleft = { GridStartX + (brickWidth * 3), GridStartY + (brickHeight * 3) };
 	
 	Color colors[BrickPysty_lvl1] = { Colors::Blue, Colors::Red, Colors::Cyan, Colors::White, Colors::Orange };
@@ -52,13 +52,17 @@ Game::Game( MainWindow& wnd )
 			{
 				state[i] = Brick::State::BlueMeterUp;
 			}
+			if (y == 1)
+			{
+				state[i] = Brick::State::RedMeterUp;
+			}
 
 			i++;
 		}
 	}
 	}				
-
-	{	//Level 2
+	//Level 2
+	{	
 	Color colors[BrickPysty_lvl2] = { Colors::Blue, Colors::White, Colors::Red,
 								   Colors::Cyan, Colors::Blue, Colors::Gray };
 
@@ -85,8 +89,8 @@ Game::Game( MainWindow& wnd )
 		}
 	}
 	}
-
-	{	//Level 3
+	//Level 3
+	{	
 		const Vec2 topleft = { GridStartX, GridStartY };
 		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl3; y++)
@@ -144,6 +148,54 @@ Game::Game( MainWindow& wnd )
 			}
 		}
 	}
+	//level 4
+	{
+		const Vec2 topleft = { GridStartX, GridStartY + (brickHeight * 2) };
+		Color c;
+
+		int i = 0;
+		for (int y = 0; y < BrickPysty_lvl4; y++)
+		{
+			for (int x = 0; x < BrickViisto_lvl4; x++)
+			{
+				if (y < 8 && x < 5)
+				{
+					c = Colors::Blue;
+					state4[i] = Brick::State::BlueMeterUp;
+				}
+				else if (y < 8 && x > 5)
+				{
+					c = Colors::Red;
+					state4[i] = Brick::State::RedMeterUp;
+				}
+				else if (y == 8)
+				{
+					c = Colors::Gray;
+					state4[i] = Brick::State::TwoHit;
+				}
+				bricks4[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
+
+				if (y < 8)
+				{
+					if (x < 2)
+					{
+						bricks4[i].SetDestr();
+					}
+					if (x > 3 && x < 10)
+					{
+						bricks4[i].SetDestr();
+					}
+					if (x > 11)
+					{
+						bricks4[i].SetDestr();
+					}
+				}
+				i++;
+			}
+		}
+	}
+
 }
 
 void Game::Go()
@@ -194,6 +246,7 @@ void Game::UpdateModel(float dt)
 		}
 
 
+
 		if (ball.GetFail())
 		{
 			Life.SetLife('-');
@@ -242,12 +295,36 @@ void Game::UpdateModel(float dt)
 			BrickCollision(bricks3_1, state3_1, BrickTotal_lvl3_1);
 			if (LvlUp)
 			{
+				ResetBall = true;
 				Lvl3 = false;
 				Lvl4 = true;
+				LvlUp = false;
+				ChoiceState = true;
+
+				if (wnd.kbd.KeyIsPressed('B'))
+				{
+					Meter.BlueMeter = true;
+					ChoiceState = false;
+				}
+				else if (wnd.kbd.KeyIsPressed('R'))
+				{
+					Meter.RedMeter = true;
+					ChoiceState = false;
+				}
+			}
+		}
+		else if (Lvl4)
+		{
+			BrickCollision(bricks4, state4, BrickTotal_lvl4);
+			if (LvlUp)
+			{
+				Lvl4 = false;
+				Lvl5 = true;
 				ResetBall = true;
 				LvlUp = false;
 			}
 		}
+
 	}
 	else
 	{
@@ -266,6 +343,14 @@ void Game::UpdateModel(float dt)
 			Lvl1 = false;
 			Lvl2 = false;
 			Lvl3 = true;
+			ResetBall = true;
+		}
+		if (wnd.kbd.KeyIsPressed(VK_F4))
+		{
+			Lvl1 = false;
+			Lvl2 = false;
+			Lvl3 = false;
+			Lvl4 = true;
 			ResetBall = true;
 		}
 	}
@@ -290,7 +375,19 @@ void Game::ComposeFrame()
 		Life.DrawLife(gfx);
 		ball.Draw(gfx);
 		pad.Draw(gfx);
-		Meter.DrawBlueMeter(gfx);
+		
+		if (Meter.BlueMeter)
+		{
+			Meter.DrawBlueMeter(gfx);
+		}
+		if (Meter.RedMeter)
+		{
+			Meter.DrawRedMeter(gfx);
+		}
+		if (ChoiceState)
+		{
+			DrawTitle();
+		}
 	
 		if (Lvl1)
 		{
@@ -318,6 +415,13 @@ void Game::ComposeFrame()
 			}
 		}
 		else if (Lvl4)
+		{
+			for (const Brick& b : bricks4)
+			{
+				b.Draw(gfx);
+			}
+		}
+		else if (Lvl5)
 		{
 			DrawTitle();
 		}
@@ -404,6 +508,12 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 			Meter.SetBlueM('+');
 			bricks[CurColIndex].SetDestr();
 		}
+		else if (state[CurColIndex] == Brick::State::RedMeterUp)
+		{
+			Meter.SetRedM();
+			bricks[CurColIndex].SetDestr();
+		}
+		
 	}
 
 }
