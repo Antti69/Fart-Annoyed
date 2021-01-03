@@ -110,5 +110,10 @@ private:
 	bool Lvl3 = false;
 	bool Lvl4 = false;
 	bool Lvl5 = false;
+	bool Lvl6 = false;
+	bool Lvl7 = false;
+	bool Lvl8 = false;
+	bool Lvl9 = false;
+	
 
 };

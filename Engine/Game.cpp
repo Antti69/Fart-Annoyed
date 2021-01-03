@@ -214,7 +214,7 @@ void Game::Go()
 
 void Game::UpdateModel(float dt)
 {
-	if (Started && !GameOver)
+	if (Started && !GameOver && !ChoiceState)
 	{
 
 		if (!ResetBall)
@@ -295,22 +295,12 @@ void Game::UpdateModel(float dt)
 			BrickCollision(bricks3_1, state3_1, BrickTotal_lvl3_1);
 			if (LvlUp)
 			{
+
+				ChoiceState = true;
 				ResetBall = true;
 				Lvl3 = false;
 				Lvl4 = true;
 				LvlUp = false;
-				ChoiceState = true;
-
-				if (wnd.kbd.KeyIsPressed('B'))
-				{
-					Meter.BlueMeter = true;
-					ChoiceState = false;
-				}
-				else if (wnd.kbd.KeyIsPressed('R'))
-				{
-					Meter.RedMeter = true;
-					ChoiceState = false;
-				}
 			}
 		}
 		else if (Lvl4)
@@ -332,20 +322,30 @@ void Game::UpdateModel(float dt)
 		{
 			Started = true;
 		}
-		if (wnd.kbd.KeyIsPressed(VK_F2))			//Level oikotie "testiä"
+		if (ChoiceState && wnd.kbd.KeyIsPressed('B'))
+		{
+			Meter.BlueMeter = true;
+			ChoiceState = false;
+		}
+		else if (ChoiceState && wnd.kbd.KeyIsPressed('R'))
+		{
+			Meter.RedMeter = true;
+			ChoiceState = false;
+		}
+		if (wnd.kbd.KeyIsPressed('2'))			//Level oikotie "testiä"
 		{
 			Lvl1 = false;
 			Lvl2 = true;
 			ResetBall = true;
 		}
-		if (wnd.kbd.KeyIsPressed(VK_F3))
+		if (wnd.kbd.KeyIsPressed('3'))
 		{
 			Lvl1 = false;
 			Lvl2 = false;
 			Lvl3 = true;
 			ResetBall = true;
 		}
-		if (wnd.kbd.KeyIsPressed(VK_F4))
+		if (wnd.kbd.KeyIsPressed('4'))
 		{
 			Lvl1 = false;
 			Lvl2 = false;
@@ -363,6 +363,10 @@ void Game::UpdateModel(float dt)
 void Game::ComposeFrame()
 {
 	if (!Started)
+	{
+		DrawTitle();
+	}
+	else if (ChoiceState)
 	{
 		DrawTitle();
 	}
@@ -384,10 +388,7 @@ void Game::ComposeFrame()
 		{
 			Meter.DrawRedMeter(gfx);
 		}
-		if (ChoiceState)
-		{
-			DrawTitle();
-		}
+
 	
 		if (Lvl1)
 		{
@@ -430,6 +431,7 @@ void Game::ComposeFrame()
 			DrawOver();
 		}
 	}
+
 }
 
 void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl1)
