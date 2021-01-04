@@ -48,15 +48,6 @@ Game::Game( MainWindow& wnd )
 				bricks[i].indestructible = true;
 				bricks[i].SetDestr();
 			}
-			if (y == 0)
-			{
-				state[i] = Brick::State::BlueMeterUp;
-			}
-			if (y == 1)
-			{
-				state[i] = Brick::State::RedMeterUp;
-			}
-
 			i++;
 		}
 	}
@@ -195,7 +186,74 @@ Game::Game( MainWindow& wnd )
 			}
 		}
 	}
+	//Level 5
+	{
+		const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY };
+		int i = 0;
+		int x = 0;
+		int y = 0;
+		Color c = Colors::Orange;
+		for (y = 0; y < BrickPysty_lvl5; y++)
+		{
+			state5[i] = Brick::State::indestructible;
+			bricks5[i].indestructible = true;
+			bricks5[i].SetDestr();
 
+			bricks5[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+				brickWidth, brickHeight), c);
+
+			if (y > 2 && y < 6)
+			{
+				bricks5[i].indestructible = false;
+				bricks5[i].SetDestr();
+			}
+			i++;
+			
+		}
+		const Vec2 topleft2 = { GridStartX + (brickWidth * 2), GridStartY };
+		for (x = 0; x < BrickViisto_lvl5; x++)
+		{
+			state5[i] = Brick::State::indestructible;
+			bricks5[i].indestructible = true;
+			bricks5[i].SetDestr();
+
+			bricks5[i] = Brick(RectF(topleft2 + Vec2(x * brickWidth, y * brickHeight),
+				brickWidth, brickHeight), c);
+
+			i++;
+		}
+		
+	}
+	//Level 5.1
+	{
+		const Vec2 topleft = { GridStartX + (brickWidth * 7), GridStartY + (brickHeight * 3) };
+		Color colors[BrickViisto_lvl5_1] = { Colors::Blue, Colors::Blue, Colors::Gray, Colors::Red, Colors::Red };
+		int i = 0;
+		for (int y = 0; y < BrickPysty_lvl5_1; y++)
+		{
+			
+			for (int x = 0; x < BrickViisto_lvl5_1; x++)
+			{
+				Color c = colors[x];
+				bricks5_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
+
+				if (x < 2)
+				{
+					state5_1[i] = Brick::State::BlueMeterUp;
+				}
+				else if (x > 2)
+				{
+					state5_1[i] = Brick::State::RedMeterUp;
+				}
+				else
+				{
+					state5_1[i] = Brick::State::TwoHit;
+				}
+				i++;
+			}
+		}
+	}
 }
 
 void Game::Go()
@@ -214,7 +272,7 @@ void Game::Go()
 
 void Game::UpdateModel(float dt)
 {
-	if (Started && !GameOver)
+	if (Started && !GameOver && !ChoiceState)
 	{
 
 		if (!ResetBall)
@@ -295,22 +353,12 @@ void Game::UpdateModel(float dt)
 			BrickCollision(bricks3_1, state3_1, BrickTotal_lvl3_1);
 			if (LvlUp)
 			{
+
+				ChoiceState = true;
 				ResetBall = true;
 				Lvl3 = false;
 				Lvl4 = true;
 				LvlUp = false;
-				ChoiceState = true;
-
-				if (wnd.kbd.KeyIsPressed('B'))
-				{
-					Meter.BlueMeter = true;
-					ChoiceState = false;
-				}
-				else if (wnd.kbd.KeyIsPressed('R'))
-				{
-					Meter.RedMeter = true;
-					ChoiceState = false;
-				}
 			}
 		}
 		else if (Lvl4)
@@ -324,6 +372,19 @@ void Game::UpdateModel(float dt)
 				LvlUp = false;
 			}
 		}
+		else if (Lvl5)
+		{
+			BrickCollision(bricks5_1, state5_1, BrickTotal_lvl5_1);
+			BrickCollision(bricks5, state5, BrickTotal_lvl5);
+			if (LvlUp)
+			{
+				Lvl5 = false;
+				Lvl6 = true;
+				ResetBall = true;
+				LvlUp = false;
+			}
+			
+		}
 
 	}
 	else
@@ -332,25 +393,44 @@ void Game::UpdateModel(float dt)
 		{
 			Started = true;
 		}
-		if (wnd.kbd.KeyIsPressed(VK_F2))			//Level oikotie "testiä"
+		if (ChoiceState && wnd.kbd.KeyIsPressed('B'))
+		{
+			Meter.BlueMeter = true;
+			ChoiceState = false;
+		}
+		else if (ChoiceState && wnd.kbd.KeyIsPressed('R'))
+		{
+			Meter.RedMeter = true;
+			ChoiceState = false;
+		}
+		if (wnd.kbd.KeyIsPressed('2'))			//Level oikotie "testiä varten"
 		{
 			Lvl1 = false;
 			Lvl2 = true;
 			ResetBall = true;
 		}
-		if (wnd.kbd.KeyIsPressed(VK_F3))
+		if (wnd.kbd.KeyIsPressed('3'))
 		{
 			Lvl1 = false;
 			Lvl2 = false;
 			Lvl3 = true;
 			ResetBall = true;
 		}
-		if (wnd.kbd.KeyIsPressed(VK_F4))
+		if (wnd.kbd.KeyIsPressed('4'))
 		{
 			Lvl1 = false;
 			Lvl2 = false;
 			Lvl3 = false;
 			Lvl4 = true;
+			ResetBall = true;
+		}
+		if (wnd.kbd.KeyIsPressed('5'))
+		{
+			Lvl1 = false;
+			Lvl2 = false;
+			Lvl3 = false;
+			Lvl4 = false;
+			Lvl5 = true;
 			ResetBall = true;
 		}
 	}
@@ -363,6 +443,10 @@ void Game::UpdateModel(float dt)
 void Game::ComposeFrame()
 {
 	if (!Started)
+	{
+		DrawTitle();
+	}
+	else if (ChoiceState)
 	{
 		DrawTitle();
 	}
@@ -384,10 +468,7 @@ void Game::ComposeFrame()
 		{
 			Meter.DrawRedMeter(gfx);
 		}
-		if (ChoiceState)
-		{
-			DrawTitle();
-		}
+
 	
 		if (Lvl1)
 		{
@@ -423,6 +504,17 @@ void Game::ComposeFrame()
 		}
 		else if (Lvl5)
 		{
+			for (const Brick& b : bricks5)
+			{
+				b.Draw(gfx);
+			}
+			for (const Brick& b : bricks5_1)
+			{
+				b.Draw(gfx);
+			}
+		}
+		else if (Lvl6)
+		{
 			DrawTitle();
 		}
 		if (GameOver)
@@ -430,6 +522,7 @@ void Game::ComposeFrame()
 			DrawOver();
 		}
 	}
+
 }
 
 void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl1)

@@ -22,7 +22,7 @@ public:
 	float GetMeterMin() const;
 	
 	bool BlueMeter = false;
-	bool RedMeter = false;
+	bool RedMeter = true;
 private:
 	RectF rect;
 	Color c;
