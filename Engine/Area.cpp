@@ -12,7 +12,7 @@ void Area::DrawWall(Graphics & gfx) const
 	gfx.DrawRect(rect, c);
 }
 
-void Area::DrawLife(Graphics& gfx) const
+void Area::Life::DrawLife(Graphics& gfx) const
 {
 	const RectF life1 = { Vec2(550.0f, 20.0f), Vec2(570.0f, 40.0f) };
 	const RectF life2 = { Vec2(580.0f, 20.0f), Vec2(600.0f, 40.0f) };
@@ -55,7 +55,7 @@ void Area::DrawLife(Graphics& gfx) const
 	}
 }
 
-void Area::DrawBlueMeter(Graphics& gfx) const
+void Area::Meter::DrawBlueMeter(Graphics& gfx) const
 {
 	const RectF pohja = { Vec2(50.0f, MeterMax), Vec2(70.0f, MeterMin) };
 	gfx.DrawRect(pohja, Colors::White);
@@ -66,7 +66,7 @@ void Area::DrawBlueMeter(Graphics& gfx) const
 	gfx.DrawRect(BlueM, Colors::Blue);
 }
 
-void Area::DrawRedMeter(Graphics& gfx) const
+void Area::Meter::DrawRedMeter(Graphics& gfx) const
 {
 	const RectF pohja = { Vec2(740.0f, MeterMax), Vec2(760.0f, MeterMin) };
 	gfx.DrawRect(pohja, Colors::White);
@@ -77,7 +77,7 @@ void Area::DrawRedMeter(Graphics& gfx) const
 	gfx.DrawRect(RedM, Colors::Red);
 }
 
-void Area::SetLife(char merkki)
+void Area::Life::SetLife(char merkki)
 {
 	if (merkki == '+' && life < 7)
 	{
@@ -90,7 +90,7 @@ void Area::SetLife(char merkki)
 }
 
 
-int Area::GetLife() const
+int Area::Life::GetLife() const
 {
 	return life;
 }
@@ -100,7 +100,7 @@ RectF Area::GetRect() const
 	return rect;
 }
 
-void Area::SetBlueM(char merkki)
+void Area::Meter::SetBlueM(char merkki)
 {
 	if (BlueMeter)
 	{
@@ -116,7 +116,7 @@ void Area::SetBlueM(char merkki)
 	}
 }
 
-void Area::SetRedM()
+void Area::Meter::SetRedM(Life& life)
 {
 	if (RedMeter)
 	{
@@ -124,7 +124,7 @@ void Area::SetRedM()
 
 		if (r_meterY <= MeterMax)
 		{
-			SetLife('+');
+			life.SetLife('+');
 			r_meterY = MeterMin;
 			
 		}
@@ -132,12 +132,12 @@ void Area::SetRedM()
 
 }
 
-float Area::GetBlueMeter() const
+float Area::Meter::GetBlueMeter() const
 {
 	return b_meterY;
 }
 
-float Area::GetMeterMin() const
+float Area::Meter::GetMeterMin() const
 {
 	return MeterMin;
 }

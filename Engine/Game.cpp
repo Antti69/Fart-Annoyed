@@ -289,9 +289,9 @@ void Game::UpdateModel(float dt)
 			ResetBall = false;
 		}
 
-		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && Meter.GetBlueMeter() <= Meter.GetMeterMin())
+		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && meter.GetBlueMeter() <= meter.GetMeterMin())
 		{
-			Meter.SetBlueM('-');
+			meter.SetBlueM('-');
 			ball.SetSpeed('s');
 		}
 		else
@@ -300,18 +300,18 @@ void Game::UpdateModel(float dt)
 		}
 		if (wnd.kbd.KeyIsPressed(VK_TAB))
 		{
-			Meter.SetBlueM('+');
+			meter.SetBlueM('+');
 		}
 
 
 
 		if (ball.GetFail())
 		{
-			Life.SetLife('-');
+			life.SetLife('-');
 			ResetBall = true;
 			ball.SetFail();
 
-			if (Life.GetLife() == 0)
+			if (life.GetLife() == 0)
 			{
 				GameOver = true;
 			}
@@ -395,12 +395,12 @@ void Game::UpdateModel(float dt)
 		}
 		if (ChoiceState && wnd.kbd.KeyIsPressed('B'))
 		{
-			Meter.BlueMeter = true;
+			meter.BlueMeter = true;
 			ChoiceState = false;
 		}
 		else if (ChoiceState && wnd.kbd.KeyIsPressed('R'))
 		{
-			Meter.RedMeter = true;
+			meter.RedMeter = true;
 			ChoiceState = false;
 		}
 		if (wnd.kbd.KeyIsPressed('2'))			//Level oikotie "testiä varten"
@@ -456,17 +456,17 @@ void Game::ComposeFrame()
 		leftwall.DrawWall(gfx);
 		rightwall.DrawWall(gfx);
 		topwall.DrawWall(gfx);
-		Life.DrawLife(gfx);
+		life.DrawLife(gfx);
 		ball.Draw(gfx);
 		pad.Draw(gfx);
 		
-		if (Meter.BlueMeter)
+		if (meter.BlueMeter)
 		{
-			Meter.DrawBlueMeter(gfx);
+			meter.DrawBlueMeter(gfx);
 		}
-		if (Meter.RedMeter)
+		if (meter.RedMeter)
 		{
-			Meter.DrawRedMeter(gfx);
+			meter.DrawRedMeter(gfx);
 		}
 
 	
@@ -593,17 +593,17 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 		}
 		else if (state[CurColIndex] == Brick::State::LifeUp)
 		{
-			Life.SetLife('+');
+			life.SetLife('+');
 			bricks[CurColIndex].SetDestr();
 		}
 		else if (state[CurColIndex] == Brick::State::BlueMeterUp)
 		{
-			Meter.SetBlueM('+');
+			meter.SetBlueM('+');
 			bricks[CurColIndex].SetDestr();
 		}
 		else if (state[CurColIndex] == Brick::State::RedMeterUp)
 		{
-			Meter.SetRedM();
+			meter.SetRedM(life);
 			bricks[CurColIndex].SetDestr();
 		}
 		
