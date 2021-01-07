@@ -24,6 +24,8 @@ public:
 	void SetFail();
 private:
 	float speed = 500.0f;
+	float baseSpeed = 500.0f;
+	float speedUp = 0.0f;
 	static constexpr float radius = 7.0f;
 	Vec2 pos;
 	Vec2 vel;

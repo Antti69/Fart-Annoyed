@@ -93,11 +93,19 @@ void Ball::SetSpeed(char merkki)
 {
 	if (merkki == '+')
 	{
-		speed += 20;
+		speedUp += 10.0f;
 	}
 	if (merkki == '-')
 	{
-		speed -= 20;
+		speedUp -= 20.0f;
+	}
+	if (merkki == '0')
+	{
+		speedUp = 0.0f;
+	}
+	if (merkki == 'b')
+	{
+		baseSpeed = 600.0f;
 	}
 	if (merkki == 's')
 	{
@@ -107,7 +115,7 @@ void Ball::SetSpeed(char merkki)
 	}
 	if (merkki == 'r')
 	{
-		speed = 500.0f;
+		speed = baseSpeed + speedUp;
 
 		vel = vel.GetNormalized() * speed;
 	}
@@ -122,6 +130,7 @@ void Ball::SetFail()
 {
 	fail = false;
 }
+
 
 
 

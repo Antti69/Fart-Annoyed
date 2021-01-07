@@ -254,6 +254,51 @@ Game::Game( MainWindow& wnd )
 			}
 		}
 	}
+	//Level 6
+	{
+		const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY + (brickHeight * 5) };
+		Color colors[BrickPysty_lvl6] = { Colors::Cyan, Colors::Cyan, Colors::White, Colors::Blue, Colors::Red,
+			Colors::Yellow, Colors::Gray, Colors::Yellow };
+		int i = 0;
+		for (int y = 0; y < BrickPysty_lvl6; y++)
+		{
+			Color c = colors[y];
+			for (int x = 0; x < BrickViisto_lvl6; x++)
+			{
+				bricks6[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
+
+				if (x == 4)
+				{
+					bricks6[i].SetDestr();
+				}
+
+				if (y == 3)
+				{
+					state6[i] = Brick::State::BlueMeterUp;
+				}
+				else if (y == 4)
+				{
+					state6[i] = Brick::State::RedMeterUp;
+				}
+				else if (y == 5 || y == 7)
+				{
+					state6[i] = Brick::State::SpeedUp;
+				}
+				else if (y == 6)
+				{
+					state6[i] = Brick::State::TwoHit;
+				}
+				else
+				{
+					state6[i] = Brick::State::Basic;
+				}
+
+
+				i++;
+			}
+		}
+	}
 }
 
 void Game::Go()
@@ -385,6 +430,18 @@ void Game::UpdateModel(float dt)
 			}
 			
 		}
+		else if (Lvl6)
+		{
+			BrickCollision(bricks6, state6, BrickTotal_lvl6);
+			if (LvlUp)
+			{
+				Lvl6 = false;
+				Lvl7 = true;
+				ResetBall = true;
+				LvlUp = false;
+			}
+
+		}
 
 	}
 	else
@@ -431,6 +488,16 @@ void Game::UpdateModel(float dt)
 			Lvl3 = false;
 			Lvl4 = false;
 			Lvl5 = true;
+			ResetBall = true;
+		}
+		if (wnd.kbd.KeyIsPressed('6'))
+		{
+			Lvl1 = false;
+			Lvl2 = false;
+			Lvl3 = false;
+			Lvl4 = false;
+			Lvl5 = false;
+			Lvl6 = true;
 			ResetBall = true;
 		}
 	}
@@ -515,6 +582,13 @@ void Game::ComposeFrame()
 		}
 		else if (Lvl6)
 		{
+			for (const Brick& b : bricks6)
+			{
+				b.Draw(gfx);
+			}
+		}
+		else if (Lvl7)
+		{
 			DrawTitle();
 		}
 		if (GameOver)
@@ -558,6 +632,7 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 	if (allDestroyed)
 	{
 		LvlUp = true;
+		ball.SetSpeed('0');
 	}
 	if (Collisionhappend)
 	{

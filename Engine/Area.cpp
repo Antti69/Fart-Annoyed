@@ -120,7 +120,7 @@ void Area::Meter::SetRedM(Life& life)
 {
 	if (RedMeter)
 	{
-		r_meterY -= 20.0f;
+		r_meterY -= 25.0f;
 
 		if (r_meterY <= MeterMax)
 		{
