@@ -334,7 +334,7 @@ void Game::UpdateModel(float dt)
 			ResetBall = false;
 		}
 
-		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && meter.GetBlueMeter() <= meter.GetMeterMin())
+		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && meter.GetBlueMeter() <= meter.GetMeterMin() && meter.BlueMeter)
 		{
 			meter.SetBlueM('-');
 			ball.SetSpeed('s');
