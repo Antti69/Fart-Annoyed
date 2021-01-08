@@ -370,29 +370,28 @@ void Game::UpdateModel(float dt)
 		pad.WallCollision(walls);
 		pad.BallCollision(ball);
 
-		if (Lvl1)
+		
+		if (level == Level::Lvl1)
 		{
 			BrickCollision(bricks, state, BrickTotal_lvl1);
 			if (LvlUp)
 			{
-				Lvl1 = false;
-				Lvl2 = true;
+				level = Level::Lvl2;
 				ResetBall = true;
 				LvlUp = false;
 			}
 		}
-		else if (Lvl2)
+		else if (level == Level::Lvl2)
 		{
 			BrickCollision(bricks2, state2, BrickTotal_lvl2);
 			if (LvlUp)
 			{
-				Lvl2 = false;
-				Lvl3 = true;
+				level = Level::Lvl3;
 				ResetBall = true;
 				LvlUp = false;
 			}
 		}
-		else if (Lvl3)
+		else if (level == Level::Lvl3)
 		{
 			BrickCollision(bricks3, state3, BrickTotal_lvl3);
 			BrickCollision(bricks3_1, state3_1, BrickTotal_lvl3_1);
@@ -401,42 +400,38 @@ void Game::UpdateModel(float dt)
 
 				ChoiceState = true;
 				ResetBall = true;
-				Lvl3 = false;
-				Lvl4 = true;
+				level = Level::Lvl4;
 				LvlUp = false;
 			}
 		}
-		else if (Lvl4)
+		else if (level == Level::Lvl4)
 		{
 			BrickCollision(bricks4, state4, BrickTotal_lvl4);
 			if (LvlUp)
 			{
-				Lvl4 = false;
-				Lvl5 = true;
+				level = Level::Lvl5;
 				ResetBall = true;
 				LvlUp = false;
 			}
 		}
-		else if (Lvl5)
+		else if (level == Level::Lvl5)
 		{
 			BrickCollision(bricks5_1, state5_1, BrickTotal_lvl5_1);
 			BrickCollision(bricks5, state5, BrickTotal_lvl5);
 			if (LvlUp)
 			{
-				Lvl5 = false;
-				Lvl6 = true;
+				level = Level::Lvl6;
 				ResetBall = true;
 				LvlUp = false;
 			}
 			
 		}
-		else if (Lvl6)
+		else if (level == Level::Lvl6)
 		{
 			BrickCollision(bricks6, state6, BrickTotal_lvl6);
 			if (LvlUp)
 			{
-				Lvl6 = false;
-				Lvl7 = true;
+				level = Level::Lvl7;
 				ResetBall = true;
 				LvlUp = false;
 			}
@@ -462,42 +457,27 @@ void Game::UpdateModel(float dt)
 		}
 		if (wnd.kbd.KeyIsPressed('2'))			//Level oikotie "testiä varten"
 		{
-			Lvl1 = false;
-			Lvl2 = true;
+			level = Level::Lvl2;
 			ResetBall = true;
 		}
 		if (wnd.kbd.KeyIsPressed('3'))
 		{
-			Lvl1 = false;
-			Lvl2 = false;
-			Lvl3 = true;
+			level = Level::Lvl3;
 			ResetBall = true;
 		}
 		if (wnd.kbd.KeyIsPressed('4'))
 		{
-			Lvl1 = false;
-			Lvl2 = false;
-			Lvl3 = false;
-			Lvl4 = true;
+			level = Level::Lvl4;
 			ResetBall = true;
 		}
 		if (wnd.kbd.KeyIsPressed('5'))
 		{
-			Lvl1 = false;
-			Lvl2 = false;
-			Lvl3 = false;
-			Lvl4 = false;
-			Lvl5 = true;
+			level = Level::Lvl5;
 			ResetBall = true;
 		}
 		if (wnd.kbd.KeyIsPressed('6'))
 		{
-			Lvl1 = false;
-			Lvl2 = false;
-			Lvl3 = false;
-			Lvl4 = false;
-			Lvl5 = false;
-			Lvl6 = true;
+			level = Level::Lvl6;
 			ResetBall = true;
 		}
 	}
@@ -536,60 +516,31 @@ void Game::ComposeFrame()
 			meter.DrawRedMeter(gfx);
 		}
 
-	
-		if (Lvl1)
+		switch (level)
 		{
-			for (const Brick& b : bricks)
-			{
-				b.Draw(gfx);
-			}
-		}
-		else if (Lvl2)
-		{
-			for (const Brick& b : bricks2)
-			{
-				b.Draw(gfx);
-			}
-		}
-		else if (Lvl3)
-		{
-			for (const Brick& b : bricks3)
-			{
-				b.Draw(gfx);
-			}
-			for (const Brick& b : bricks3_1)
-			{
-				b.Draw(gfx);
-			}
-		}
-		else if (Lvl4)
-		{
-			for (const Brick& b : bricks4)
-			{
-				b.Draw(gfx);
-			}
-		}
-		else if (Lvl5)
-		{
-			for (const Brick& b : bricks5)
-			{
-				b.Draw(gfx);
-			}
-			for (const Brick& b : bricks5_1)
-			{
-				b.Draw(gfx);
-			}
-		}
-		else if (Lvl6)
-		{
-			for (const Brick& b : bricks6)
-			{
-				b.Draw(gfx);
-			}
-		}
-		else if (Lvl7)
-		{
-			DrawTitle();
+		case Level::Lvl1:
+			DrawLevel(Level::Lvl1);
+			break;
+
+		case Level::Lvl2:
+			DrawLevel(Level::Lvl2);
+			break;
+
+		case Level::Lvl3:
+			DrawLevel(Level::Lvl3);
+			break;
+
+		case Level::Lvl4:
+			DrawLevel(Level::Lvl4);
+			break;
+
+		case Level::Lvl5:
+			DrawLevel(Level::Lvl5);
+			break;
+
+		case Level::Lvl6:
+			DrawLevel(Level::Lvl6);
+			break;
 		}
 		if (GameOver)
 		{
@@ -694,5 +645,63 @@ void Game::DrawTitle()
 void Game::DrawOver()
 {
 	gfx.DrawRect(370, 280, 430, 350, Colors::Red);
+}
+
+void Game::DrawLevel(const Level level)
+{
+	if (level == Level::Lvl1)
+	{
+		for (const Brick& b : bricks)
+		{
+			b.Draw(gfx);
+		}
+	}
+	else if (level == Level::Lvl2)
+	{
+		for (const Brick& b : bricks2)
+		{
+			b.Draw(gfx);
+		}
+	}
+	else if (level == Level::Lvl3)
+	{
+		for (const Brick& b : bricks3)
+		{
+			b.Draw(gfx);
+		}
+		for (const Brick& b : bricks3_1)
+		{
+			b.Draw(gfx);
+		}
+	}
+	else if (level == Level::Lvl4)
+	{
+		for (const Brick& b : bricks4)
+		{
+			b.Draw(gfx);
+		}
+	}
+	else if (level == Level::Lvl5)
+	{
+		for (const Brick& b : bricks5)
+		{
+			b.Draw(gfx);
+		}
+		for (const Brick& b : bricks5_1)
+		{
+			b.Draw(gfx);
+		}
+	}
+	else if (level == Level::Lvl6)
+	{
+		for (const Brick& b : bricks6)
+		{
+			b.Draw(gfx);
+		}
+	}
+	else if (level == Level::Lvl7)
+	{
+		DrawTitle();
+	}
 }
 

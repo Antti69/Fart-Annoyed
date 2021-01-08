@@ -37,6 +37,19 @@ public:
 	Game(const Game&) = delete;
 	Game& operator=(const Game&) = delete;
 	void Go();
+
+	enum class Level
+	{
+		Lvl1,
+		Lvl2,
+		Lvl3,
+		Lvl4,
+		Lvl5,
+		Lvl6,
+		Lvl7,
+		Lvl8,
+		Lvl9
+	}	level = Level::Lvl1;
 private:
 	void ComposeFrame();
 	void UpdateModel(float dt);
@@ -48,6 +61,7 @@ private:
 	void BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl1);
 	void DrawTitle();
 	void DrawOver();
+	void DrawLevel(const Level level);
 
 	static constexpr float brickWidth = 40.0;			//Brickkien arvot ja säädöt
 	static constexpr float brickHeight = 18.0f;
@@ -122,15 +136,5 @@ private:
 	bool GameOver = false;
 	bool ChoiceState = false;
 	bool LvlUp = false;
-
-	bool Lvl1 = true;
-	bool Lvl2 = false;
-	bool Lvl3 = false;
-	bool Lvl4 = false;
-	bool Lvl5 = false;
-	bool Lvl6 = false;
-	bool Lvl7 = false;
-	bool Lvl8 = false;
-	bool Lvl9 = false;
 
 };
