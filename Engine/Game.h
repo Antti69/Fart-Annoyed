@@ -135,6 +135,7 @@ private:
 	bool Started = false;
 	bool GameOver = false;
 	bool ChoiceState = false;
+	bool ChoiceState2 = false;
 	bool LvlUp = false;
 
 };

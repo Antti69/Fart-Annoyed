@@ -80,3 +80,11 @@ void Paddle::ResetCooldown()
 	Cooldown = false;
 }
 
+void Paddle::SmallSizePad()
+{
+	if (smallpad)
+	{
+		halfWidth = 30.0f;
+	}
+}
+

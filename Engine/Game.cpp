@@ -317,10 +317,10 @@ void Game::Go()
 
 void Game::UpdateModel(float dt)
 {
-	if (Started && !GameOver && !ChoiceState)
+	if (Started && !GameOver && !ChoiceState && !ChoiceState2)
 	{
 
-		if (!ResetBall)
+		if (!ResetBall)					//Pallon sijainti ja liike
 		{
 			ball.Movement(dt);
 		}
@@ -336,7 +336,7 @@ void Game::UpdateModel(float dt)
 
 		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && meter.GetBlueMeter() <= meter.GetMeterMin() && meter.BlueMeter)
 		{
-			meter.SetBlueM('-');
+			meter.SetBlueM('-');			//Sinisen mittarin mekaniikka
 			ball.SetSpeed('s');
 		}
 		else
@@ -350,7 +350,7 @@ void Game::UpdateModel(float dt)
 
 
 
-		if (ball.GetFail())
+		if (ball.GetFail())				//Elämä mekaniikka
 		{
 			life.SetLife('-');
 			ResetBall = true;
@@ -366,12 +366,13 @@ void Game::UpdateModel(float dt)
 		{
 			pad.ResetCooldown();
 		}
-		pad.Movement(wnd.kbd, dt);
+		pad.Movement(wnd.kbd, dt);		//Paddlen funktiot
 		pad.WallCollision(walls);
 		pad.BallCollision(ball);
+		pad.SmallSizePad();
 
 		
-		if (level == Level::Lvl1)
+		if (level == Level::Lvl1)			//Lvl päivitys
 		{
 			BrickCollision(bricks, state, BrickTotal_lvl1);
 			if (LvlUp)
@@ -420,6 +421,7 @@ void Game::UpdateModel(float dt)
 			BrickCollision(bricks5, state5, BrickTotal_lvl5);
 			if (LvlUp)
 			{
+				
 				level = Level::Lvl6;
 				ResetBall = true;
 				LvlUp = false;
@@ -431,8 +433,9 @@ void Game::UpdateModel(float dt)
 			BrickCollision(bricks6, state6, BrickTotal_lvl6);
 			if (LvlUp)
 			{
-				level = Level::Lvl7;
+				ChoiceState2 = true;
 				ResetBall = true;
+				level = Level::Lvl7;
 				LvlUp = false;
 			}
 
@@ -445,7 +448,8 @@ void Game::UpdateModel(float dt)
 		{
 			Started = true;
 		}
-		if (ChoiceState && wnd.kbd.KeyIsPressed('B'))
+
+		if (ChoiceState && wnd.kbd.KeyIsPressed('B'))			//valinta mekaniikka
 		{
 			meter.BlueMeter = true;
 			ChoiceState = false;
@@ -455,6 +459,18 @@ void Game::UpdateModel(float dt)
 			meter.RedMeter = true;
 			ChoiceState = false;
 		}
+
+		if (ChoiceState2 && wnd.kbd.KeyIsPressed('B'))
+		{
+			ball.SetSpeed('b');
+			ChoiceState2 = false;
+		}
+		else if (ChoiceState2 && wnd.kbd.KeyIsPressed('R'))
+		{
+			pad.smallpad = true;
+			ChoiceState2 = false;
+		}
+
 		if (wnd.kbd.KeyIsPressed('2'))			//Level oikotie "testiä varten"
 		{
 			level = Level::Lvl2;
@@ -480,6 +496,10 @@ void Game::UpdateModel(float dt)
 			level = Level::Lvl6;
 			ResetBall = true;
 		}
+		/*if (wnd.kbd.KeyIsPressed('0'))
+		{
+			pad.SmallSizePad();
+		}*/
 	}
 	
 
@@ -493,7 +513,7 @@ void Game::ComposeFrame()
 	{
 		DrawTitle();
 	}
-	else if (ChoiceState)
+	else if (ChoiceState || ChoiceState2)
 	{
 		DrawTitle();
 	}
@@ -541,6 +561,9 @@ void Game::ComposeFrame()
 		case Level::Lvl6:
 			DrawLevel(Level::Lvl6);
 			break;
+
+		case Level::Lvl7:
+			DrawLevel(Level::Lvl4);
 		}
 		if (GameOver)
 		{
@@ -701,7 +724,10 @@ void Game::DrawLevel(const Level level)
 	}
 	else if (level == Level::Lvl7)
 	{
-		DrawTitle();
+		for (const Brick& b : bricks4)
+		{
+			b.Draw(gfx);
+		}
 	}
 }
 
