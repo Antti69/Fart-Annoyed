@@ -80,7 +80,7 @@ void Paddle::ResetCooldown()
 	Cooldown = false;
 }
 
-void Paddle::SmallSizePad()
+void Paddle::PaddleSize()
 {
 	if (smallpad)
 	{

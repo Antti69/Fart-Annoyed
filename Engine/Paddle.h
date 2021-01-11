@@ -17,7 +17,7 @@ public:
 	void Movement(Keyboard& kbd, float dt);
 	RectF GetRect() const;
 	void ResetCooldown();
-	void SmallSizePad();
+	void PaddleSize();
 	bool smallpad = false;
 private:
 	Color color = Colors::White;

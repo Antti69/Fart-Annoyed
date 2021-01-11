@@ -97,6 +97,14 @@ private:
 	static constexpr int BrickPysty_lvl6 = 8;
 	static constexpr int BrickTotal_lvl6 = BrickViisto_lvl6 * BrickPysty_lvl6;
 
+	static constexpr int BrickViisto_lvl7 = 10;
+	static constexpr int BrickPysty_lvl7 = 2;
+	static constexpr int BrickTotal_lvl7 = BrickViisto_lvl7 * BrickPysty_lvl7;
+
+	static constexpr int BrickViisto_lvl7_1 = 12;
+	static constexpr int BrickPysty_lvl7_1 = 10;
+	static constexpr int BrickTotal_lvl7_1 = BrickViisto_lvl7_1 * BrickPysty_lvl7_1;
+
 	static constexpr float GridStartX = 120.0f;
 	static constexpr float GridStartY = 60.0f;
 
@@ -114,6 +122,8 @@ private:
 	Brick bricks5[BrickTotal_lvl5];
 	Brick bricks5_1[BrickTotal_lvl5_1];
 	Brick bricks6[BrickTotal_lvl6];
+	Brick bricks7[BrickTotal_lvl7];
+	Brick bricks7_1[BrickTotal_lvl7_1];
 
 	Brick::State state[BrickTotal_lvl1] = { Brick::State::Basic };
 	Brick::State state2[BrickTotal_lvl2] = { Brick::State::Basic };
@@ -123,6 +133,8 @@ private:
 	Brick::State state5[BrickTotal_lvl5] = { Brick::State::Basic };
 	Brick::State state5_1[BrickTotal_lvl5_1] = { Brick::State::Basic };
 	Brick::State state6[BrickTotal_lvl6] = { Brick::State::Basic };
+	Brick::State state7[BrickTotal_lvl7] = { Brick::State::Basic };
+	Brick::State state7_1[BrickTotal_lvl7_1] = { Brick::State::Basic };
 
 
 	Area leftwall = { RectF(110.0f, GridStartX , GridStartY, gfx.ScreenHeight), Colors::Blue };		//pelialueen säätö

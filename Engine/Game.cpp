@@ -299,6 +299,90 @@ Game::Game( MainWindow& wnd )
 			}
 		}
 	}
+	//Level 7
+	{
+		const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY };
+		Color c;
+		int i = 0;
+		for (int y = 0; y < BrickPysty_lvl7; y++)
+		{
+
+			for (int x = 0; x < BrickViisto_lvl7; ++x)
+			{
+				if (y == 0 && x <= 4)
+				{
+					c = Colors::Blue;
+					state7[i] = Brick::State::BlueMeterUp;
+				}
+				else if (y == 0 && x >= 5)
+				{
+					c = Colors::Red;
+					state7[i] = Brick::State::RedMeterUp;
+				}
+				else if (y == 1)
+				{
+					c = Colors::Gray;
+					state7[i] = Brick::State::TwoHit;
+				}
+				bricks7[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
+				++i;
+			}
+		}
+	}
+	//Level 7.1
+	{
+		const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY + (brickHeight * 3) };
+
+		Color c = Colors::Orange;
+
+		int i = 0;
+		for (int y = 0; y < BrickPysty_lvl7_1; y++)
+		{
+			
+			for (int x = 0; x < BrickViisto_lvl7_1; x++)
+			{
+
+
+				if (y == 0 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8 || x == 10))
+				{
+					state7_1[i] = Brick::State::indestructible;
+					bricks7_1[i].SetDestr();
+					bricks7_1[i].indestructible = true;
+
+				}
+				else if (y == 2 && (x == 1 || x == 5 || x == 9))
+				{
+					state7_1[i] = Brick::State::indestructible;
+					bricks7_1[i].SetDestr();
+					bricks7_1[i].indestructible = true;
+
+				}
+				else if (y == 4 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8 || x == 10))
+				{
+					state7_1[i] = Brick::State::indestructible;
+					bricks7_1[i].SetDestr();
+					bricks7_1[i].indestructible = true;
+			
+				}
+				else if (y == 6 && (x == 1 || x == 3 || x == 5 || x == 7 || x == 10))
+				{
+					state7_1[i] = Brick::State::indestructible;
+					bricks7_1[i].SetDestr();
+					bricks7_1[i].indestructible = true;
+					
+
+				}
+				else
+				{
+					bricks7[i].SetDestr();
+				}
+				bricks7_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
+				i++;
+			}
+		}
+	}
 }
 
 void Game::Go()
@@ -369,7 +453,7 @@ void Game::UpdateModel(float dt)
 		pad.Movement(wnd.kbd, dt);		//Paddlen funktiot
 		pad.WallCollision(walls);
 		pad.BallCollision(ball);
-		pad.SmallSizePad();
+		pad.PaddleSize();
 
 		
 		if (level == Level::Lvl1)			//Lvl päivitys
@@ -398,7 +482,6 @@ void Game::UpdateModel(float dt)
 			BrickCollision(bricks3_1, state3_1, BrickTotal_lvl3_1);
 			if (LvlUp)
 			{
-
 				ChoiceState = true;
 				ResetBall = true;
 				level = Level::Lvl4;
@@ -426,7 +509,6 @@ void Game::UpdateModel(float dt)
 				ResetBall = true;
 				LvlUp = false;
 			}
-			
 		}
 		else if (level == Level::Lvl6)
 		{
@@ -438,7 +520,17 @@ void Game::UpdateModel(float dt)
 				level = Level::Lvl7;
 				LvlUp = false;
 			}
-
+		}
+		else if (level == Level::Lvl7)
+		{
+			BrickCollision(bricks7_1, state7_1, BrickTotal_lvl7_1);
+			BrickCollision(bricks7_1, state7_1, BrickTotal_lvl7_1);
+			if (LvlUp)
+			{
+				ResetBall = true;
+				level = Level::Lvl8;
+				LvlUp = false;
+			}
 		}
 
 	}
@@ -496,10 +588,12 @@ void Game::UpdateModel(float dt)
 			level = Level::Lvl6;
 			ResetBall = true;
 		}
-		/*if (wnd.kbd.KeyIsPressed('0'))
+		if (wnd.kbd.KeyIsPressed('7'))
 		{
-			pad.SmallSizePad();
-		}*/
+			level = Level::Lvl7;
+			ResetBall = true;
+		}
+
 	}
 	
 
@@ -563,8 +657,14 @@ void Game::ComposeFrame()
 			break;
 
 		case Level::Lvl7:
+			DrawLevel(Level::Lvl7);
+			break;
+
+		case Level::Lvl8:
 			DrawLevel(Level::Lvl4);
+			break;
 		}
+		
 		if (GameOver)
 		{
 			DrawOver();
@@ -723,6 +823,17 @@ void Game::DrawLevel(const Level level)
 		}
 	}
 	else if (level == Level::Lvl7)
+	{
+		for (const Brick& b : bricks7)
+		{
+			b.Draw(gfx);
+		}
+		for (const Brick& b : bricks7_1)
+		{
+			b.Draw(gfx);
+		}
+	}
+	else if (level == Level::Lvl8)
 	{
 		for (const Brick& b : bricks4)
 		{
