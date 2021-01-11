@@ -309,6 +309,7 @@ Game::Game( MainWindow& wnd )
 
 			for (int x = 0; x < BrickViisto_lvl7; ++x)
 			{
+
 				if (y == 0 && x <= 4)
 				{
 					c = Colors::Blue;
@@ -343,39 +344,36 @@ Game::Game( MainWindow& wnd )
 			for (int x = 0; x < BrickViisto_lvl7_1; x++)
 			{
 
-
-				if (y == 0 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8 || x == 10))
+				if (y == 0 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8 ))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
 
 				}
-				else if (y == 2 && (x == 1 || x == 5 || x == 9))
+				else if (y == 3 && (x == 1 || x == 5 || x == 9))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
 
 				}
-				else if (y == 4 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8 || x == 10))
+				else if (y == 6 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
 			
 				}
-				else if (y == 6 && (x == 1 || x == 3 || x == 5 || x == 7 || x == 10))
+				else if (y == 9 && (x == 1 || x == 3 || x == 7 || x == 9))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
-					
-
 				}
 				else
 				{
-					bricks7[i].SetDestr();
+					continue;
 				}
 				bricks7_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
@@ -523,7 +521,7 @@ void Game::UpdateModel(float dt)
 		}
 		else if (level == Level::Lvl7)
 		{
-			BrickCollision(bricks7_1, state7_1, BrickTotal_lvl7_1);
+			BrickCollision(bricks7, state7, BrickTotal_lvl7);
 			BrickCollision(bricks7_1, state7_1, BrickTotal_lvl7_1);
 			if (LvlUp)
 			{

@@ -93,7 +93,7 @@ void Ball::SetSpeed(char merkki)
 {
 	if (merkki == '+')
 	{
-		speedUp += 10.0f;
+		speedUp += 5.0f;
 	}
 	if (merkki == '-')
 	{
@@ -105,7 +105,7 @@ void Ball::SetSpeed(char merkki)
 	}
 	if (merkki == 'b')
 	{
-		baseSpeed = 600.0f;
+		baseSpeed = 550.0f;
 	}
 	if (merkki == 's')
 	{

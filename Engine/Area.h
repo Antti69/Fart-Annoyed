@@ -28,7 +28,7 @@ public:
 		void SetRedM(Life& life);
 		float GetBlueMeter() const;
 		float GetMeterMin() const;
-		bool BlueMeter = false;
+		bool BlueMeter = true;
 		bool RedMeter = false;
 	private:
 		float b_meterY = 530.0f;

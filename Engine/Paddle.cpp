@@ -84,7 +84,7 @@ void Paddle::PaddleSize()
 {
 	if (smallpad)
 	{
-		halfWidth = 30.0f;
+		halfWidth = 33.0f;
 	}
 }
 
