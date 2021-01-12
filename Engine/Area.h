@@ -14,7 +14,6 @@ public:
 		void DrawLife(Graphics& gfx) const;
 		void SetLife(char merkki);
 		int GetLife() const;
-
 	private:
 		int life = 4;
 
@@ -28,7 +27,7 @@ public:
 		void SetRedM(Life& life);
 		float GetBlueMeter() const;
 		float GetMeterMin() const;
-		bool BlueMeter = true;
+		bool BlueMeter = false;
 		bool RedMeter = false;
 	private:
 		float b_meterY = 530.0f;

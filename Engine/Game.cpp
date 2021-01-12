@@ -381,6 +381,24 @@ Game::Game( MainWindow& wnd )
 			}
 		}
 	}
+	//Level 8
+	{
+		const Vec2 topleft = { GridStartX + (brickWidth * 4), GridStartY + (brickHeight * 5) };
+		int i = 0;
+		for (int y = 0; y < BrickPysty_lvl8; y++)
+		{
+			Color c = Colors::Cyan;
+			for (int x = 0; x < BrickViisto_lvl8; x++)
+			{
+				bricks8[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
+
+				state8[i] = Brick::State::Catcher;
+
+				i++;
+			}
+		}
+	}
 }
 
 void Game::Go()
@@ -402,18 +420,18 @@ void Game::UpdateModel(float dt)
 	if (Started && !GameOver && !ChoiceState && !ChoiceState2)
 	{
 
-		if (!ResetBall)					//Pallon sijainti ja liike
+		if (ball.ResetBall)					//Pallon sijainti ja liike
 		{
-			ball.Movement(dt);
+			ball.SetPos(pad);
 		}
 		else
 		{
-			ball.SetPos(pad);
+			ball.Movement(dt);
 
 		}
 		if (wnd.kbd.KeyIsPressed(VK_SPACE))
 		{
-			ResetBall = false;
+			ball.ResetBall = false;
 		}
 
 		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && meter.GetBlueMeter() <= meter.GetMeterMin() && meter.BlueMeter)
@@ -428,6 +446,7 @@ void Game::UpdateModel(float dt)
 		if (wnd.kbd.KeyIsPressed(VK_TAB))
 		{
 			meter.SetBlueM('+');
+			
 		}
 
 
@@ -435,7 +454,7 @@ void Game::UpdateModel(float dt)
 		if (ball.GetFail())				//Elämä mekaniikka
 		{
 			life.SetLife('-');
-			ResetBall = true;
+			ball.ResetBall = true;
 			ball.SetFail();
 
 			if (life.GetLife() == 0)
@@ -460,7 +479,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				level = Level::Lvl2;
-				ResetBall = true;
+				ball.ResetBall = true;
 				LvlUp = false;
 			}
 		}
@@ -470,7 +489,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				level = Level::Lvl3;
-				ResetBall = true;
+				ball.ResetBall = true;
 				LvlUp = false;
 			}
 		}
@@ -481,7 +500,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				ChoiceState = true;
-				ResetBall = true;
+				ball.ResetBall = true;
 				level = Level::Lvl4;
 				LvlUp = false;
 			}
@@ -492,7 +511,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				level = Level::Lvl5;
-				ResetBall = true;
+				ball.ResetBall = true;
 				LvlUp = false;
 			}
 		}
@@ -504,7 +523,7 @@ void Game::UpdateModel(float dt)
 			{
 				
 				level = Level::Lvl6;
-				ResetBall = true;
+				ball.ResetBall = true;
 				LvlUp = false;
 			}
 		}
@@ -514,7 +533,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				ChoiceState2 = true;
-				ResetBall = true;
+				ball.ResetBall = true;
 				level = Level::Lvl7;
 				LvlUp = false;
 			}
@@ -525,8 +544,18 @@ void Game::UpdateModel(float dt)
 			BrickCollision(bricks7_1, state7_1, BrickTotal_lvl7_1);
 			if (LvlUp)
 			{
-				ResetBall = true;
+				ball.ResetBall = true;
 				level = Level::Lvl8;
+				LvlUp = false;
+			}
+		}
+		else if (level == Level::Lvl8)
+		{
+			BrickCollision(bricks8, state8, BrickTotal_lvl8);
+			if (LvlUp)
+			{
+				ball.ResetBall = true;
+				level = Level::Lvl9;
 				LvlUp = false;
 			}
 		}
@@ -564,32 +593,37 @@ void Game::UpdateModel(float dt)
 		if (wnd.kbd.KeyIsPressed('2'))			//Level oikotie "testiä varten"
 		{
 			level = Level::Lvl2;
-			ResetBall = true;
+			ball.ResetBall = true;
 		}
 		if (wnd.kbd.KeyIsPressed('3'))
 		{
 			level = Level::Lvl3;
-			ResetBall = true;
+			ball.ResetBall = true;
 		}
 		if (wnd.kbd.KeyIsPressed('4'))
 		{
 			level = Level::Lvl4;
-			ResetBall = true;
+			ball.ResetBall = true;
 		}
 		if (wnd.kbd.KeyIsPressed('5'))
 		{
 			level = Level::Lvl5;
-			ResetBall = true;
+			ball.ResetBall = true;
 		}
 		if (wnd.kbd.KeyIsPressed('6'))
 		{
 			level = Level::Lvl6;
-			ResetBall = true;
+			ball.ResetBall = true;
 		}
 		if (wnd.kbd.KeyIsPressed('7'))
 		{
 			level = Level::Lvl7;
-			ResetBall = true;
+			ball.ResetBall = true;
+		}
+		if (wnd.kbd.KeyIsPressed('8'))
+		{
+			level = Level::Lvl8;
+			ball.ResetBall = true;
 		}
 
 	}
@@ -659,6 +693,10 @@ void Game::ComposeFrame()
 			break;
 
 		case Level::Lvl8:
+			DrawLevel(Level::Lvl8);
+			break;
+
+		case Level::Lvl9:
 			DrawLevel(Level::Lvl4);
 			break;
 		}
@@ -753,7 +791,11 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl
 			meter.SetRedM(life);
 			bricks[CurColIndex].SetDestr();
 		}
-		
+		else if (state[CurColIndex] == Brick::State::Catcher)
+		{
+			pad.SetCatch();
+			bricks[CurColIndex].SetDestr();
+		}
 	}
 
 }
@@ -833,7 +875,7 @@ void Game::DrawLevel(const Level level)
 	}
 	else if (level == Level::Lvl8)
 	{
-		for (const Brick& b : bricks4)
+		for (const Brick& b : bricks8)
 		{
 			b.Draw(gfx);
 		}

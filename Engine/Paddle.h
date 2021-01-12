@@ -18,6 +18,8 @@ public:
 	RectF GetRect() const;
 	void ResetCooldown();
 	void PaddleSize();
+	bool CatchCount() const;
+	void SetCatch();
 	bool smallpad = false;
 private:
 	Color color = Colors::White;
@@ -30,4 +32,6 @@ private:
 	float halfHeight;
 	Vec2 pos;
 	bool Cooldown = false;
+	int CatchCounter = 0;
+	
 };

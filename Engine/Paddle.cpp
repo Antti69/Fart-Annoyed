@@ -27,6 +27,13 @@ bool Paddle::BallCollision(Ball& ball)
 
 	if (!Cooldown && GetRect().IsOverlappingWith(ball.GetRect()))
 	{
+		if (CatchCount())
+		{
+			ball.ResetBall = true;
+			const Vec2 Dir = Vec2(0.2f, -1.0f);
+			ball.SetDirection(Dir);
+			CatchCounter -= 1;
+		}
 		if (std::signbit(ball.GetVel().x) == std::signbit((ballpos - rect.GetCenter()).x)
 			|| ballpos.x >= rect.left && ballpos.x <= rect.right)
 		{
@@ -86,5 +93,23 @@ void Paddle::PaddleSize()
 	{
 		halfWidth = 33.0f;
 	}
+}
+
+bool Paddle::CatchCount() const
+{
+	if (CatchCounter > 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	
+}
+
+void Paddle::SetCatch()
+{
+	CatchCounter = 3;
 }
 

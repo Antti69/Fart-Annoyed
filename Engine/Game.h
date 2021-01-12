@@ -105,6 +105,10 @@ private:
 	static constexpr int BrickPysty_lvl7_1 = 10;
 	static constexpr int BrickTotal_lvl7_1 = BrickViisto_lvl7_1 * BrickPysty_lvl7_1;
 
+	static constexpr int BrickViisto_lvl8 = 2;
+	static constexpr int BrickPysty_lvl8 = 2;
+	static constexpr int BrickTotal_lvl8 = BrickViisto_lvl8 * BrickPysty_lvl8;
+
 	static constexpr float GridStartX = 120.0f;
 	static constexpr float GridStartY = 60.0f;
 
@@ -124,6 +128,7 @@ private:
 	Brick bricks6[BrickTotal_lvl6];
 	Brick bricks7[BrickTotal_lvl7];
 	Brick bricks7_1[BrickTotal_lvl7_1];
+	Brick bricks8[BrickTotal_lvl8];
 
 	Brick::State state[BrickTotal_lvl1] = { Brick::State::Basic };
 	Brick::State state2[BrickTotal_lvl2] = { Brick::State::Basic };
@@ -135,6 +140,7 @@ private:
 	Brick::State state6[BrickTotal_lvl6] = { Brick::State::Basic };
 	Brick::State state7[BrickTotal_lvl7] = { Brick::State::Basic };
 	Brick::State state7_1[BrickTotal_lvl7_1] = { Brick::State::Basic };
+	Brick::State state8[BrickTotal_lvl8] = { Brick::State::Basic };
 
 
 	Area leftwall = { RectF(110.0f, GridStartX , GridStartY, gfx.ScreenHeight), Colors::Blue };		//pelialueen säätö
@@ -143,7 +149,7 @@ private:
 
 	RectF walls = { RectF(leftwall.GetRect().right, rightwall.GetRect().left, topwall.GetRect().bottom, float(gfx.ScreenHeight)) };
 
-	bool ResetBall = true;
+	
 	bool Started = false;
 	bool GameOver = false;
 	bool ChoiceState = false;

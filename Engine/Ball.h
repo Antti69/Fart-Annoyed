@@ -22,6 +22,7 @@ public:
 	void SetSpeed(char merkki);
 	bool GetFail() const;
 	void SetFail();
+	bool ResetBall = true;
 private:
 	float speed = 500.0f;
 	float baseSpeed = 500.0f;

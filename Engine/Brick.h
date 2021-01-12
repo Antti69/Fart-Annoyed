@@ -17,7 +17,8 @@ public:
 		SpeedDown,
 		LifeUp,
 		BlueMeterUp,
-		RedMeterUp
+		RedMeterUp,
+		Catcher
 	};
 
 public:
@@ -40,4 +41,5 @@ private:
 	Color c;
 	bool destroyed = false;
 	bool firstcol = false;
+	
 };
