@@ -10,7 +10,7 @@ Paddle::Paddle(const Vec2& pos_in, float halfWidth_in, float halfHeight_in)
 	eXitFactor = MaxExitRation / halfWidth;
 }
 
-void Paddle::Draw(Graphics& gfx)
+void Paddle::Draw(Graphics& gfx) const
 {
 	RectF rect = GetRect();
 	gfx.DrawRect(rect, WingColor);
@@ -111,5 +111,13 @@ bool Paddle::CatchCount() const
 void Paddle::SetCatch()
 {
 	CatchCounter = 3;
+}
+
+void Paddle::DrawCatchSign(Graphics& gfx)
+{
+	if (CatchCounter > 0)
+	{
+		gfx.DrawCircle(120, 30, 10, Colors::Green);
+	}
 }
 

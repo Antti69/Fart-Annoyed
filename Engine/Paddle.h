@@ -11,7 +11,7 @@ class Paddle
 {
 public:
 	Paddle(const Vec2& pos_in, float halfWidth_in, float halfHeight_in);
-	void Draw(Graphics& gfx);
+	void Draw(Graphics& gfx) const;
 	bool BallCollision(Ball& ball);
 	void WallCollision(const RectF& walls);
 	void Movement(Keyboard& kbd, float dt);
@@ -20,6 +20,7 @@ public:
 	void PaddleSize();
 	bool CatchCount() const;
 	void SetCatch();
+	void DrawCatchSign(Graphics& gfx);
 	bool smallpad = false;
 private:
 	Color color = Colors::White;

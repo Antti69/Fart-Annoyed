@@ -18,7 +18,8 @@ public:
 		LifeUp,
 		BlueMeterUp,
 		RedMeterUp,
-		Catcher
+		Catcher,
+		MultipleBalls
 	};
 
 public:

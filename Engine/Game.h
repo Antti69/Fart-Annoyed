@@ -29,6 +29,7 @@
 #include "Paddle.h"
 #include "Sound.h"
 #include "Area.h"
+#include <random>
 
 class Game
 {
@@ -58,7 +59,7 @@ private:
 	MainWindow& wnd;
 	Graphics gfx;
 
-	void BrickCollision(Brick* bricks, Brick::State* state, int BrickTotal_lvl1);
+	void BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int BrickTotal_lvl1);
 	void DrawTitle();
 	void DrawOver();
 	void DrawLevel(const Level level);
@@ -115,6 +116,8 @@ private:
 	FrameTimer ft;											//objektit
 	Paddle pad{ Vec2(400.0f, 520.0f), 40.0f, 10.0f };
 	Ball ball = { Vec2(pad.GetRect().GetCenter().x, pad.GetRect().GetCenter().y - 20.0f), Vec2(200.0f, 200.0f) };
+	Ball ball2;
+	Ball ball3;
 	Area::Life life;
 	Area::Meter meter;
 
@@ -155,5 +158,7 @@ private:
 	bool ChoiceState = false;
 	bool ChoiceState2 = false;
 	bool LvlUp = false;
-
+	bool Multipleballs = false;
+	bool Ball_2 = false;
+	bool Ball_3 = false;
 };
