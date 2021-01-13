@@ -19,7 +19,8 @@ public:
 		BlueMeterUp,
 		RedMeterUp,
 		Catcher,
-		MultipleBalls
+		MultipleBalls,
+		LargePad
 	};
 
 public:

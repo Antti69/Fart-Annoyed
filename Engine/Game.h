@@ -158,7 +158,7 @@ private:
 	bool ChoiceState = false;
 	bool ChoiceState2 = false;
 	bool LvlUp = false;
-	bool Multipleballs = false;
+	bool Ball_1 = true;
 	bool Ball_2 = false;
 	bool Ball_3 = false;
 };

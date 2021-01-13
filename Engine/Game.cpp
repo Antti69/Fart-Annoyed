@@ -396,7 +396,7 @@ Game::Game( MainWindow& wnd )
 				bricks8[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
 
-				state8[i] = Brick::State::MultipleBalls;
+				state8[i] = Brick::State::LargePad;
 
 				i++;
 			}
@@ -429,10 +429,17 @@ void Game::UpdateModel(float dt)
 		}
 		else
 		{
-			ball.Movement(dt);
-			if (Multipleballs)
+			if (Ball_1)
+			{
+				ball.Movement(dt);
+			}
+			if (Ball_2)
 			{
 				ball2.Movement(dt);
+				
+			}
+			if (Ball_3)
+			{
 				ball3.Movement(dt);
 			}
 		}
@@ -456,43 +463,79 @@ void Game::UpdateModel(float dt)
 			
 		}
 
-
-
-		if (ball.GetFail())				//Elämä mekaniikka
+		if (!Ball_1)
 		{
-			life.SetLife('-');
-			ball.ResetBall = true;
-			ball.SetFail();
+			ball.fail = true;
+		}
+		if (!Ball_2)
+		{
+			ball2.fail = true;
+		}
+		if (!Ball_3)
+		{
+			ball3.fail = true;
+		}
 
-			if (life.GetLife() == 0)
+		bool allfail = true;
+		if (ball.fail || ball2.fail || ball3.fail)				//Elämä mekaniikka
+		{
+			allfail = allfail && ball.fail && ball2.fail && ball3.fail;
+
+			if (ball.fail)
 			{
-				GameOver = true;
+				Ball_1 = false;
 			}
+			if (ball2.fail)
+			{
+				Ball_2 = false;
+			}
+			if (ball3.fail)
+			{
+				Ball_3 = false;
+			}
+
+			if (allfail)
+			{
+				life.SetLife('-');
+				ball.ResetBall = true;
+				ball.fail = false;
+				Ball_1 = true;
+
+				if (life.GetLife() == 0)
+				{
+					GameOver = true;
+				}
+
+			}
+
 		}
 
 		if (ball.DoWallCollision(walls) || ball2.DoWallCollision(walls) || ball3.DoWallCollision(walls) )
 		{
-			pad.ResetCooldown();
+			
 		}
 		
 		
 
 		pad.Movement(wnd.kbd, dt);		//Paddlen funktiot
 		pad.WallCollision(walls);
-
+		//pad.ResetCooldown(dt);
 		pad.PaddleSize();
 		pad.DrawCatchSign(gfx);
 
-		if (Multipleballs)
+		if (Ball_1)
 		{
 			pad.BallCollision(ball);
+		}
+		if (Ball_2)
+		{
 			pad.BallCollision(ball2);
+		}
+		if (Ball_3)
+		{
 			pad.BallCollision(ball3);
 		}
-		else
-		{
-			pad.BallCollision(ball);
-		}
+
 
 
 		
@@ -577,12 +620,12 @@ void Game::UpdateModel(float dt)
 			BrickCollision(bricks8, state8, ball, BrickTotal_lvl8);
 			BrickCollision(bricks8, state8, ball2, BrickTotal_lvl8);
 			BrickCollision(bricks8, state8, ball3, BrickTotal_lvl8);
-			if (LvlUp)
+			/*if (LvlUp)
 			{
 				ball.ResetBall = true;
 				level = Level::Lvl9;
 				LvlUp = false;
-			}
+			}*/
 		}
 
 	}
@@ -676,17 +719,20 @@ void Game::ComposeFrame()
 		topwall.DrawWall(gfx);
 		life.DrawLife(gfx);
 		pad.Draw(gfx);
-		
-		if (Multipleballs)
+
+		if (Ball_1)
 		{
 			ball.Draw(gfx);
+		}
+		if (Ball_2)
+		{
 			ball2.Draw(gfx);
+		}
+		if (Ball_3)
+		{
 			ball3.Draw(gfx);
 		}
-		else
-		{
-			ball.Draw(gfx);
-		}
+
 		
 		
 		if (meter.BlueMeter)
@@ -779,11 +825,13 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 	{
 		LvlUp = true;
 		ball.SetSpeed('0');
+		Ball_2 = false;
+		Ball_3 = false;
 	}
 	if (Collisionhappend)
 	{
 		bricks[CurColIndex].ExecuteBallCollision(ball);
-		pad.ResetCooldown();
+		//pad.ResetCooldown();
 
 		if (state[CurColIndex] == Brick::State::indestructible)
 		{
@@ -834,14 +882,16 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 		}
 		else if (state[CurColIndex] == Brick::State::MultipleBalls)
 		{
-			Multipleballs = true;
-
-			const Vec2 Dir = Vec2(0.2f, -1.0f);
+			Ball_2 = true;
+			Ball_3 = true;
 			const Vec2 pos = bricks[CurColIndex].GetCenter();
-
-			ball2 = Ball(Vec2(pos), Vec2(Dir));
-			ball3 = Ball(Vec2(pos), Vec2(0.4f, -1.0f));
-
+			ball2 = Ball(Vec2(pos), Vec2(0.4f, -1.0f));
+			ball3 = Ball(Vec2(pos), Vec2(-0.4f, -1.0f));
+			bricks[CurColIndex].SetDestr();
+		}
+		else if (state[CurColIndex] == Brick::State::LargePad)
+		{
+			pad.largepad = true;
 			bricks[CurColIndex].SetDestr();
 		}
 	}

@@ -20,9 +20,8 @@ public:
 	void SetDirection(const Vec2& dir);
 	void SetPos(class Paddle& pad);
 	void SetSpeed(char merkki);
-	bool GetFail() const;
-	void SetFail();
 	bool ResetBall = true;
+	bool fail = false;
 private:
 	float speed = 500.0f;
 	float baseSpeed = 500.0f;
@@ -30,5 +29,5 @@ private:
 	static constexpr float radius = 7.0f;
 	Vec2 pos;
 	Vec2 vel;
-	bool fail = false;
+	
 };

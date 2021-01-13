@@ -121,16 +121,6 @@ void Ball::SetSpeed(char merkki)
 	}
 }
 
-bool Ball::GetFail() const
-{
-	return fail;
-}
-
-void Ball::SetFail()
-{
-	fail = false;
-}
-
 
 
 

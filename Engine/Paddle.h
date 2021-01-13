@@ -5,6 +5,7 @@
 #include "Colors.h"
 #include "RectF.h"
 #include "Keyboard.h"
+#include "FrameTimer.h"
 
 
 class Paddle
@@ -16,12 +17,14 @@ public:
 	void WallCollision(const RectF& walls);
 	void Movement(Keyboard& kbd, float dt);
 	RectF GetRect() const;
-	void ResetCooldown();
+	void ResetCooldown(float dt);
 	void PaddleSize();
 	bool CatchCount() const;
 	void SetCatch();
 	void DrawCatchSign(Graphics& gfx);
 	bool smallpad = false;
+	bool normalpad = true;
+	bool largepad = false;
 private:
 	Color color = Colors::White;
 	Color WingColor = Colors::Red;
@@ -34,5 +37,6 @@ private:
 	Vec2 pos;
 	bool Cooldown = false;
 	int CatchCounter = 0;
+	FrameTimer ft;
 	
 };
