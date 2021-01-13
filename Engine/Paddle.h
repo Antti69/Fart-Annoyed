@@ -5,11 +5,17 @@
 #include "Colors.h"
 #include "RectF.h"
 #include "Keyboard.h"
-#include "FrameTimer.h"
 
 
 class Paddle
 {
+public:
+	enum class PadSize
+	{
+		Small,
+		Normal,
+		Large
+	} padsize = PadSize::Normal;
 public:
 	Paddle(const Vec2& pos_in, float halfWidth_in, float halfHeight_in);
 	void Draw(Graphics& gfx) const;
@@ -18,13 +24,11 @@ public:
 	void Movement(Keyboard& kbd, float dt);
 	RectF GetRect() const;
 	void ResetCooldown(float dt);
-	void PaddleSize();
+	void PaddleSize(float dt);
 	bool CatchCount() const;
 	void SetCatch();
 	void DrawCatchSign(Graphics& gfx);
-	bool smallpad = false;
-	bool normalpad = true;
-	bool largepad = false;
+	bool PadChoiceSize = false;
 private:
 	Color color = Colors::White;
 	Color WingColor = Colors::Red;
@@ -37,6 +41,8 @@ private:
 	Vec2 pos;
 	bool Cooldown = false;
 	int CatchCounter = 0;
-	FrameTimer ft;
-	
+	float PadtimerEnd = 8.0f;
+	float PadtimerStart = 0.0f;
+	float cooldowntimerstart = 0.0f;
+	float cooldowntimerend = 0.2f;
 };

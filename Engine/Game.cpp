@@ -505,7 +505,6 @@ void Game::UpdateModel(float dt)
 				{
 					GameOver = true;
 				}
-
 			}
 
 		}
@@ -520,7 +519,7 @@ void Game::UpdateModel(float dt)
 		pad.Movement(wnd.kbd, dt);		//Paddlen funktiot
 		pad.WallCollision(walls);
 		//pad.ResetCooldown(dt);
-		pad.PaddleSize();
+		pad.PaddleSize(dt);
 		pad.DrawCatchSign(gfx);
 
 		if (Ball_1)
@@ -654,7 +653,8 @@ void Game::UpdateModel(float dt)
 		}
 		else if (ChoiceState2 && wnd.kbd.KeyIsPressed('R'))
 		{
-			pad.smallpad = true;
+			pad.PadChoiceSize = true;
+			pad.padsize = Paddle::PadSize::Small;
 			ChoiceState2 = false;
 		}
 
@@ -891,7 +891,7 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 		}
 		else if (state[CurColIndex] == Brick::State::LargePad)
 		{
-			pad.largepad = true;
+			pad.padsize = Paddle::PadSize::Large;
 			bricks[CurColIndex].SetDestr();
 		}
 	}

@@ -91,39 +91,37 @@ void Paddle::ResetCooldown(float dt)
 	
 }
 
-void Paddle::PaddleSize()
+void Paddle::PaddleSize(float dt)
 {
+	switch (padsize)
+	{
+	case PadSize::Small:
+		halfWidth = 30.0f;
+		break;
 
-	if (smallpad)
-	{
-		halfWidth = 33.0f;
-	}
-	if (normalpad)
-	{
+	case PadSize::Normal:
 		halfWidth = 40.0f;
-	}
-	if (largepad)
-	{
-		halfWidth = 47.0f;
+		break;
 
-		int start = 0;
-		int end = 500;
-		for (start; start < end; start++)
+	case PadSize::Large:
+		halfWidth = 50.0f;
+		if ((PadtimerStart += dt) > PadtimerEnd)
 		{
-			if (start < end)
+			PadtimerStart = 0.0f;
+			if (PadChoiceSize)
 			{
-				largepad = true;
-				normalpad = false;
-
+				padsize = PadSize::Small;
 			}
 			else
 			{
-				largepad = false;
-				normalpad = true;
+				padsize = PadSize::Normal;
 			}
 		}
-
-		
+		else
+		{
+			padsize = PadSize::Large;
+		}
+		break;
 	}
 }
 
