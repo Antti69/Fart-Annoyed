@@ -82,13 +82,18 @@ RectF Paddle::GetRect() const
 	return RectF::FromCenter(pos, halfWidth, halfHeight);
 }
 
-void Paddle::ResetCooldown(float dt)
+void Paddle::ResetCooldown(float dt)		//ei käytössä tällä hetkellä
 {
-	if (Cooldown && dt > 0.02f)
+	if (Cooldown && (cooldowntimerstart += dt) > cooldowntimerend)
 	{
 		Cooldown = false;
+		cooldowntimerstart = 0.0f;
 	}
-	
+	else
+	{
+		Cooldown = true;
+	}
+
 }
 
 void Paddle::PaddleSize(float dt)

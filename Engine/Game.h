@@ -60,6 +60,12 @@ private:
 	Graphics gfx;
 
 	void BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int BrickTotal_lvl1);
+	void BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, Ball& ball2, Ball& ball3, int BrickTotal_lvl1)
+	{
+		BrickCollision(bricks, state, ball, BrickTotal_lvl1);
+		BrickCollision(bricks, state, ball2, BrickTotal_lvl1);
+		BrickCollision(bricks, state, ball3, BrickTotal_lvl1);
+	}
 	void DrawTitle();
 	void DrawOver();
 	void DrawLevel(const Level level);

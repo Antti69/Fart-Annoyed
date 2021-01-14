@@ -352,27 +352,33 @@ Game::Game( MainWindow& wnd )
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
-
+					c = Colors::Orange;
 				}
 				else if (y == 3 && (x == 1 || x == 5 || x == 9))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
-
+					c = Colors::Orange;
+				}
+				else if (y == 3 && x == 3)
+				{
+					state7_1[i] = Brick::State::MultipleBalls;
+					c = Colors::Green;
 				}
 				else if (y == 6 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
-			
+					c = Colors::Orange;
 				}
 				else if (y == 9 && (x == 1 || x == 3 || x == 7 || x == 9))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
+					c = Colors::Orange;
 				}
 				else
 				{
@@ -518,9 +524,9 @@ void Game::UpdateModel(float dt)
 
 		pad.Movement(wnd.kbd, dt);		//Paddlen funktiot
 		pad.WallCollision(walls);
-		//pad.ResetCooldown(dt);
 		pad.PaddleSize(dt);
 		pad.DrawCatchSign(gfx);
+		//pad.ResetCooldown(dt);
 
 		if (Ball_1)
 		{
@@ -534,7 +540,7 @@ void Game::UpdateModel(float dt)
 		{
 			pad.BallCollision(ball3);
 		}
-
+		
 
 
 		
@@ -605,8 +611,8 @@ void Game::UpdateModel(float dt)
 		}
 		else if (level == Level::Lvl7)
 		{
-			BrickCollision(bricks7, state7, ball, BrickTotal_lvl7);
-			BrickCollision(bricks7_1, state7_1, ball, BrickTotal_lvl7_1);
+			BrickCollision(bricks7, state7, ball, ball2, ball3, BrickTotal_lvl7);
+			BrickCollision(bricks7_1, state7_1, ball, ball2, ball3, BrickTotal_lvl7_1);
 			if (LvlUp)
 			{
 				ball.ResetBall = true;
@@ -831,8 +837,7 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 	if (Collisionhappend)
 	{
 		bricks[CurColIndex].ExecuteBallCollision(ball);
-		//pad.ResetCooldown();
-
+		
 		if (state[CurColIndex] == Brick::State::indestructible)
 		{
 

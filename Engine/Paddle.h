@@ -44,5 +44,5 @@ private:
 	float PadtimerEnd = 8.0f;
 	float PadtimerStart = 0.0f;
 	float cooldowntimerstart = 0.0f;
-	float cooldowntimerend = 0.2f;
+	float cooldowntimerend = 0.025f;
 };
