@@ -836,7 +836,18 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 	}
 	if (Collisionhappend)
 	{
-		bricks[CurColIndex].ExecuteBallCollision(ball);
+		Color df = Colors::White;
+		Color old = bricks[CurColIndex].GetColor();
+		flash = bricks[CurColIndex].ExecuteBallCollision(ball);
+		if (flash)
+		{
+			bricks[CurColIndex].c = df;
+			flash = false;
+		}
+		if (!flash)
+		{
+			bricks[CurColIndex].c = old;
+		}
 		
 		if (state[CurColIndex] == Brick::State::indestructible)
 		{

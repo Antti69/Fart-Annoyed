@@ -38,6 +38,9 @@ public:
 	Game(const Game&) = delete;
 	Game& operator=(const Game&) = delete;
 	void Go();
+	
+
+	
 
 	enum class Level
 	{
@@ -69,6 +72,7 @@ private:
 	void DrawTitle();
 	void DrawOver();
 	void DrawLevel(const Level level);
+
 
 	static constexpr float brickWidth = 40.0;			//Brickkien arvot ja säädöt
 	static constexpr float brickHeight = 18.0f;
@@ -167,4 +171,6 @@ private:
 	bool Ball_1 = true;
 	bool Ball_2 = false;
 	bool Ball_3 = false;
+
+	bool flash;
 };

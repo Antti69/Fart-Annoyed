@@ -28,20 +28,24 @@ public:
 	Brick(const RectF& rect_in, Color c_in);
 	void Draw(Graphics& gfx) const;
 	bool CheckBallCollision(const Ball& ball) const;
-	void ExecuteBallCollision(Ball& ball);
+	bool ExecuteBallCollision(Ball& ball);
+	void FlashEffect();
 	RectF GetRect() const;
 	Vec2 GetCenter() const;
+	Color GetColor() const;
+	void SetColor(Color c);
 	bool GetFirstcol();
 	bool GetDestroyed();
 	void SetDestr();
 	void Setfirstcol();
 	bool indestructible = false;
-	
+	Color c;
 private:
 	static constexpr float padding = 1.0f;
 	RectF rect;
-	Color c;
+
 	bool destroyed = false;
 	bool firstcol = false;
-	
+	float flashstart = 0.0f;
+	float flashend = 0.2f;
 };
