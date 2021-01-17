@@ -31,6 +31,7 @@ public:
 	void ExecuteBallCollision(Ball& ball);
 	RectF GetRect() const;
 	Vec2 GetCenter() const;
+	Color GetColor() const;
 	bool GetFirstcol();
 	bool GetDestroyed();
 	void SetDestr();
@@ -43,5 +44,4 @@ private:
 	Color c;
 	bool destroyed = false;
 	bool firstcol = false;
-	
 };

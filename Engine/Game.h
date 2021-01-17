@@ -59,10 +59,19 @@ private:
 	MainWindow& wnd;
 	Graphics gfx;
 
-	void BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int BrickTotal_lvl1);
+	void BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int BrickTotal_lvl1, float dt);
+	void BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, Ball& ball2, Ball& ball3, int BrickTotal_lvl1, float dt)
+	{
+		BrickCollision(bricks, state, ball, BrickTotal_lvl1, dt);			//float dt testejä varten
+		BrickCollision(bricks, state, ball2, BrickTotal_lvl1, dt);
+		BrickCollision(bricks, state, ball3, BrickTotal_lvl1, dt);
+	}
 	void DrawTitle();
 	void DrawOver();
 	void DrawLevel(const Level level);
+	void Timer(float dt);
+	float dt;
+	float elapsedTime;
 
 	static constexpr float brickWidth = 40.0;			//Brickkien arvot ja säädöt
 	static constexpr float brickHeight = 18.0f;
@@ -161,4 +170,5 @@ private:
 	bool Ball_1 = true;
 	bool Ball_2 = false;
 	bool Ball_3 = false;
+
 };

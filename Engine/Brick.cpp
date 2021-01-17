@@ -7,7 +7,9 @@ Brick::Brick(const RectF& rect_in, Color c_in)
 	:
 	rect(rect_in),
 	c(c_in)
-{}
+{
+	
+}
 
 
 void Brick::Draw(Graphics& gfx) const
@@ -49,13 +51,16 @@ void Brick::ExecuteBallCollision(Ball& ball)
 		|| ballpos.x >= rect.left && ballpos.x <= rect.right)
 	{
 		ball.ReboundY();
+		
 	}
 	else
 	{
 		ball.ReboundX();
+		
 	}
 	
 }
+
 
 RectF Brick::GetRect() const
 {
@@ -65,6 +70,11 @@ RectF Brick::GetRect() const
 Vec2 Brick::GetCenter() const
 {
 	return Vec2(rect.GetCenter());
+}
+
+Color Brick::GetColor() const
+{
+	return c;
 }
 
 bool Brick::GetFirstcol()

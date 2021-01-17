@@ -352,27 +352,33 @@ Game::Game( MainWindow& wnd )
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
-
+					c = Colors::Orange;
 				}
 				else if (y == 3 && (x == 1 || x == 5 || x == 9))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
-
+					c = Colors::Orange;
+				}
+				else if (y == 3 && x == 3)
+				{
+					state7_1[i] = Brick::State::MultipleBalls;
+					c = Colors::Green;
 				}
 				else if (y == 6 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
-			
+					c = Colors::Orange;
 				}
 				else if (y == 9 && (x == 1 || x == 3 || x == 7 || x == 9))
 				{
 					state7_1[i] = Brick::State::indestructible;
 					bricks7_1[i].SetDestr();
 					bricks7_1[i].indestructible = true;
+					c = Colors::Orange;
 				}
 				else
 				{
@@ -407,10 +413,10 @@ Game::Game( MainWindow& wnd )
 void Game::Go()
 {
 	gfx.BeginFrame();
-	float elapsedTime = ft.Mark();
+	elapsedTime = ft.Mark();
 	while (elapsedTime > 0.0f)
 	{
-		const float dt = std::min(0.0025f, elapsedTime);
+		dt = std::min(0.0025f, elapsedTime);
 		UpdateModel(dt);
 		elapsedTime -= dt;
 	}
@@ -511,17 +517,16 @@ void Game::UpdateModel(float dt)
 
 		if (ball.DoWallCollision(walls) || ball2.DoWallCollision(walls) || ball3.DoWallCollision(walls) )
 		{
-			
+			//‰‰net t‰h‰n joskus
 		}
 		
 		
 
 		pad.Movement(wnd.kbd, dt);		//Paddlen funktiot
 		pad.WallCollision(walls);
-		//pad.ResetCooldown(dt);
 		pad.PaddleSize(dt);
 		pad.DrawCatchSign(gfx);
-
+		//pad.ResetCooldown(dt);
 		if (Ball_1)
 		{
 			pad.BallCollision(ball);
@@ -534,13 +539,13 @@ void Game::UpdateModel(float dt)
 		{
 			pad.BallCollision(ball3);
 		}
-
+		
 
 
 		
 		if (level == Level::Lvl1)			//Lvl p‰ivitys
 		{
-			BrickCollision(bricks, state, ball, BrickTotal_lvl1);
+			BrickCollision(bricks, state, ball, BrickTotal_lvl1, dt);
 			if (LvlUp)
 			{
 				level = Level::Lvl2;
@@ -550,7 +555,7 @@ void Game::UpdateModel(float dt)
 		}
 		else if (level == Level::Lvl2)
 		{
-			BrickCollision(bricks2, state2, ball, BrickTotal_lvl2);
+			BrickCollision(bricks2, state2, ball, BrickTotal_lvl2, dt);
 			if (LvlUp)
 			{
 				level = Level::Lvl3;
@@ -560,8 +565,8 @@ void Game::UpdateModel(float dt)
 		}
 		else if (level == Level::Lvl3)
 		{
-			BrickCollision(bricks3, state3, ball, BrickTotal_lvl3);
-			BrickCollision(bricks3_1, state3_1, ball, BrickTotal_lvl3_1);
+			BrickCollision(bricks3, state3, ball, BrickTotal_lvl3, dt);
+			BrickCollision(bricks3_1, state3_1, ball, BrickTotal_lvl3_1, dt);
 			if (LvlUp)
 			{
 				ChoiceState = true;
@@ -572,7 +577,7 @@ void Game::UpdateModel(float dt)
 		}
 		else if (level == Level::Lvl4)
 		{
-			BrickCollision(bricks4, state4, ball, BrickTotal_lvl4);
+			BrickCollision(bricks4, state4, ball, BrickTotal_lvl4, dt);
 			if (LvlUp)
 			{
 				level = Level::Lvl5;
@@ -582,8 +587,8 @@ void Game::UpdateModel(float dt)
 		}
 		else if (level == Level::Lvl5)
 		{
-			BrickCollision(bricks5_1, state5_1, ball, BrickTotal_lvl5_1);
-			BrickCollision(bricks5, state5, ball, BrickTotal_lvl5);
+			BrickCollision(bricks5_1, state5_1, ball, BrickTotal_lvl5_1, dt);
+			BrickCollision(bricks5, state5, ball, BrickTotal_lvl5, dt);
 			if (LvlUp)
 			{
 				
@@ -594,7 +599,7 @@ void Game::UpdateModel(float dt)
 		}
 		else if (level == Level::Lvl6)
 		{
-			BrickCollision(bricks6, state6, ball, BrickTotal_lvl6);
+			BrickCollision(bricks6, state6, ball, BrickTotal_lvl6, dt);
 			if (LvlUp)
 			{
 				ChoiceState2 = true;
@@ -605,8 +610,8 @@ void Game::UpdateModel(float dt)
 		}
 		else if (level == Level::Lvl7)
 		{
-			BrickCollision(bricks7, state7, ball, BrickTotal_lvl7);
-			BrickCollision(bricks7_1, state7_1, ball, BrickTotal_lvl7_1);
+			BrickCollision(bricks7, state7, ball, ball2, ball3, BrickTotal_lvl7, dt);
+			BrickCollision(bricks7_1, state7_1, ball, ball2, ball3, BrickTotal_lvl7_1, dt);
 			if (LvlUp)
 			{
 				ball.ResetBall = true;
@@ -616,9 +621,9 @@ void Game::UpdateModel(float dt)
 		}
 		else if (level == Level::Lvl8)
 		{
-			BrickCollision(bricks8, state8, ball, BrickTotal_lvl8);
-			BrickCollision(bricks8, state8, ball2, BrickTotal_lvl8);
-			BrickCollision(bricks8, state8, ball3, BrickTotal_lvl8);
+			BrickCollision(bricks8, state8, ball, BrickTotal_lvl8, dt);
+			BrickCollision(bricks8, state8, ball2, BrickTotal_lvl8, dt);
+			BrickCollision(bricks8, state8, ball3, BrickTotal_lvl8, dt);
 			/*if (LvlUp)
 			{
 				ball.ResetBall = true;
@@ -791,7 +796,7 @@ void Game::ComposeFrame()
 
 }
 
-void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int BrickTotal_lvl1)
+void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int BrickTotal_lvl1, float dt)
 {
 
 	bool Collisionhappend = false;
@@ -831,8 +836,7 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 	if (Collisionhappend)
 	{
 		bricks[CurColIndex].ExecuteBallCollision(ball);
-		//pad.ResetCooldown();
-
+		
 		if (state[CurColIndex] == Brick::State::indestructible)
 		{
 
@@ -978,5 +982,11 @@ void Game::DrawLevel(const Level level)
 			b.Draw(gfx);
 		}
 	}
+}
+
+void Game::Timer(float dt)
+{
+
+
 }
 
