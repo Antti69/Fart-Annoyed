@@ -10,6 +10,22 @@
 class Paddle
 {
 public:
+	class Guns
+	{
+	public:
+		Guns() = default;
+		Guns(const Vec2& pos_in);
+		void DrawAmmo(Graphics& gfx) const;
+		void AmmoMovment(float dt);
+		
+
+	private:
+		Vec2 pos;
+		static constexpr float speed = 600.0f;
+		
+		static constexpr int radius = 6;
+	};
+public:
 	enum class PadSize
 	{
 		Small,
@@ -23,6 +39,7 @@ public:
 	void WallCollision(const RectF& walls);
 	void Movement(Keyboard& kbd, float dt);
 	RectF GetRect() const;
+	Vec2 GetPos() const;
 	void ResetCooldown(float dt);
 	void PaddleSize(float dt);
 	bool CatchCount() const;

@@ -469,6 +469,17 @@ void Game::UpdateModel(float dt)
 			
 		}
 
+		if (wnd.kbd.KeyIsPressed('Q'))
+		{
+			guns = true;
+		}
+
+		if (guns)
+		{
+			gun.AmmoMovment(dt);
+			
+		}
+
 		if (!Ball_1)
 		{
 			ball.fail = true;
@@ -738,6 +749,10 @@ void Game::ComposeFrame()
 			ball3.Draw(gfx);
 		}
 
+		if (guns)
+		{
+			gun.DrawAmmo(gfx);
+		}
 		
 		
 		if (meter.BlueMeter)

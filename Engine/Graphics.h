@@ -24,6 +24,7 @@
 #include "ChiliException.h"
 #include "Colors.h"
 #include "RectF.h"
+#include "Vec2.h"
 
 class Graphics
 {
@@ -68,6 +69,10 @@ public:
 		DrawRectSpacec((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom, c);
 	}
 	void DrawCircle( int x,int y,int radius,Color c );
+	void DrawCircle(const Vec2& pos, int radius, Color c)
+	{
+		DrawCircle((int)pos.x, (int)pos.y, radius, c);
+	}
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

@@ -82,6 +82,11 @@ RectF Paddle::GetRect() const
 	return RectF::FromCenter(pos, halfWidth, halfHeight);
 }
 
+Vec2 Paddle::GetPos() const
+{
+	return pos;
+}
+
 void Paddle::ResetCooldown(float dt)
 {
 	if (Cooldown && dt > 0.02f)
@@ -151,3 +156,20 @@ void Paddle::DrawCatchSign(Graphics& gfx)
 	}
 }
 
+Paddle::Guns::Guns(const Vec2& pos_in)
+	:
+	pos(pos_in)
+{
+	
+}
+
+
+void Paddle::Guns::DrawAmmo(Graphics& gfx) const
+{
+	gfx.DrawCircle((int)pos.x, (int)pos.y, radius, Colors::Red);
+}
+
+void Paddle::Guns::AmmoMovment(float dt)
+{
+	pos.y -= speed * dt;
+}
