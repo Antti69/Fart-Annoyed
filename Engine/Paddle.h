@@ -17,12 +17,14 @@ public:
 		Guns(const Vec2& pos_in);
 		void DrawAmmo(Graphics& gfx) const;
 		void AmmoMovment(float dt);
-		
+		void SetPos(const Paddle& pad);
+		void WallCollision(const RectF walls);
 
+		bool guns = false;
+		bool guns2 = false;
 	private:
 		Vec2 pos;
-		static constexpr float speed = 600.0f;
-		
+		static constexpr float speed = 400.0f;
 		static constexpr int radius = 6;
 	};
 public:

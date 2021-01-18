@@ -129,7 +129,9 @@ private:
 	Ball ball3;
 	Area::Life life;
 	Area::Meter meter;
-	Paddle::Guns gun = { Vec2(pad.GetRect().GetCenter().x, pad.GetRect().GetCenter().y) };
+	Paddle::Guns gun = { Vec2(pad.GetPos()) };
+	Paddle::Guns gun2 = { Vec2(pad.GetPos()) };
+	
 
 	Brick bricks[BrickTotal_lvl1];
 	Brick bricks2[BrickTotal_lvl2];
@@ -171,5 +173,5 @@ private:
 	bool Ball_1 = true;
 	bool Ball_2 = false;
 	bool Ball_3 = false;
-	bool guns = false;
+	
 };

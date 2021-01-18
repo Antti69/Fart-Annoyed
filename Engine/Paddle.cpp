@@ -160,7 +160,7 @@ Paddle::Guns::Guns(const Vec2& pos_in)
 	:
 	pos(pos_in)
 {
-	
+
 }
 
 
@@ -172,4 +172,18 @@ void Paddle::Guns::DrawAmmo(Graphics& gfx) const
 void Paddle::Guns::AmmoMovment(float dt)
 {
 	pos.y -= speed * dt;
+}
+
+void Paddle::Guns::SetPos(const Paddle& pad)
+{
+	pos = pad.GetPos();
+}
+
+void Paddle::Guns::WallCollision(const RectF walls)
+{
+	if (pos.y - radius < walls.top)
+	{
+		guns = false;
+	}
+
 }

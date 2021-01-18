@@ -463,21 +463,45 @@ void Game::UpdateModel(float dt)
 		{
 			ball.SetSpeed('r');
 		}
-		if (wnd.kbd.KeyIsPressed(VK_TAB))
+		if (wnd.kbd.KeyIsPressed('Q'))
 		{
 			meter.SetBlueM('+');
 			
 		}
 
-		if (wnd.kbd.KeyIsPressed('Q'))
+		
+		if (gun.guns)
 		{
-			guns = true;
+			if (wnd.kbd.KeyIsPressed(VK_TAB))
+			{
+				gun2.guns = true;
+			}
 		}
-
-		if (guns)
+		else if (!gun.guns)					//Ase mekaniikka
+		{
+			if (wnd.kbd.KeyIsPressed(VK_TAB))
+			{
+				gun.guns = true;
+				
+			}
+		}
+		if (gun.guns)
 		{
 			gun.AmmoMovment(dt);
-			
+			gun.WallCollision(walls);
+		}
+		else
+		{
+			gun.SetPos(pad);
+		}
+		if (gun2.guns)
+		{
+			gun2.AmmoMovment(dt);
+			gun2.WallCollision(walls);
+		}
+		else
+		{
+			gun2.SetPos(pad);
 		}
 
 		if (!Ball_1)
@@ -749,9 +773,13 @@ void Game::ComposeFrame()
 			ball3.Draw(gfx);
 		}
 
-		if (guns)
+		if (gun.guns)
 		{
 			gun.DrawAmmo(gfx);
+		}
+		if (gun2.guns)
+		{
+			gun2.DrawAmmo(gfx);
 		}
 		
 		
