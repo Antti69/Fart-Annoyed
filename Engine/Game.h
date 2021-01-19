@@ -66,6 +66,8 @@ private:
 		BrickCollision(bricks, state, ball2, BrickTotal_lvl1, dt);
 		BrickCollision(bricks, state, ball3, BrickTotal_lvl1, dt);
 	}
+
+	
 	void DrawTitle();
 	void DrawOver();
 	void DrawLevel(const Level level);
@@ -130,7 +132,6 @@ private:
 	Area::Life life;
 	Area::Meter meter;
 	Paddle::Guns gun = { Vec2(pad.GetPos()) };
-	Paddle::Guns gun2 = { Vec2(pad.GetPos()) };
 	
 
 	Brick bricks[BrickTotal_lvl1];

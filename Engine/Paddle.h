@@ -19,12 +19,13 @@ public:
 		void AmmoMovment(float dt);
 		void SetPos(const Paddle& pad);
 		void WallCollision(const RectF walls);
-
+		RectF GetRect() const;
+		Vec2 GetPos() const;
 		bool guns = false;
-		bool guns2 = false;
+		bool Guns_Active = true;
 	private:
 		Vec2 pos;
-		static constexpr float speed = 400.0f;
+		static constexpr float speed = 800.0f;
 		static constexpr int radius = 6;
 	};
 public:

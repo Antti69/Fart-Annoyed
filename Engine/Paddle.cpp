@@ -176,7 +176,11 @@ void Paddle::Guns::AmmoMovment(float dt)
 
 void Paddle::Guns::SetPos(const Paddle& pad)
 {
-	pos = pad.GetPos();
+	if (!guns)
+	{
+		pos = pad.GetPos();
+	}
+	
 }
 
 void Paddle::Guns::WallCollision(const RectF walls)
@@ -186,4 +190,14 @@ void Paddle::Guns::WallCollision(const RectF walls)
 		guns = false;
 	}
 
+}
+
+RectF Paddle::Guns::GetRect() const
+{
+	return RectF::FromCenter(pos, radius, radius);
+}
+
+Vec2 Paddle::Guns::GetPos() const
+{
+	return pos;
 }

@@ -3,6 +3,7 @@
 #include "RectF.h"
 #include "Colors.h"
 #include "Ball.h"
+#include "Paddle.h"
 
 class Brick
 {
@@ -29,6 +30,8 @@ public:
 	void Draw(Graphics& gfx) const;
 	bool CheckBallCollision(const Ball& ball) const;
 	void ExecuteBallCollision(Ball& ball);
+	bool CheckAmmoCollision(const Paddle::Guns& gun) const;
+
 	RectF GetRect() const;
 	Vec2 GetCenter() const;
 	Color GetColor() const;

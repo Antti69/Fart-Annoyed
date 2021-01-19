@@ -61,6 +61,21 @@ void Brick::ExecuteBallCollision(Ball& ball)
 	
 }
 
+bool Brick::CheckAmmoCollision(const Paddle::Guns& gun) const
+{
+	{
+		if (indestructible && GetRect().IsOverlappingWith(gun.GetRect()))
+		{
+			return true;
+		}
+		if (!destroyed && GetRect().IsOverlappingWith(gun.GetRect()))
+		{
+			return true;
+		}
+		return false;
+	}
+}
+
 
 RectF Brick::GetRect() const
 {

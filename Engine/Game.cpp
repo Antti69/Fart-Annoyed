@@ -469,40 +469,18 @@ void Game::UpdateModel(float dt)
 			
 		}
 
-		
-		if (gun.guns)
+		if (wnd.kbd.KeyIsPressed(VK_TAB))			//Ase funktiot
 		{
-			if (wnd.kbd.KeyIsPressed(VK_TAB))
-			{
-				gun2.guns = true;
-			}
-		}
-		else if (!gun.guns)					//Ase mekaniikka
-		{
-			if (wnd.kbd.KeyIsPressed(VK_TAB))
-			{
-				gun.guns = true;
-				
-			}
+			gun.guns = true;
 		}
 		if (gun.guns)
 		{
 			gun.AmmoMovment(dt);
 			gun.WallCollision(walls);
-		}
-		else
-		{
 			gun.SetPos(pad);
 		}
-		if (gun2.guns)
-		{
-			gun2.AmmoMovment(dt);
-			gun2.WallCollision(walls);
-		}
-		else
-		{
-			gun2.SetPos(pad);
-		}
+
+
 
 		if (!Ball_1)
 		{
@@ -776,10 +754,6 @@ void Game::ComposeFrame()
 		if (gun.guns)
 		{
 			gun.DrawAmmo(gfx);
-		}
-		if (gun2.guns)
-		{
-			gun2.DrawAmmo(gfx);
 		}
 		
 		
