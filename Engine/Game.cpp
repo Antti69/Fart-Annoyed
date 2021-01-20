@@ -366,6 +366,11 @@ Game::Game( MainWindow& wnd )
 					state7_1[i] = Brick::State::MultipleBalls;
 					c = Colors::Green;
 				}
+				else if (y == 3 && x == 7)
+				{
+					state7_1[i] = Brick::State::LargePad;
+					c = Colors::Green;
+				}
 				else if (y == 6 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8))
 				{
 					state7_1[i] = Brick::State::indestructible;
@@ -390,24 +395,25 @@ Game::Game( MainWindow& wnd )
 			}
 		}
 	}
-	//Level 8
+	//Testi kenttä
 	{
 		const Vec2 topleft = { GridStartX + (brickWidth * 4), GridStartY + (brickHeight * 5) };
 		int i = 0;
-		for (int y = 0; y < BrickPysty_lvl8; y++)
+		for (int y = 0; y < BrickPysty_lvlTesti; y++)
 		{
 			Color c = Colors::Cyan;
-			for (int x = 0; x < BrickViisto_lvl8; x++)
+			for (int x = 0; x < BrickViisto_lvlTesti; x++)
 			{
-				bricks8[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+				bricksTesti[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
 
-				state8[i] = Brick::State::LargePad;
+				stateTesti[i] = Brick::State::LargePad;
 
 				i++;
 			}
 		}
 	}
+	
 }
 
 void Game::Go()
@@ -458,6 +464,9 @@ void Game::UpdateModel(float dt)
 		{
 			meter.SetBlueM('-');			//Sinisen mittarin mekaniikka
 			ball.SetSpeed('s');
+			ball2.SetSpeed('s');
+			ball3.SetSpeed('s');
+			
 		}
 		else
 		{
@@ -468,7 +477,7 @@ void Game::UpdateModel(float dt)
 			meter.SetBlueM('+');
 			
 		}
-
+		gun.SetPos(pad);
 		if (wnd.kbd.KeyIsPressed(VK_TAB))			//Ase funktiot
 		{
 			gun.guns = true;
@@ -477,7 +486,7 @@ void Game::UpdateModel(float dt)
 		{
 			gun.AmmoMovment(dt);
 			gun.WallCollision(walls);
-			gun.SetPos(pad);
+			
 		}
 
 
@@ -632,17 +641,9 @@ void Game::UpdateModel(float dt)
 				LvlUp = false;
 			}
 		}
-		else if (level == Level::Lvl8)
+		else if (level == Level::Testi)
 		{
-			BrickCollision(bricks8, state8, ball, BrickTotal_lvl8, dt);
-			BrickCollision(bricks8, state8, ball2, BrickTotal_lvl8, dt);
-			BrickCollision(bricks8, state8, ball3, BrickTotal_lvl8, dt);
-			/*if (LvlUp)
-			{
-				ball.ResetBall = true;
-				level = Level::Lvl9;
-				LvlUp = false;
-			}*/
+			BrickCollision(bricksTesti, stateTesti, ball, BrickTotal_lvl8, dt);
 		}
 
 	}
@@ -709,6 +710,11 @@ void Game::UpdateModel(float dt)
 		if (wnd.kbd.KeyIsPressed('8'))
 		{
 			level = Level::Lvl8;
+			ball.ResetBall = true;
+		}
+		if (wnd.kbd.KeyIsPressed('T'))
+		{
+			level = Level::Testi;
 			ball.ResetBall = true;
 		}
 
@@ -803,6 +809,10 @@ void Game::ComposeFrame()
 		case Level::Lvl9:
 			DrawLevel(Level::Lvl4);
 			break;
+
+		case Level::Testi:
+			DrawLevel(Level::Testi);
+			break;
 		}
 		
 		if (GameOver)
@@ -816,7 +826,8 @@ void Game::ComposeFrame()
 void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int BrickTotal_lvl1, float dt)
 {
 
-	bool Collisionhappend = false;
+	bool BallCollisionhappend = false;
+	bool AmmoCollisionhappend = false;
 	float CurColDist;
 	int CurColIndex;
 	bool allDestroyed = true;
@@ -827,7 +838,7 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 		if (bricks[i].CheckBallCollision(ball))
 		{
 			const float newColDist = (ball.GetPos() - bricks[i].GetCenter()).GetLengthSq();
-			if (Collisionhappend)
+			if (BallCollisionhappend)
 			{
 				if (newColDist < CurColDist)
 				{
@@ -839,7 +850,25 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 			{
 				CurColDist = newColDist;
 				CurColIndex = i;
-				Collisionhappend = true;
+				BallCollisionhappend = true;
+			}
+		}
+		if (bricks[i].CheckAmmoCollision(gun))
+		{
+			const float newColDist = (gun.GetPos() - bricks[i].GetCenter()).GetLengthSq();
+			if (AmmoCollisionhappend)
+			{
+				if (newColDist < CurColDist)
+				{
+					CurColDist = newColDist;
+					CurColIndex = i;
+				}
+			}
+			else
+			{
+				CurColDist = newColDist;
+				CurColIndex = i;
+				AmmoCollisionhappend = true;
 			}
 		}
 	}
@@ -850,9 +879,16 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 		Ball_2 = false;
 		Ball_3 = false;
 	}
-	if (Collisionhappend)
+	if (BallCollisionhappend || AmmoCollisionhappend)
 	{
-		bricks[CurColIndex].ExecuteBallCollision(ball);
+		if (BallCollisionhappend)
+		{
+			bricks[CurColIndex].ExecuteBallCollision(ball);
+		}
+		if (AmmoCollisionhappend)
+		{
+			gun.guns = false;
+		}
 		
 		if (state[CurColIndex] == Brick::State::indestructible)
 		{
@@ -918,6 +954,7 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 	}
 
 }
+
 
 void Game::DrawTitle()
 {
@@ -992,9 +1029,9 @@ void Game::DrawLevel(const Level level)
 			b.Draw(gfx);
 		}
 	}
-	else if (level == Level::Lvl8)
+	else if (level == Level::Testi)
 	{
-		for (const Brick& b : bricks8)
+		for (const Brick& b : bricksTesti)
 		{
 			b.Draw(gfx);
 		}

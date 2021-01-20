@@ -49,7 +49,8 @@ public:
 		Lvl6,
 		Lvl7,
 		Lvl8,
-		Lvl9
+		Lvl9,
+		Testi
 	}	level = Level::Lvl1;
 private:
 	void ComposeFrame();
@@ -66,7 +67,6 @@ private:
 		BrickCollision(bricks, state, ball2, BrickTotal_lvl1, dt);
 		BrickCollision(bricks, state, ball3, BrickTotal_lvl1, dt);
 	}
-
 	
 	void DrawTitle();
 	void DrawOver();
@@ -121,6 +121,10 @@ private:
 	static constexpr int BrickPysty_lvl8 = 2;
 	static constexpr int BrickTotal_lvl8 = BrickViisto_lvl8 * BrickPysty_lvl8;
 
+	static constexpr int BrickViisto_lvlTesti = 2;
+	static constexpr int BrickPysty_lvlTesti = 2;
+	static constexpr int BrickTotal_lvlTesti = BrickViisto_lvlTesti * BrickPysty_lvlTesti;
+
 	static constexpr float GridStartX = 120.0f;
 	static constexpr float GridStartY = 60.0f;
 
@@ -146,6 +150,9 @@ private:
 	Brick bricks7_1[BrickTotal_lvl7_1];
 	Brick bricks8[BrickTotal_lvl8];
 
+
+	Brick bricksTesti[BrickTotal_lvlTesti];
+
 	Brick::State state[BrickTotal_lvl1] = { Brick::State::Basic };
 	Brick::State state2[BrickTotal_lvl2] = { Brick::State::Basic };
 	Brick::State state3[BrickTotal_lvl3] = { Brick::State::Basic };
@@ -157,6 +164,8 @@ private:
 	Brick::State state7[BrickTotal_lvl7] = { Brick::State::Basic };
 	Brick::State state7_1[BrickTotal_lvl7_1] = { Brick::State::Basic };
 	Brick::State state8[BrickTotal_lvl8] = { Brick::State::Basic };
+
+	Brick::State stateTesti[BrickTotal_lvlTesti] = { Brick::State::Basic };
 
 
 	Area leftwall = { RectF(110.0f, GridStartX , GridStartY, gfx.ScreenHeight), Colors::Blue };		//pelialueen säätö

@@ -63,6 +63,7 @@ private:
 	int CatchCounter = 0;
 	float PadtimerEnd = 8.0f;
 	float PadtimerStart = 0.0f;
-	float cooldowntimerstart = 0.0f;
+
+	float cooldowntimerstart = 0.0f;		//ei käytössä, vaatii enemmän testejä
 	float cooldowntimerend = 0.2f;
 };
