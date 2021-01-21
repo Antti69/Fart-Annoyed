@@ -51,7 +51,8 @@ public:
 		Lvl8,
 		Lvl9,
 		Testi
-	}	level = Level::Lvl1;
+	};
+	Level level = { Level::Lvl1 };
 private:
 	void ComposeFrame();
 	void UpdateModel(float dt);

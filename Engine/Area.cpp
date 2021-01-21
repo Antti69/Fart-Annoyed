@@ -57,24 +57,89 @@ void Area::Life::DrawLife(Graphics& gfx) const
 
 void Area::Meter::DrawBlueMeter(Graphics& gfx) const
 {
-	const RectF pohja = { Vec2(50.0f, MeterMax), Vec2(70.0f, MeterMin) };
+	RectF BlueMLeft = { Vec2(50.0f, b_meterY), Vec2(70.0f, MeterMin) };
+	RectF BlueMRight = { Vec2(740.0f, b_meterY), Vec2(760.0f, MeterMin) };
+	switch (Blue)
+	{
+	case MeterPos::None:
+		break;
+
+	case MeterPos::Left:
+		gfx.DrawRect(pohja_left, Colors::White);
+		gfx.DrawCircle(60, 560, 20, Colors::Blue);
+		gfx.DrawRect(BlueMLeft, Colors::Blue);
+		break;
+
+	case MeterPos::Right:
+		gfx.DrawRect(pohja_right, Colors::White);
+		gfx.DrawCircle(750, 560, 20, Colors::Blue);
+		gfx.DrawRect(BlueMRight, Colors::Blue);
+		break;
+	}
+
+	/*const RectF pohja = { Vec2(50.0f, MeterMax), Vec2(70.0f, MeterMin) };
 	gfx.DrawRect(pohja, Colors::White);
 
 	gfx.DrawCircle(60, 560, 20, Colors::Blue);
 
 	RectF BlueM = { Vec2(50.0f, b_meterY), Vec2(70.0f, MeterMin) };
-	gfx.DrawRect(BlueM, Colors::Blue);
+	gfx.DrawRect(BlueM, Colors::Blue);*/
 }
 
 void Area::Meter::DrawRedMeter(Graphics& gfx) const
 {
-	const RectF pohja = { Vec2(740.0f, MeterMax), Vec2(760.0f, MeterMin) };
+	RectF RedMLeft = { Vec2(50.0f, r_meterY), Vec2(70.0f, MeterMin) };
+	RectF RedMRight = { Vec2(740.0f, r_meterY), Vec2(760.0f, MeterMin) };
+
+	switch (Red)
+	{
+	case MeterPos::None:
+		break;
+
+	case MeterPos::Left:
+		gfx.DrawRect(pohja_left, Colors::White);
+		gfx.DrawCircle(60, 560, 20, Colors::Red);
+		gfx.DrawRect(RedMLeft, Colors::Red);
+		break;
+
+	case MeterPos::Right:
+		gfx.DrawRect(pohja_right, Colors::White);
+		gfx.DrawCircle(750, 560, 20, Colors::Red);
+		gfx.DrawRect(RedMRight, Colors::Red);
+		break;
+	}
+
+	/*const RectF pohja = { Vec2(740.0f, MeterMax), Vec2(760.0f, MeterMin) };
 	gfx.DrawRect(pohja, Colors::White);
 
 	gfx.DrawCircle(750, 560, 20, Colors::Red);
 
 	RectF RedM = { Vec2(740.0f, r_meterY), Vec2(760.0f, MeterMin) };
-	gfx.DrawRect(RedM, Colors::Red);
+	gfx.DrawRect(RedM, Colors::Red);*/
+}
+
+void Area::Meter::DrawGreenMeter(Graphics& gfx) const
+{
+	RectF GreenMLeft = { Vec2(50.0f, g_meterY), Vec2(70.0f, MeterMin) };
+	RectF GreenMRight = { Vec2(740.0f, g_meterY), Vec2(760.0f, MeterMin) };
+
+	switch (Green)
+	{
+	case MeterPos::None:
+		break;
+
+	case MeterPos::Left:
+		gfx.DrawRect(pohja_left, Colors::White);
+		gfx.DrawCircle(60, 560, 20, Colors::Green);
+		gfx.DrawRect(GreenMLeft, Colors::Green);
+		break;
+
+	case MeterPos::Right:
+		gfx.DrawRect(pohja_right, Colors::White);
+		gfx.DrawCircle(750, 560, 20, Colors::Green);
+		gfx.DrawRect(GreenMRight, Colors::Green);
+		break;
+	}
 }
 
 void Area::Life::SetLife(char merkki)
@@ -102,23 +167,24 @@ RectF Area::GetRect() const
 
 void Area::Meter::SetBlueM(char merkki)
 {
-	if (BlueMeter)
+	if (merkki == '+' && b_meterY > MeterMax)
 	{
-		if (merkki == '+' && b_meterY > MeterMax)
-		{
-			b_meterY -= 10.0f;
+		b_meterY -= 10.0f;
 
-		}
-		if (merkki == '-' && b_meterY < MeterMin)
-		{
-			b_meterY += 0.1f;
-		}
 	}
+	if (merkki == '-' && b_meterY < MeterMin)
+	{
+		b_meterY += 0.1f;
+	}
+	/*if (Blue != MeterPos::None )
+	{
+
+	}*/
 }
 
 void Area::Meter::SetRedM(Life& life)
 {
-	if (RedMeter)
+	if (Red != MeterPos::None)
 	{
 		r_meterY -= 25.0f;
 

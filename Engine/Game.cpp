@@ -460,7 +460,8 @@ void Game::UpdateModel(float dt)
 			ball.ResetBall = false;
 		}
 
-		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && meter.GetBlueMeter() <= meter.GetMeterMin() && meter.BlueMeter)
+		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && meter.GetBlueMeter() <= meter.GetMeterMin() &&
+			meter.Blue != Area::Meter::MeterPos::None)
 		{
 			meter.SetBlueM('-');			//Sinisen mittarin mekaniikka
 			ball.SetSpeed('s');
@@ -472,11 +473,12 @@ void Game::UpdateModel(float dt)
 		{
 			ball.SetSpeed('r');
 		}
-		if (wnd.kbd.KeyIsPressed('Q'))
+		if (wnd.kbd.KeyIsPressed('Q'))		//Tämä testejä varten
 		{
 			meter.SetBlueM('+');
 			
 		}
+
 		gun.SetPos(pad);
 		if (wnd.kbd.KeyIsPressed(VK_TAB))			//Ase funktiot
 		{
@@ -562,7 +564,7 @@ void Game::UpdateModel(float dt)
 			pad.BallCollision(ball3);
 		}
 		
-
+		
 
 		
 		if (level == Level::Lvl1)			//Lvl päivitys
@@ -656,12 +658,17 @@ void Game::UpdateModel(float dt)
 
 		if (ChoiceState && wnd.kbd.KeyIsPressed('B'))			//valinta mekaniikka
 		{
-			meter.BlueMeter = true;
+			meter.Blue = Area::Meter::MeterPos::Left;
 			ChoiceState = false;
 		}
 		else if (ChoiceState && wnd.kbd.KeyIsPressed('R'))
 		{
-			meter.RedMeter = true;
+			meter.Red = Area::Meter::MeterPos::Left;
+			ChoiceState = false;
+		}
+		else if (ChoiceState && wnd.kbd.KeyIsPressed('G'))
+		{
+			meter.Green = Area::Meter::MeterPos::Left;
 			ChoiceState = false;
 		}
 
@@ -743,6 +750,9 @@ void Game::ComposeFrame()
 		topwall.DrawWall(gfx);
 		life.DrawLife(gfx);
 		pad.Draw(gfx);
+		meter.DrawBlueMeter(gfx);
+		meter.DrawRedMeter(gfx);
+		meter.DrawGreenMeter(gfx);
 
 		if (Ball_1)
 		{
@@ -763,14 +773,14 @@ void Game::ComposeFrame()
 		}
 		
 		
-		if (meter.BlueMeter)
+		/*if (meter.BlueMeter)
 		{
 			meter.DrawBlueMeter(gfx);
 		}
 		if (meter.RedMeter)
 		{
 			meter.DrawRedMeter(gfx);
-		}
+		}*/
 
 		switch (level)
 		{
