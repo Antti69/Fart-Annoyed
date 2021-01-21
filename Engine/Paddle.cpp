@@ -29,7 +29,7 @@ bool Paddle::BallCollision(Ball& ball)
 	{
 		if (CatchCount())
 		{
-			ball.ResetBall = true;
+			ball.SetResetBall(true);
 			const Vec2 Dir = Vec2(0.2f, -1.0f);
 			ball.SetDirection(Dir);
 			CatchCounter -= 1;
@@ -148,12 +148,25 @@ void Paddle::SetCatch()
 	CatchCounter = 3;
 }
 
-void Paddle::DrawCatchSign(Graphics& gfx)
+void Paddle::DrawCatchSign(Graphics& gfx) const
 {
 	if (CatchCounter > 0)
 	{
 		gfx.DrawCircle(120, 30, 10, Colors::Green);
 	}
+}
+
+void Paddle::SetPadChoiceSize(bool status)
+{
+	if (status == true)
+	{
+		PadChoiceSize = true;
+	}
+	else if (status == false)
+	{
+		PadChoiceSize = false;
+	}
+	
 }
 
 Paddle::Guns::Guns(const Vec2& pos_in)
@@ -163,15 +176,20 @@ Paddle::Guns::Guns(const Vec2& pos_in)
 
 }
 
-
 void Paddle::Guns::DrawAmmo(Graphics& gfx) const
 {
-	gfx.DrawCircle((int)pos.x, (int)pos.y, radius, Colors::Red);
+	if (guns)
+	{
+		gfx.DrawCircle((int)pos.x, (int)pos.y, radius, Colors::Red);
+	}
 }
 
 void Paddle::Guns::AmmoMovment(float dt)
 {
-	pos.y -= speed * dt;
+	if (guns)
+	{
+		pos.y -= speed * dt;
+	}
 }
 
 void Paddle::Guns::SetPos(const Paddle& pad)
@@ -180,7 +198,6 @@ void Paddle::Guns::SetPos(const Paddle& pad)
 	{
 		pos = pad.GetPos();
 	}
-	
 }
 
 void Paddle::Guns::WallCollision(const RectF walls)
@@ -189,7 +206,6 @@ void Paddle::Guns::WallCollision(const RectF walls)
 	{
 		guns = false;
 	}
-
 }
 
 RectF Paddle::Guns::GetRect() const
@@ -200,4 +216,16 @@ RectF Paddle::Guns::GetRect() const
 Vec2 Paddle::Guns::GetPos() const
 {
 	return pos;
+}
+
+void Paddle::Guns::SetGuns(bool status)
+{
+	if (status == true)
+	{
+		guns = true;
+	}
+	else if (status == false)
+	{
+		guns = false;
+	}
 }

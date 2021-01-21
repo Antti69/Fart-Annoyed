@@ -21,12 +21,13 @@ public:
 		void WallCollision(const RectF walls);
 		RectF GetRect() const;
 		Vec2 GetPos() const;
-		bool guns = false;
-		bool Guns_Active = true;
+		void SetGuns(bool status);
+		bool Guns_Active = true;		//ei viellä aktiivinen
 	private:
 		Vec2 pos;
 		static constexpr float speed = 800.0f;
 		static constexpr int radius = 6;
+		bool guns = false;
 	};
 public:
 	enum class PadSize
@@ -48,8 +49,8 @@ public:
 	void PaddleSize(float dt);
 	bool CatchCount() const;
 	void SetCatch();
-	void DrawCatchSign(Graphics& gfx);
-	bool PadChoiceSize = false;
+	void DrawCatchSign(Graphics& gfx) const;
+	void SetPadChoiceSize(bool status);
 private:
 	Color color = Colors::White;
 	Color WingColor = Colors::Red;
@@ -60,11 +61,11 @@ private:
 	float halfWidth;
 	float halfHeight;
 	Vec2 pos;
-	bool Cooldown = false;
 	int CatchCounter = 0;
 	float PadtimerEnd = 8.0f;
 	float PadtimerStart = 0.0f;
-
+	bool PadChoiceSize = false;
 	float cooldowntimerstart = 0.0f;		//ei käytössä, vaatii enemmän testejä
 	float cooldowntimerend = 0.2f;
+	bool Cooldown = false;
 };

@@ -20,9 +20,10 @@ public:
 	void SetDirection(const Vec2& dir);
 	void SetPos(class Paddle& pad);
 	void SetSpeed(char merkki);
-	bool ResetBall = true;
+	void SetResetBall(bool status);
 	bool fail = false;
 private:
+	bool ResetBall = true;
 	float speed = 500.0f;
 	float baseSpeed = 500.0f;
 	float speedUp = 0.0f;

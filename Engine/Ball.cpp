@@ -15,7 +15,10 @@ void Ball::Draw(Graphics& gfx) const
 
 void Ball::Movement(float dt)
 {
-	pos += vel * dt;
+	if (!ResetBall)
+	{
+		pos += vel * dt;
+	}
 }
 
 bool Ball::DoWallCollision(const RectF& walls)
@@ -82,11 +85,14 @@ void Ball::SetDirection(const Vec2& dir)
 
 void Ball::SetPos(Paddle& pad)
 {
-	pos.x = pad.GetRect().GetCenter().x;
-	pos.y = pad.GetRect().GetCenter().y - 20.0f;
+	if (ResetBall)
+	{
+		pos.x = pad.GetRect().GetCenter().x;
+		pos.y = pad.GetRect().GetCenter().y - 20.0f;
 
-	const Vec2 Dir = Vec2(0.2f, -1.0f);
-	SetDirection(Dir);
+		const Vec2 Dir = Vec2(0.2f, -1.0f);
+		SetDirection(Dir);
+	}
 }
 
 void Ball::SetSpeed(char merkki)
@@ -118,6 +124,18 @@ void Ball::SetSpeed(char merkki)
 		speed = baseSpeed + speedUp;
 
 		vel = vel.GetNormalized() * speed;
+	}
+}
+
+void Ball::SetResetBall(bool status)
+{
+	if (status == true)
+	{
+		ResetBall = true;
+	}
+	else if (status == false)
+	{
+		ResetBall = false;
 	}
 }
 

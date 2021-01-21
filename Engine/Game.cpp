@@ -434,33 +434,30 @@ void Game::UpdateModel(float dt)
 {
 	if (Started && !GameOver && !ChoiceState && !ChoiceState2)
 	{
+		ball.SetPos(pad);					//Pallon sijainti ja liike
 
-		if (ball.ResetBall)					//Pallon sijainti ja liike
+		if (ball.DoWallCollision(walls) || ball2.DoWallCollision(walls) || ball3.DoWallCollision(walls))
 		{
-			ball.SetPos(pad);
+			//‰‰net t‰h‰n joskus
 		}
-		else
+		if (Ball_1)
 		{
-			if (Ball_1)
-			{
-				ball.Movement(dt);
-			}
-			if (Ball_2)
-			{
-				ball2.Movement(dt);
-				
-			}
-			if (Ball_3)
-			{
-				ball3.Movement(dt);
-			}
+			ball.Movement(dt);
+		}
+		if (Ball_2)
+		{
+			ball2.Movement(dt);
+		}
+		if (Ball_3)
+		{
+			ball3.Movement(dt);
 		}
 		if (wnd.kbd.KeyIsPressed(VK_SPACE))
 		{
-			ball.ResetBall = false;
+			ball.SetResetBall(false);
 		}
 
-		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && meter.GetBlueMeter() <= meter.GetMeterMin() &&
+		if (wnd.kbd.KeyIsPressed(VK_CONTROL) && meter.GetB_meterY() <= meter.GetMeterMin() &&
 			meter.Blue != Area::Meter::MeterPos::None)
 		{
 			meter.SetBlueM('-');			//Sinisen mittarin mekaniikka
@@ -479,18 +476,15 @@ void Game::UpdateModel(float dt)
 			
 		}
 
+		gun.WallCollision(walls);
 		gun.SetPos(pad);
+		gun.AmmoMovment(dt);
+		
+
 		if (wnd.kbd.KeyIsPressed(VK_TAB))			//Ase funktiot
 		{
-			gun.guns = true;
+			gun.SetGuns(true);
 		}
-		if (gun.guns)
-		{
-			gun.AmmoMovment(dt);
-			gun.WallCollision(walls);
-			
-		}
-
 
 
 		if (!Ball_1)
@@ -527,7 +521,7 @@ void Game::UpdateModel(float dt)
 			if (allfail)
 			{
 				life.SetLife('-');
-				ball.ResetBall = true;
+				ball.SetResetBall(true);
 				ball.fail = false;
 				Ball_1 = true;
 
@@ -539,10 +533,7 @@ void Game::UpdateModel(float dt)
 
 		}
 
-		if (ball.DoWallCollision(walls) || ball2.DoWallCollision(walls) || ball3.DoWallCollision(walls) )
-		{
-			//‰‰net t‰h‰n joskus
-		}
+
 		
 		
 
@@ -573,7 +564,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				level = Level::Lvl2;
-				ball.ResetBall = true;
+				ball.SetResetBall(true);
 				LvlUp = false;
 			}
 		}
@@ -583,7 +574,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				level = Level::Lvl3;
-				ball.ResetBall = true;
+				ball.SetResetBall(true);
 				LvlUp = false;
 			}
 		}
@@ -594,7 +585,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				ChoiceState = true;
-				ball.ResetBall = true;
+				ball.SetResetBall(true);
 				level = Level::Lvl4;
 				LvlUp = false;
 			}
@@ -605,7 +596,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				level = Level::Lvl5;
-				ball.ResetBall = true;
+				ball.SetResetBall(true);
 				LvlUp = false;
 			}
 		}
@@ -617,7 +608,7 @@ void Game::UpdateModel(float dt)
 			{
 				
 				level = Level::Lvl6;
-				ball.ResetBall = true;
+				ball.SetResetBall(true);
 				LvlUp = false;
 			}
 		}
@@ -627,7 +618,7 @@ void Game::UpdateModel(float dt)
 			if (LvlUp)
 			{
 				ChoiceState2 = true;
-				ball.ResetBall = true;
+				ball.SetResetBall(true);
 				level = Level::Lvl7;
 				LvlUp = false;
 			}
@@ -638,7 +629,7 @@ void Game::UpdateModel(float dt)
 			BrickCollision(bricks7_1, state7_1, ball, ball2, ball3, BrickTotal_lvl7_1, dt);
 			if (LvlUp)
 			{
-				ball.ResetBall = true;
+				ball.SetResetBall(true);
 				level = Level::Lvl8;
 				LvlUp = false;
 			}
@@ -679,7 +670,7 @@ void Game::UpdateModel(float dt)
 		}
 		else if (ChoiceState2 && wnd.kbd.KeyIsPressed('R'))
 		{
-			pad.PadChoiceSize = true;
+			pad.SetPadChoiceSize(true);
 			pad.padsize = Paddle::PadSize::Small;
 			ChoiceState2 = false;
 		}
@@ -687,42 +678,42 @@ void Game::UpdateModel(float dt)
 		if (wnd.kbd.KeyIsPressed('2'))			//Level oikotie "testi‰ varten"
 		{
 			level = Level::Lvl2;
-			ball.ResetBall = true;
+			ball.SetResetBall(true);
 		}
 		if (wnd.kbd.KeyIsPressed('3'))
 		{
 			level = Level::Lvl3;
-			ball.ResetBall = true;
+			ball.SetResetBall(true);
 		}
 		if (wnd.kbd.KeyIsPressed('4'))
 		{
 			level = Level::Lvl4;
-			ball.ResetBall = true;
+			ball.SetResetBall(true);
 		}
 		if (wnd.kbd.KeyIsPressed('5'))
 		{
 			level = Level::Lvl5;
-			ball.ResetBall = true;
+			ball.SetResetBall(true);
 		}
 		if (wnd.kbd.KeyIsPressed('6'))
 		{
 			level = Level::Lvl6;
-			ball.ResetBall = true;
+			ball.SetResetBall(true);
 		}
 		if (wnd.kbd.KeyIsPressed('7'))
 		{
 			level = Level::Lvl7;
-			ball.ResetBall = true;
+			ball.SetResetBall(true);
 		}
 		if (wnd.kbd.KeyIsPressed('8'))
 		{
 			level = Level::Lvl8;
-			ball.ResetBall = true;
+			ball.SetResetBall(true);
 		}
 		if (wnd.kbd.KeyIsPressed('T'))
 		{
 			level = Level::Testi;
-			ball.ResetBall = true;
+			ball.SetResetBall(true);
 		}
 
 	}
@@ -750,9 +741,10 @@ void Game::ComposeFrame()
 		topwall.DrawWall(gfx);
 		life.DrawLife(gfx);
 		pad.Draw(gfx);
-		meter.DrawBlueMeter(gfx);
-		meter.DrawRedMeter(gfx);
-		meter.DrawGreenMeter(gfx);
+		meter.DrawMeter(gfx, meter.Blue, meter.GetB_meterY(), Colors::Blue);
+		meter.DrawMeter(gfx, meter.Red, meter.GetR_meterY(), Colors::Red);
+		meter.DrawMeter(gfx, meter.Green, meter.GetG_meterY(), Colors::Green);
+		gun.DrawAmmo(gfx);
 
 		if (Ball_1)
 		{
@@ -766,21 +758,6 @@ void Game::ComposeFrame()
 		{
 			ball3.Draw(gfx);
 		}
-
-		if (gun.guns)
-		{
-			gun.DrawAmmo(gfx);
-		}
-		
-		
-		/*if (meter.BlueMeter)
-		{
-			meter.DrawBlueMeter(gfx);
-		}
-		if (meter.RedMeter)
-		{
-			meter.DrawRedMeter(gfx);
-		}*/
 
 		switch (level)
 		{
@@ -897,7 +874,7 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 		}
 		if (AmmoCollisionhappend)
 		{
-			gun.guns = false;
+			gun.SetGuns(false);
 		}
 		
 		if (state[CurColIndex] == Brick::State::indestructible)

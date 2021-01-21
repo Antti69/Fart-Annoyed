@@ -32,13 +32,13 @@ public:
 		MeterPos Green = { MeterPos::None };
 
 	public:
-		void DrawBlueMeter(Graphics& gfx) const;
-		void DrawRedMeter(Graphics& gfx) const;
-		void DrawGreenMeter(Graphics& gfx) const;
+		void DrawMeter(Graphics& gfx, MeterPos& pos, float b_meterY, Color c) const;
 		void SetBlueM(char merkki);
 		void SetRedM(Life& life);
-		float GetBlueMeter() const;
 		float GetMeterMin() const;
+		float GetB_meterY() const;
+		float GetR_meterY() const;
+		float GetG_meterY() const;
 	private:
 		float b_meterY = 530.0f;
 		float r_meterY = 530.0f;
