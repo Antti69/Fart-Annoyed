@@ -25,7 +25,7 @@ bool Paddle::BallCollision(Ball& ball)
 	const Vec2 ballpos = ball.GetPos();
 	const RectF rect = GetRect();
 
-	if (GetRect().IsOverlappingWith(ball.GetRect()))
+	if (!Cooldown && GetRect().IsOverlappingWith(ball.GetRect()))
 	{
 		if (CatchCount())
 		{
@@ -46,7 +46,7 @@ bool Paddle::BallCollision(Ball& ball)
 		{
 			ball.ReboundX();
 		}
-		//Cooldown = true;
+		Cooldown = true;
 		return true;
 	}
 	return false;
@@ -89,9 +89,13 @@ Vec2 Paddle::GetPos() const
 
 void Paddle::ResetCooldown(float dt)
 {
-	if (Cooldown && dt > 0.02f)
+	if (Cooldown)
 	{
-		Cooldown = false;
+		if ((cooldowntimerstart += dt) > cooldowntimerend)
+		{
+			Cooldown = false;
+			cooldowntimerstart = 0.0f;
+		}
 	}
 	
 }
@@ -228,4 +232,9 @@ void Paddle::Guns::SetGuns(bool status)
 	{
 		guns = false;
 	}
+}
+
+bool Paddle::Guns::GetGuns() const
+{
+	return guns;
 }

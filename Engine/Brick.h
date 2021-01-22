@@ -17,8 +17,7 @@ public:
 		SpeedUp,
 		SpeedDown,
 		LifeUp,
-		BlueMeterUp,
-		RedMeterUp,
+		MeterUp,
 		Catcher,
 		MultipleBalls,
 		LargePad
@@ -46,4 +45,5 @@ private:
 	Color c;
 	bool destroyed = false;
 	bool firstcol = false;
+	
 };

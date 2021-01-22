@@ -35,6 +35,7 @@ public:
 		void DrawMeter(Graphics& gfx, MeterPos& pos, float b_meterY, Color c) const;
 		void SetBlueM(char merkki);
 		void SetRedM(Life& life);
+		void SetGreenM(char merkki);
 		float GetMeterMin() const;
 		float GetB_meterY() const;
 		float GetR_meterY() const;

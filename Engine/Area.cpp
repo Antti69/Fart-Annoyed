@@ -106,7 +106,7 @@ void Area::Meter::SetBlueM(char merkki)
 	{
 		if (merkki == '+' && b_meterY > MeterMax)
 		{
-			b_meterY -= 10.0f;
+			b_meterY -= 8.0f;
 
 		}
 		if (merkki == '-' && b_meterY < MeterMin)
@@ -120,7 +120,7 @@ void Area::Meter::SetRedM(Life& life)
 {
 	if (Red != MeterPos::None)
 	{
-		r_meterY -= 25.0f;
+		r_meterY -= 10.0f;
 
 		if (r_meterY <= MeterMax)
 		{
@@ -130,6 +130,22 @@ void Area::Meter::SetRedM(Life& life)
 		}
 	}
 
+}
+
+void Area::Meter::SetGreenM(char merkki)
+{
+	if (Green != MeterPos::None)
+	{
+		if (merkki == '+' && g_meterY > MeterMax)
+		{
+			g_meterY -= 7.0f;
+
+		}
+		if (merkki == '-' && g_meterY < MeterMin)
+		{
+			g_meterY += 19.2f;
+		}
+	}
 }
 
 float Area::Meter::GetMeterMin() const

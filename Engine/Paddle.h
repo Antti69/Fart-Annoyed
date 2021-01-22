@@ -22,7 +22,7 @@ public:
 		RectF GetRect() const;
 		Vec2 GetPos() const;
 		void SetGuns(bool status);
-		bool Guns_Active = true;		//ei viellä aktiivinen
+		bool GetGuns() const;
 	private:
 		Vec2 pos;
 		static constexpr float speed = 800.0f;
@@ -65,7 +65,7 @@ private:
 	float PadtimerEnd = 8.0f;
 	float PadtimerStart = 0.0f;
 	bool PadChoiceSize = false;
-	float cooldowntimerstart = 0.0f;		//ei käytössä, vaatii enemmän testejä
-	float cooldowntimerend = 0.2f;
+	float cooldowntimerstart = 0.0f;		//cooldown käytössä mutta vaatii lisää testiä
+	float cooldowntimerend = 0.3f;
 	bool Cooldown = false;
 };

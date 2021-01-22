@@ -155,12 +155,12 @@ Game::Game( MainWindow& wnd )
 				if (y < 8 && x < 5)
 				{
 					c = Colors::Blue;
-					state4[i] = Brick::State::BlueMeterUp;
+					state4[i] = Brick::State::MeterUp;
 				}
 				else if (y < 8 && x > 5)
 				{
 					c = Colors::Red;
-					state4[i] = Brick::State::RedMeterUp;
+					state4[i] = Brick::State::MeterUp;
 				}
 				else if (y == 8)
 				{
@@ -243,11 +243,11 @@ Game::Game( MainWindow& wnd )
 
 				if (x < 2)
 				{
-					state5_1[i] = Brick::State::BlueMeterUp;
+					state5_1[i] = Brick::State::MeterUp;
 				}
 				else if (x > 2)
 				{
-					state5_1[i] = Brick::State::RedMeterUp;
+					state5_1[i] = Brick::State::MeterUp;
 				}
 				else
 				{
@@ -278,11 +278,11 @@ Game::Game( MainWindow& wnd )
 
 				if (y == 3)
 				{
-					state6[i] = Brick::State::BlueMeterUp;
+					state6[i] = Brick::State::MeterUp;
 				}
 				else if (y == 4)
 				{
-					state6[i] = Brick::State::RedMeterUp;
+					state6[i] = Brick::State::MeterUp;
 				}
 				else if (y == 5 || y == 7)
 				{
@@ -316,12 +316,12 @@ Game::Game( MainWindow& wnd )
 				if (y == 0 && x <= 4)
 				{
 					c = Colors::Blue;
-					state7[i] = Brick::State::BlueMeterUp;
+					state7[i] = Brick::State::MeterUp;
 				}
 				else if (y == 0 && x >= 5)
 				{
 					c = Colors::Red;
-					state7[i] = Brick::State::RedMeterUp;
+					state7[i] = Brick::State::MeterUp;
 				}
 				else if (y == 1)
 				{
@@ -446,10 +446,12 @@ void Game::UpdateModel(float dt)
 		}
 		if (Ball_2)
 		{
+			ball2.SetResetBall(false);
 			ball2.Movement(dt);
 		}
 		if (Ball_3)
 		{
+			ball3.SetResetBall(false);
 			ball3.Movement(dt);
 		}
 		if (wnd.kbd.KeyIsPressed(VK_SPACE))
@@ -481,11 +483,21 @@ void Game::UpdateModel(float dt)
 		gun.AmmoMovment(dt);
 		
 
-		if (wnd.kbd.KeyIsPressed(VK_TAB))			//Ase funktiot
+		if (wnd.kbd.KeyIsPressed(VK_TAB) && meter.Green != Area::Meter::MeterPos::None
+			&& meter.GetG_meterY() <= meter.GetMeterMin() && !gun.GetGuns())			//Ase funktiot
 		{
 			gun.SetGuns(true);
+			meter.SetGreenM('-');
 		}
 
+		if (wnd.kbd.KeyIsPressed('C'))
+		{
+			meter.Green = Area::Meter::MeterPos::Left;
+		}
+		if (wnd.kbd.KeyIsPressed('P'))
+		{
+			meter.Blue = Area::Meter::MeterPos::Right;
+		}
 
 		if (!Ball_1)
 		{
@@ -541,7 +553,7 @@ void Game::UpdateModel(float dt)
 		pad.WallCollision(walls);
 		pad.PaddleSize(dt);
 		pad.DrawCatchSign(gfx);
-		//pad.ResetCooldown(dt);
+		pad.ResetCooldown(dt);
 		if (Ball_1)
 		{
 			pad.BallCollision(ball);
@@ -715,6 +727,7 @@ void Game::UpdateModel(float dt)
 			level = Level::Testi;
 			ball.SetResetBall(true);
 		}
+
 
 	}
 	
@@ -909,14 +922,11 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 			life.SetLife('+');
 			bricks[CurColIndex].SetDestr();
 		}
-		else if (state[CurColIndex] == Brick::State::BlueMeterUp)
-		{
-			meter.SetBlueM('+');
-			bricks[CurColIndex].SetDestr();
-		}
-		else if (state[CurColIndex] == Brick::State::RedMeterUp)
+		else if (state[CurColIndex] == Brick::State::MeterUp)
 		{
 			meter.SetRedM(life);
+			meter.SetGreenM('+');
+			meter.SetBlueM('+');
 			bricks[CurColIndex].SetDestr();
 		}
 		else if (state[CurColIndex] == Brick::State::Catcher)
