@@ -407,7 +407,7 @@ Game::Game( MainWindow& wnd )
 				bricksTesti[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
 
-				stateTesti[i] = Brick::State::LargePad;
+				stateTesti[i] = Brick::State::MeterFull;
 
 				i++;
 			}
@@ -490,7 +490,7 @@ void Game::UpdateModel(float dt)
 			meter.SetGreenM('-');
 		}
 
-		if (wnd.kbd.KeyIsPressed('C'))
+		if (wnd.kbd.KeyIsPressed('C'))					//Testejä varten
 		{
 			meter.Green = Area::Meter::MeterPos::Left;
 		}
@@ -927,6 +927,12 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 			meter.SetRedM(life);
 			meter.SetGreenM('+');
 			meter.SetBlueM('+');
+			bricks[CurColIndex].SetDestr();
+		}
+		else if (state[CurColIndex] == Brick::State::MeterFull)
+		{
+			meter.SetBlueM('F');
+			meter.SetGreenM('F');
 			bricks[CurColIndex].SetDestr();
 		}
 		else if (state[CurColIndex] == Brick::State::Catcher)

@@ -18,6 +18,7 @@ public:
 		SpeedDown,
 		LifeUp,
 		MeterUp,
+		MeterFull,
 		Catcher,
 		MultipleBalls,
 		LargePad

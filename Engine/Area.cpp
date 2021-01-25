@@ -113,6 +113,10 @@ void Area::Meter::SetBlueM(char merkki)
 		{
 			b_meterY += 0.1f;
 		}
+		if (merkki == 'F')
+		{
+			b_meterY = MeterMax;
+		}
 	}
 }
 
@@ -126,10 +130,8 @@ void Area::Meter::SetRedM(Life& life)
 		{
 			life.SetLife('+');
 			r_meterY = MeterMin;
-			
 		}
 	}
-
 }
 
 void Area::Meter::SetGreenM(char merkki)
@@ -144,6 +146,10 @@ void Area::Meter::SetGreenM(char merkki)
 		if (merkki == '-' && g_meterY < MeterMin)
 		{
 			g_meterY += 19.2f;
+		}
+		if (merkki == 'F')
+		{
+			g_meterY = MeterMax;
 		}
 	}
 }
