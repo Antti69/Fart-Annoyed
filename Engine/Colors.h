@@ -96,6 +96,37 @@ public:
 
 namespace Colors
 {
+	Color Pulsing()
+	{
+		Color c = { 127u, 0u, 0u };
+
+		bool increasing = true;
+		if (increasing)
+		{
+			if (c.GetR() >= 253u)
+			{
+				increasing = false;
+			}
+			else
+			{
+				c = Color(c.GetR() + 2, c.GetG() + 4, c.GetB() + 4);
+			}
+			return c;
+		}
+		else
+		{
+			if (c.GetR() <= 127u)
+			{
+				increasing = true;
+			}
+			else
+			{
+				c = Color(c.GetR() - 2, c.GetG() - 4, c.GetB() - 4);
+			}
+			return c;
+		}
+	}
+
 	static constexpr Color MakeRGB( unsigned char r,unsigned char g,unsigned char b )
 	{
 		return (r << 16) | (g << 8) | b;
@@ -111,4 +142,13 @@ namespace Colors
 	static constexpr Color Cyan = MakeRGB( 0u,255u,255u );
 	static constexpr Color Magenta = MakeRGB( 255u,0u,255u );
 	static constexpr Color Orange = MakeRGB(255u, 127u, 0u);
+	static constexpr Color Purple = MakeRGB(128u, 0u, 128u);
+	static constexpr Color DarkRed = MakeRGB(139u, 0u, 0u);
+	static constexpr Color DarkGreen = MakeRGB(47u, 79u, 47u);
+	static constexpr Color MidnightBlue = MakeRGB(47u, 47u, 79u);
+	static constexpr Color LawnGreen = MakeRGB(124u, 252u, 0u);
+
+	static constexpr Color RedTest = MakeRGB(124u, 252u, 0u);
+
+	Color Pulse = Pulsing();
 }

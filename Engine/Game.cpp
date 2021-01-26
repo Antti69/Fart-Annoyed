@@ -395,7 +395,7 @@ Game::Game( MainWindow& wnd )
 			}
 		}
 	}
-	//Testi kenttä
+	//Level 8
 	{
 		const Vec2 topleft = { GridStartX + (brickWidth * 4), GridStartY + (brickHeight * 5) };
 		int i = 0;
@@ -408,6 +408,30 @@ Game::Game( MainWindow& wnd )
 					brickWidth, brickHeight), c);
 
 				stateTesti[i] = Brick::State::MeterFull;
+
+				i++;
+			}
+		}
+	}
+	//Testi kenttä
+	{
+		const Vec2 topleft = { GridStartX + (brickWidth * 4), GridStartY + (brickHeight * 5) };
+		int i = 0;
+		for (int y = 0; y < BrickPysty_lvlTesti; y++)
+		{
+			Color c = Colors::RedTest;
+			for (int x = 0; x < BrickViisto_lvlTesti; x++)
+			{
+				if (x == 1)
+				{
+					c = Colors::Pulse;
+				}
+
+				bricksTesti[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
+
+				stateTesti[i] = Brick::State::MeterFull;
+
 
 				i++;
 			}
