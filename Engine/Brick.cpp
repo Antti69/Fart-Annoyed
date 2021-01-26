@@ -63,17 +63,15 @@ void Brick::ExecuteBallCollision(Ball& ball)
 
 bool Brick::CheckAmmoCollision(const Paddle::Guns& gun) const
 {
+	if (indestructible && GetRect().IsOverlappingWith(gun.GetRect()))
 	{
-		if (indestructible && GetRect().IsOverlappingWith(gun.GetRect()))
-		{
-			return true;
-		}
-		if (!destroyed && GetRect().IsOverlappingWith(gun.GetRect()))
-		{
-			return true;
-		}
-		return false;
+		return true;
 	}
+	if (!destroyed && GetRect().IsOverlappingWith(gun.GetRect()))
+	{
+		return true;
+	}
+	return false;
 }
 
 
@@ -90,6 +88,38 @@ Vec2 Brick::GetCenter() const
 Color Brick::GetColor() const
 {
 	return c;
+}
+
+Color Brick::ColorPulse(Color c)
+{
+	if (increasing)
+	{
+		if (c.GetR() >= 253)
+		{
+			increasing = false;
+		}
+		else
+		{
+			c = Color(c.GetR() + 1, c.GetG() + 1, c.GetB() + 1);
+		}
+	}
+	else
+	{
+		if (c.GetR() <= 3)
+		{
+			increasing = true;
+		}
+		else
+		{
+			c = Color(c.GetR() - 1, c.GetG() - 1, c.GetB() - 1);
+		}
+	}
+	return c;
+}
+
+void Brick::SetColor()
+{
+	c = ColorPulse(c);
 }
 
 bool Brick::GetFirstcol()

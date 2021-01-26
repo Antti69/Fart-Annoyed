@@ -422,16 +422,16 @@ Game::Game( MainWindow& wnd )
 			Color c = Colors::RedTest;
 			for (int x = 0; x < BrickViisto_lvlTesti; x++)
 			{
-				if (x == 1)
-				{
-					c = Colors::Pulse;
-				}
+
 
 				bricksTesti[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
 
 				stateTesti[i] = Brick::State::MeterFull;
-
+				if (x == 1)
+				{
+					bricksTesti[i].ColorChange = true;
+				}
 
 				i++;
 			}
@@ -673,6 +673,7 @@ void Game::UpdateModel(float dt)
 		else if (level == Level::Testi)
 		{
 			BrickCollision(bricksTesti, stateTesti, ball, BrickTotal_lvl8, dt);
+			
 		}
 
 	}
@@ -857,6 +858,10 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 	bool allDestroyed = true;
 	for (int i = 0; i < BrickTotal_lvl1; i++)
 	{
+		if (bricks[i].ColorChange)
+		{
+			bricks[i].SetColor();
+		}
 		allDestroyed = allDestroyed && bricks[i].GetDestroyed() == true;
 
 		if (bricks[i].CheckBallCollision(ball))
@@ -1070,4 +1075,6 @@ void Game::Timer(float dt)
 
 
 }
+
+
 

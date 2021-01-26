@@ -96,36 +96,6 @@ public:
 
 namespace Colors
 {
-	Color Pulsing()
-	{
-		Color c = { 127u, 0u, 0u };
-
-		bool increasing = true;
-		if (increasing)
-		{
-			if (c.GetR() >= 253u)
-			{
-				increasing = false;
-			}
-			else
-			{
-				c = Color(c.GetR() + 2, c.GetG() + 4, c.GetB() + 4);
-			}
-			return c;
-		}
-		else
-		{
-			if (c.GetR() <= 127u)
-			{
-				increasing = true;
-			}
-			else
-			{
-				c = Color(c.GetR() - 2, c.GetG() - 4, c.GetB() - 4);
-			}
-			return c;
-		}
-	}
 
 	static constexpr Color MakeRGB( unsigned char r,unsigned char g,unsigned char b )
 	{
@@ -150,5 +120,4 @@ namespace Colors
 
 	static constexpr Color RedTest = MakeRGB(124u, 252u, 0u);
 
-	Color Pulse = Pulsing();
 }

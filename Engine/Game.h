@@ -73,6 +73,9 @@ private:
 	void DrawOver();
 	void DrawLevel(const Level level);
 	void Timer(float dt);
+	
+	
+	
 	float dt;
 	float elapsedTime;
 
@@ -174,7 +177,7 @@ private:
 	Area topwall = { RectF(110.0f, 690.0f, 50.0f, GridStartY), Colors::Blue };
 
 	RectF walls = { RectF(leftwall.GetRect().right, rightwall.GetRect().left, topwall.GetRect().bottom, float(gfx.ScreenHeight)) };
-
+	
 	
 	bool Started = false;
 	bool GameOver = false;

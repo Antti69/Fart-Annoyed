@@ -34,11 +34,14 @@ public:
 	RectF GetRect() const;
 	Vec2 GetCenter() const;
 	Color GetColor() const;
+	Color ColorPulse(Color c);
+	void SetColor();
 	bool GetFirstcol();
 	bool GetDestroyed();
 	void SetDestr();
 	void Setfirstcol();
 	bool indestructible = false;
+	bool ColorChange = false;
 	
 private:
 	static constexpr float padding = 1.0f;
@@ -46,5 +49,5 @@ private:
 	Color c;
 	bool destroyed = false;
 	bool firstcol = false;
-	
+	bool increasing = true;
 };
