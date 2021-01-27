@@ -85,8 +85,24 @@ Vec2 Brick::GetCenter() const
 	return Vec2(rect.GetCenter());
 }
 
-Color Brick::GetColor() const
+Color Brick::FlashEffect(Color c)
 {
+	if (ColorFlash)
+	{
+		if (c.GetB() >= 245)
+		{
+			ColorFlash = false;
+			c = Colors::Orange;
+		}
+		else
+		{
+			c = Color(c.GetR(), c.GetG() + 1, c.GetB() + 3);
+		}
+	}
+	else
+	{
+		c = Colors::Orange;
+	}
 	return c;
 }
 
@@ -117,9 +133,17 @@ Color Brick::ColorPulse(Color c)
 	return c;
 }
 
-void Brick::SetColor()
+void Brick::SetColor(char merkki)
 {
-	c = ColorPulse(c);
+	if (merkki == 'P')
+	{
+		c = ColorPulse(c);
+	}
+	if (merkki == 'F')
+	{
+		c = FlashEffect(c);
+	}
+	
 }
 
 bool Brick::GetFirstcol()

@@ -50,6 +50,7 @@ Game::Game( MainWindow& wnd )
 				state[i] = Brick::State::indestructible;
 				bricks[i].indestructible = true;
 				bricks[i].SetDestr();
+				
 			}
 			i++;
 		}
@@ -860,8 +861,13 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 	{
 		if (bricks[i].ColorChange)
 		{
-			bricks[i].SetColor();
+			bricks[i].SetColor('P');
 		}
+		if (bricks[i].ColorFlash)
+		{
+			bricks[i].SetColor('F');
+		}
+
 		allDestroyed = allDestroyed && bricks[i].GetDestroyed() == true;
 
 		if (bricks[i].CheckBallCollision(ball))
@@ -921,7 +927,7 @@ void Game::BrickCollision(Brick* bricks, Brick::State* state, Ball& ball, int Br
 		
 		if (state[CurColIndex] == Brick::State::indestructible)
 		{
-
+			bricks[CurColIndex].ColorFlash = true;
 		}
 		else if (state[CurColIndex] == Brick::State::Basic)
 		{
