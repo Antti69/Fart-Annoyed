@@ -398,18 +398,62 @@ Game::Game( MainWindow& wnd )
 	}
 	//Level 8
 	{
-		const Vec2 topleft = { GridStartX + (brickWidth * 4), GridStartY + (brickHeight * 5) };
+		const Vec2 topleft = { GridStartX + (brickWidth * 1), GridStartY + (brickHeight * 2) };
+		Color c = Colors::Orange;
 		int i = 0;
-		for (int y = 0; y < BrickPysty_lvlTesti; y++)
+		for (int y = 0; y < BrickPysty_lvl8; y++)
 		{
-			Color c = Colors::Cyan;
-			for (int x = 0; x < BrickViisto_lvlTesti; x++)
+			for (int x = 0; x < BrickViisto_lvl8; x++)
 			{
-				bricksTesti[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+				if (y <= 2 && (x == 0 || x == 2 || x == 9 || x == 11))
+				{
+					state8[i] = Brick::State::indestructible;
+					bricks8[i].SetDestr();
+					bricks8[i].indestructible = true;
+					c = Colors::Orange;
+				}
+				else if (y == 3 && (x <= 2 || x >= 9))
+				{
+					state8[i] = Brick::State::indestructible;
+					bricks8[i].SetDestr();
+					bricks8[i].indestructible = true;
+					c = Colors::Orange;
+				}
+				else if (y == 2 && x == 1)
+				{
+					state8[i] = Brick::State::Catcher;
+					c = Colors::LawnGreen;
+				}
+				else if (y == 2 && x == 10)
+				{
+					state8[i] = Brick::State::LifeUp;
+					c = Colors::Magenta;
+				}
+				else if ((y == 6 || y == 7 || y == 8) && (x == 5 || x == 7))
+				{
+					state8[i] = Brick::State::indestructible;
+					bricks8[i].SetDestr();
+					bricks8[i].indestructible = true;
+					c = Colors::Orange;
+				}
+				else if (y == 9 && (x == 5 || x == 6 || x == 7))
+				{
+					state8[i] = Brick::State::indestructible;
+					bricks8[i].SetDestr();
+					bricks8[i].indestructible = true;
+					c = Colors::Orange;
+				}
+				else if (y == 8 && x == 6)
+				{
+					state8[i] = Brick::State::LargePad;
+					c = Colors::Scarlet;
+				}
+				else
+				{
+					continue;
+				}
+				bricks8[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
-
-				stateTesti[i] = Brick::State::MeterFull;
-
 				i++;
 			}
 		}
@@ -420,7 +464,7 @@ Game::Game( MainWindow& wnd )
 		int i = 0;
 		for (int y = 0; y < BrickPysty_lvlTesti; y++)
 		{
-			Color c = Colors::RedTest;
+			Color c = Colors::Scarlet;
 			for (int x = 0; x < BrickViisto_lvlTesti; x++)
 			{
 
@@ -570,10 +614,6 @@ void Game::UpdateModel(float dt)
 
 		}
 
-
-		
-		
-
 		pad.Movement(wnd.kbd, dt);		//Paddlen funktiot
 		pad.WallCollision(walls);
 		pad.PaddleSize(dt);
@@ -592,8 +632,6 @@ void Game::UpdateModel(float dt)
 			pad.BallCollision(ball3);
 		}
 		
-		
-
 		
 		if (level == Level::Lvl1)			//Lvl päivitys
 		{
@@ -670,6 +708,16 @@ void Game::UpdateModel(float dt)
 				level = Level::Lvl8;
 				LvlUp = false;
 			}
+		}
+		else if (level == Level::Lvl8)
+		{
+			BrickCollision(bricks8, state8, ball, BrickTotal_lvl8, dt);
+			/*if (LvlUp)
+			{
+				ball.SetResetBall(true);
+				level = Level::Lvl9;
+				LvlUp = false;
+			}*/
 		}
 		else if (level == Level::Testi)
 		{
@@ -1063,6 +1111,13 @@ void Game::DrawLevel(const Level level)
 			b.Draw(gfx);
 		}
 		for (const Brick& b : bricks7_1)
+		{
+			b.Draw(gfx);
+		}
+	}
+	else if (level == Level::Lvl8)
+	{
+		for (const Brick& b : bricks8)
 		{
 			b.Draw(gfx);
 		}

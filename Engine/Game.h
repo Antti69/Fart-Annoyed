@@ -121,8 +121,8 @@ private:
 	static constexpr int BrickPysty_lvl7_1 = 10;
 	static constexpr int BrickTotal_lvl7_1 = BrickViisto_lvl7_1 * BrickPysty_lvl7_1;
 
-	static constexpr int BrickViisto_lvl8 = 2;
-	static constexpr int BrickPysty_lvl8 = 2;
+	static constexpr int BrickViisto_lvl8 = 12;
+	static constexpr int BrickPysty_lvl8 = 10;
 	static constexpr int BrickTotal_lvl8 = BrickViisto_lvl8 * BrickPysty_lvl8;
 
 	static constexpr int BrickViisto_lvlTesti = 2;

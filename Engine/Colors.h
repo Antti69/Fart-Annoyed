@@ -117,6 +117,7 @@ namespace Colors
 	static constexpr Color DarkGreen = MakeRGB(47u, 79u, 47u);
 	static constexpr Color MidnightBlue = MakeRGB(47u, 47u, 79u);
 	static constexpr Color LawnGreen = MakeRGB(124u, 252u, 0u);
+	static constexpr Color Scarlet = MakeRGB(140u, 23u, 23u);
 
 	static constexpr Color RedTest = MakeRGB(124u, 252u, 0u);
 
