@@ -62,7 +62,7 @@ private:
 	float halfHeight;
 	Vec2 pos;
 	int CatchCounter = 0;
-	float PadtimerEnd = 8.0f;
+	float PadtimerEnd = 15.0f;
 	float PadtimerStart = 0.0f;
 	bool PadChoiceSize = false;
 	float cooldowntimerstart = 0.0f;		//cooldown käytössä mutta vaatii lisää testiä

@@ -51,14 +51,11 @@ void Brick::ExecuteBallCollision(Ball& ball)
 		|| ballpos.x >= rect.left && ballpos.x <= rect.right)
 	{
 		ball.ReboundY();
-		
 	}
 	else
 	{
 		ball.ReboundX();
-		
 	}
-	
 }
 
 bool Brick::CheckAmmoCollision(const Paddle::Guns& gun) const
@@ -143,7 +140,6 @@ void Brick::SetColor(char merkki)
 	{
 		c = FlashEffect(c);
 	}
-	
 }
 
 bool Brick::GetFirstcol()

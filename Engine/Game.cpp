@@ -408,21 +408,19 @@ Game::Game( MainWindow& wnd )
 				if (y <= 2 && (x == 0 || x == 2 || x == 9 || x == 11))
 				{
 					state8[i] = Brick::State::indestructible;
-					bricks8[i].SetDestr();
 					bricks8[i].indestructible = true;
 					c = Colors::Orange;
 				}
 				else if (y == 3 && (x <= 2 || x >= 9))
 				{
 					state8[i] = Brick::State::indestructible;
-					bricks8[i].SetDestr();
 					bricks8[i].indestructible = true;
 					c = Colors::Orange;
 				}
 				else if (y == 2 && x == 1)
 				{
-					state8[i] = Brick::State::Catcher;
-					c = Colors::LawnGreen;
+					state8[i] = Brick::State::MeterFull;
+					c = Colors::Purple;
 				}
 				else if (y == 2 && x == 10)
 				{
@@ -432,14 +430,12 @@ Game::Game( MainWindow& wnd )
 				else if ((y == 6 || y == 7 || y == 8) && (x == 5 || x == 7))
 				{
 					state8[i] = Brick::State::indestructible;
-					bricks8[i].SetDestr();
 					bricks8[i].indestructible = true;
 					c = Colors::Orange;
 				}
 				else if (y == 9 && (x == 5 || x == 6 || x == 7))
 				{
 					state8[i] = Brick::State::indestructible;
-					bricks8[i].SetDestr();
 					bricks8[i].indestructible = true;
 					c = Colors::Orange;
 				}
@@ -535,23 +531,22 @@ void Game::UpdateModel(float dt)
 			ball.SetSpeed('s');
 			ball2.SetSpeed('s');
 			ball3.SetSpeed('s');
-			
 		}
 		else
 		{
 			ball.SetSpeed('r');
+			ball2.SetSpeed('r');
+			ball3.SetSpeed('r');
 		}
 		if (wnd.kbd.KeyIsPressed('Q'))		//Tämä testejä varten
 		{
 			meter.SetBlueM('+');
-			
 		}
 
 		gun.WallCollision(walls);
 		gun.SetPos(pad);
 		gun.AmmoMovment(dt);
 		
-
 		if (wnd.kbd.KeyIsPressed(VK_TAB) && meter.Green != Area::Meter::MeterPos::None
 			&& meter.GetG_meterY() <= meter.GetMeterMin() && !gun.GetGuns())			//Ase funktiot
 		{
@@ -712,12 +707,12 @@ void Game::UpdateModel(float dt)
 		else if (level == Level::Lvl8)
 		{
 			BrickCollision(bricks8, state8, ball, BrickTotal_lvl8, dt);
-			/*if (LvlUp)
+			if (LvlUp)
 			{
 				ball.SetResetBall(true);
 				level = Level::Lvl9;
 				LvlUp = false;
-			}*/
+			}
 		}
 		else if (level == Level::Testi)
 		{
