@@ -125,6 +125,10 @@ private:
 	static constexpr int BrickPysty_lvl8 = 10;
 	static constexpr int BrickTotal_lvl8 = BrickViisto_lvl8 * BrickPysty_lvl8;
 
+	static constexpr int BrickViisto_lvl8_1 = 10;
+	static constexpr int BrickPysty_lvl8_1 = 7;
+	static constexpr int BrickTotal_lvl8_1 = BrickViisto_lvl8_1 * BrickPysty_lvl8_1;
+
 	static constexpr int BrickViisto_lvlTesti = 2;
 	static constexpr int BrickPysty_lvlTesti = 2;
 	static constexpr int BrickTotal_lvlTesti = BrickViisto_lvlTesti * BrickPysty_lvlTesti;
@@ -153,6 +157,7 @@ private:
 	Brick bricks7[BrickTotal_lvl7];
 	Brick bricks7_1[BrickTotal_lvl7_1];
 	Brick bricks8[BrickTotal_lvl8];
+	Brick bricks8_1[BrickTotal_lvl8_1];
 
 
 	Brick bricksTesti[BrickTotal_lvlTesti];
@@ -168,6 +173,7 @@ private:
 	Brick::State state7[BrickTotal_lvl7] = { Brick::State::Basic };
 	Brick::State state7_1[BrickTotal_lvl7_1] = { Brick::State::Basic };
 	Brick::State state8[BrickTotal_lvl8] = { Brick::State::Basic };
+	Brick::State state8_1[BrickTotal_lvl8_1] = { Brick::State::Basic };
 
 	Brick::State stateTesti[BrickTotal_lvlTesti] = { Brick::State::Basic };
 

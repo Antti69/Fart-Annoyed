@@ -454,6 +454,30 @@ Game::Game( MainWindow& wnd )
 			}
 		}
 	}
+	//Level 8.1
+	{
+	const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY + (brickHeight * 6) };
+	Color c = Colors::Gray;
+	int i = 0;
+	for (int y = 0; y < BrickPysty_lvl8_1; y++)
+	{
+		for (int x = 0; x < BrickViisto_lvl8_1; x++)
+		{
+			bricks8_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+				brickWidth, brickHeight), c);
+
+			if (y == 0 || x == 0 || x == 9)
+			{
+				state8_1[i] = Brick::State::TwoHit;
+			}
+			else
+			{
+				bricks8_1[i].SetDestr();
+			}
+			i++;
+		}
+	}
+	}
 	//Testi kenttä
 	{
 		const Vec2 topleft = { GridStartX + (brickWidth * 4), GridStartY + (brickHeight * 5) };
@@ -707,6 +731,7 @@ void Game::UpdateModel(float dt)
 		else if (level == Level::Lvl8)
 		{
 			BrickCollision(bricks8, state8, ball, BrickTotal_lvl8, dt);
+			BrickCollision(bricks8_1, state8_1, ball, BrickTotal_lvl8_1, dt);
 			if (LvlUp)
 			{
 				ball.SetResetBall(true);
@@ -1113,6 +1138,10 @@ void Game::DrawLevel(const Level level)
 	else if (level == Level::Lvl8)
 	{
 		for (const Brick& b : bricks8)
+		{
+			b.Draw(gfx);
+		}
+		for (const Brick& b : bricks8_1)
 		{
 			b.Draw(gfx);
 		}
