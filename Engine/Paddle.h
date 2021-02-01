@@ -47,11 +47,11 @@ public:
 	Vec2 GetPos() const;
 	void ResetCooldown(float dt);
 	void PaddleSize(float dt);
-	bool CatchCount() const;
 	void SetCatch();
 	void DrawCatchSign(Graphics& gfx) const;
 	void SetPadChoiceSize(bool status);
 private:
+	bool CatchCount() const;
 	Color color = Colors::White;
 	Color WingColor = Colors::Red;
 	float WingWidth = 10.0f;

@@ -33,8 +33,6 @@ public:
 	bool CheckAmmoCollision(const Paddle::Guns& gun) const;
 	RectF GetRect() const;
 	Vec2 GetCenter() const;
-	Color FlashEffect(Color c);
-	Color ColorPulse(Color c);
 	void SetColor(char merkki);
 	bool GetFirstcol();
 	bool GetDestroyed();
@@ -45,6 +43,8 @@ public:
 	bool ColorFlash = false;
 	
 private:
+	Color FlashEffect(Color c);
+	Color ColorPulse(Color c);
 	static constexpr float padding = 1.0f;
 	RectF rect;
 	Color c;

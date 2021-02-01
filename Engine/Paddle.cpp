@@ -153,7 +153,7 @@ void Paddle::SetCatch()
 
 void Paddle::DrawCatchSign(Graphics& gfx) const
 {
-	if (CatchCounter > 0)
+	if (CatchCount())
 	{
 		gfx.DrawCircle(120, 30, 10, Colors::Green);
 	}
