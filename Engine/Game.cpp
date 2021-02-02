@@ -34,17 +34,16 @@ Game::Game( MainWindow& wnd )
 	//Level 1
 	{	
 	const Vec2 topleft = { GridStartX + (brickWidth * 3), GridStartY + (brickHeight * 3) };
-	
 	Color colors[BrickPysty_lvl1] = { Colors::Blue, Colors::Red, Colors::Cyan, Colors::White, Colors::Orange };
 
-	
 	for (int y = 0; y < BrickPysty_lvl1; y++)
 	{
 		Color c = colors[y];
 		for (int x = 0; x < BrickViisto_lvl1; x++)
 		{
 			int i = y * BrickViisto_lvl1 + x;
-			bricks[y * BrickViisto_lvl1 + x] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+
+			bricks[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 				brickWidth, brickHeight), c);
 			if (y == 4)
 			{
@@ -53,7 +52,6 @@ Game::Game( MainWindow& wnd )
 				bricks[i].SetDestr();
 				
 			}
-			
 		}
 	}
 	}				
@@ -64,12 +62,12 @@ Game::Game( MainWindow& wnd )
 
 	const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY + (brickHeight * 3) };
 
-	int i = 0;
 	for (int y = 0; y < BrickPysty_lvl2; y++)
 	{
 		Color c = colors[y];
 		for (int x = 0; x < BrickViisto_lvl2; x++)
 		{
+			int i = y * BrickViisto_lvl2 + x;
 			bricks2[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 				brickWidth, brickHeight), c);
 
@@ -81,25 +79,23 @@ Game::Game( MainWindow& wnd )
 			{
 				state2[i] = Brick::State::Basic;
 			}
-			i++;
 		}
 	}
 	}
 	//Level 3
 	{	
 		const Vec2 topleft = { GridStartX, GridStartY };
-		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl3; y++)
 		{
 			Color c = Colors::Cyan;
 			for (int x = 0; x < BrickViisto_lvl3; x++)
 			{
+				int i = y * BrickViisto_lvl3 + x;
+
 				bricks3[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
 
 				state3[i] = Brick::State::Basic;
-
-				i++;
 			}
 		}
 	}
@@ -108,12 +104,13 @@ Game::Game( MainWindow& wnd )
 		const Vec2 topleft = { GridStartX + (brickWidth * 10), GridStartY + (brickHeight * 4) };
 		Color c = Colors::Orange;
 		
-		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl3_1; y++)
 		{
 			
 			for (int x = 0; x < BrickViisto_lvl3_1; x++)
 			{
+				int i = y * BrickViisto_lvl3_1 + x;
+
 				if (y == 2 && x == 1)
 				{
 					c = Colors::Magenta;
@@ -126,8 +123,7 @@ Game::Game( MainWindow& wnd )
 					bricks3_1[i].SetDestr();
 					c = Colors::Orange;
 				}
-				bricks3_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
-					brickWidth, brickHeight), c);
+
 				if (y == 1 && x < 2)
 				{
 					continue;
@@ -140,7 +136,8 @@ Game::Game( MainWindow& wnd )
 				{
 					continue;
 				}
-				i++;
+				bricks3_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+					brickWidth, brickHeight), c);
 			}
 		}
 	}
@@ -149,11 +146,12 @@ Game::Game( MainWindow& wnd )
 		const Vec2 topleft = { GridStartX, GridStartY + (brickHeight * 2) };
 		Color c;
 
-		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl4; y++)
 		{
 			for (int x = 0; x < BrickViisto_lvl4; x++)
 			{
+				int i = y * BrickViisto_lvl4 + x;
+
 				if (y < 8 && x < 5)
 				{
 					c = Colors::Blue;
@@ -171,7 +169,6 @@ Game::Game( MainWindow& wnd )
 				}
 				bricks4[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
-
 				if (y < 8)
 				{
 					if (x < 2)
@@ -187,7 +184,7 @@ Game::Game( MainWindow& wnd )
 						bricks4[i].SetDestr();
 					}
 				}
-				i++;
+
 			}
 		}
 	}
@@ -264,12 +261,12 @@ Game::Game( MainWindow& wnd )
 		const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY + (brickHeight * 5) };
 		Color colors[BrickPysty_lvl6] = { Colors::Cyan, Colors::Cyan, Colors::White, Colors::Blue, Colors::Red,
 			Colors::Yellow, Colors::Gray, Colors::Yellow };
-		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl6; y++)
 		{
 			Color c = colors[y];
 			for (int x = 0; x < BrickViisto_lvl6; x++)
 			{
+				int i = y * BrickViisto_lvl6 + x;
 				bricks6[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
 
@@ -298,9 +295,6 @@ Game::Game( MainWindow& wnd )
 				{
 					state6[i] = Brick::State::Basic;
 				}
-
-
-				i++;
 			}
 		}
 	}
@@ -308,12 +302,12 @@ Game::Game( MainWindow& wnd )
 	{
 		const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY };
 		Color c;
-		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl7; y++)
 		{
 
 			for (int x = 0; x < BrickViisto_lvl7; ++x)
 			{
+				int i = y * BrickViisto_lvl7 + x;
 
 				if (y == 0 && x <= 4)
 				{
@@ -332,7 +326,6 @@ Game::Game( MainWindow& wnd )
 				}
 				bricks7[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
-				++i;
 			}
 		}
 	}
@@ -342,13 +335,11 @@ Game::Game( MainWindow& wnd )
 
 		Color c = Colors::Orange;
 
-		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl7_1; y++)
 		{
-			
 			for (int x = 0; x < BrickViisto_lvl7_1; x++)
 			{
-
+				int i = y * BrickViisto_lvl7_1 + x;
 				if (y == 0 && (x == 0 || x == 2 || x == 4 || x == 6 || x == 8 ))
 				{
 					state7_1[i] = Brick::State::indestructible;
@@ -393,7 +384,7 @@ Game::Game( MainWindow& wnd )
 				}
 				bricks7_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
-				i++;
+				
 			}
 		}
 	}
@@ -401,11 +392,11 @@ Game::Game( MainWindow& wnd )
 	{
 		const Vec2 topleft = { GridStartX + (brickWidth * 1), GridStartY + (brickHeight * 2) };
 		Color c = Colors::Orange;
-		int i = 0;
 		for (int y = 0; y < BrickPysty_lvl8; y++)
 		{
 			for (int x = 0; x < BrickViisto_lvl8; x++)
 			{
+				int i = y * BrickViisto_lvl8 + x;
 				if (y <= 2 && (x == 0 || x == 2 || x == 9 || x == 11))
 				{
 					state8[i] = Brick::State::indestructible;
@@ -451,7 +442,6 @@ Game::Game( MainWindow& wnd )
 				}
 				bricks8[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 					brickWidth, brickHeight), c);
-				i++;
 			}
 		}
 	}
@@ -459,11 +449,11 @@ Game::Game( MainWindow& wnd )
 	{
 	const Vec2 topleft = { GridStartX + (brickWidth * 2), GridStartY + (brickHeight * 6) };
 	Color c = Colors::Gray;
-	int i = 0;
 	for (int y = 0; y < BrickPysty_lvl8_1; y++)
 	{
 		for (int x = 0; x < BrickViisto_lvl8_1; x++)
 		{
+			int i = y * BrickViisto_lvl8_1 + x;
 			bricks8_1[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 				brickWidth, brickHeight), c);
 
@@ -475,7 +465,6 @@ Game::Game( MainWindow& wnd )
 			{
 				bricks8_1[i].SetDestr();
 			}
-			i++;
 		}
 	}
 	}

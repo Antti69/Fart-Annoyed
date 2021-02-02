@@ -52,7 +52,7 @@ public:
 		Lvl9,
 		Testi
 	};
-	Level level = { Level::Lvl1 };
+	
 private:
 	void ComposeFrame();
 	void UpdateModel(float dt);
@@ -144,7 +144,7 @@ private:
 	Area::Life life;
 	Area::Meter meter;
 	Paddle::Guns gun = { Vec2(pad.GetPos()) };
-	
+	Level level = { Level::Lvl1 };
 
 	Brick bricks[BrickTotal_lvl1];
 	Brick bricks2[BrickTotal_lvl2];
