@@ -37,13 +37,14 @@ Game::Game( MainWindow& wnd )
 	
 	Color colors[BrickPysty_lvl1] = { Colors::Blue, Colors::Red, Colors::Cyan, Colors::White, Colors::Orange };
 
-	int i = 0;
+	
 	for (int y = 0; y < BrickPysty_lvl1; y++)
 	{
 		Color c = colors[y];
 		for (int x = 0; x < BrickViisto_lvl1; x++)
 		{
-			bricks[i] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
+			int i = y * BrickViisto_lvl1 + x;
+			bricks[y * BrickViisto_lvl1 + x] = Brick(RectF(topleft + Vec2(x * brickWidth, y * brickHeight),
 				brickWidth, brickHeight), c);
 			if (y == 4)
 			{
@@ -52,7 +53,7 @@ Game::Game( MainWindow& wnd )
 				bricks[i].SetDestr();
 				
 			}
-			i++;
+			
 		}
 	}
 	}				
