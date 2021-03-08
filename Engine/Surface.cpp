@@ -1,4 +1,41 @@
 #include "Surface.h"
+#include <cassert>
+#include "ChiliWin.h"
+#include <fstream>
+
+Surface::Surface(const std::string& filename)
+{
+	std::ifstream file(filename, std::ios::binary);
+
+	BITMAPFILEHEADER bmFileHeader;
+	file.read(reinterpret_cast<char*>(&bmFileHeader), sizeof(bmFileHeader));
+
+	BITMAPINFOHEADER bmInfoHeader;
+	file.read(reinterpret_cast<char*>(&bmInfoHeader), sizeof(bmInfoHeader));
+
+	assert(bmInfoHeader.biBitCount == 24 || bmInfoHeader.biBitCount == 32);
+	assert(bmInfoHeader.biCompression == BI_RGB);
+
+	width = bmInfoHeader.biWidth;
+	height = -bmInfoHeader.biHeight;
+
+	pPixels = new Color[width * height];
+
+	file.seekg(bmFileHeader.bfOffBits);
+
+	const int padding = (4 - (width * 3) % 4) % 4;
+	const unsigned char b = file.get();
+	const unsigned char g = file.get();
+	const unsigned char r = file.get();
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			PutPixel(x, y, { r, g, b });
+		}
+		file.seekg(padding, std::ios::cur);
+	}
+}
 
 Surface::Surface(int width, int height)
 	:
@@ -19,7 +56,7 @@ Surface::Surface(const Surface& oikea)
 	}
 }
 
-Surface Surface::operator=(const Surface& oikea)
+Surface& Surface::operator=(const Surface& oikea)
 {
 	width = oikea.width;
 	height = oikea.height;
@@ -42,11 +79,19 @@ Surface::~Surface()
 
 void Surface::PutPixel(int x, int y, Color c)
 {
-	pPixels[y * width + x];
+	assert(x >= 0);
+	assert(x < width);
+	assert(y >= 0);
+	assert(y < height);
+	pPixels[y * width + x] = c;
 }
 
 Color Surface::GetPixel(int x, int y) const
 {
+	assert(x >= 0);
+	assert(x < width);
+	assert(y >= 0);
+	assert(y < height);
 	return pPixels[y * width + x];
 }
 

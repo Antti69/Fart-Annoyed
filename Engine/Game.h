@@ -39,6 +39,7 @@ public:
 	Game& operator=(const Game&) = delete;
 	void Go();
 
+private:
 	enum class Level
 	{
 		Lvl1,
