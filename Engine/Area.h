@@ -3,6 +3,7 @@
 #include "RectF.h"
 #include "Colors.h"
 #include "Vec2.h"
+#include "Surface.h"
 
 class Area
 {
@@ -10,13 +11,13 @@ public:
 	class Life
 	{
 	public:
-		Life() = default;
 		void DrawLife(Graphics& gfx) const;
+		void DrawLifeTest(Graphics& gfx) const;
 		void SetLife(char merkki);
 		int GetLife() const;
 	private:
 		int life = 4;
-
+		Surface surf = Surface("heart.bmp");
 	};
 	class Meter
 	{

@@ -836,7 +836,7 @@ void Game::ComposeFrame()
 		leftwall.DrawWall(gfx);
 		rightwall.DrawWall(gfx);
 		topwall.DrawWall(gfx);
-		life.DrawLife(gfx);
+		life.DrawLifeTest(gfx);
 		pad.Draw(gfx);
 		meter.DrawMeter(gfx, meter.Blue, meter.GetB_meterY(), Colors::Blue);
 		meter.DrawMeter(gfx, meter.Red, meter.GetR_meterY(), Colors::Red);

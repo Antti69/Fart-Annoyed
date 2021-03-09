@@ -30,6 +30,7 @@
 #include "Sound.h"
 #include "Area.h"
 #include <random>
+#include "Surface.h"
 
 class Game
 {

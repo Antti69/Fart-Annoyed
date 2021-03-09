@@ -6,6 +6,7 @@
 Surface::Surface(const std::string& filename)
 {
 	std::ifstream file(filename, std::ios::binary);
+	assert(file);
 
 	BITMAPFILEHEADER bmFileHeader;
 	file.read(reinterpret_cast<char*>(&bmFileHeader), sizeof(bmFileHeader));
@@ -17,7 +18,7 @@ Surface::Surface(const std::string& filename)
 	assert(bmInfoHeader.biCompression == BI_RGB);
 
 	width = bmInfoHeader.biWidth;
-	height = -bmInfoHeader.biHeight;
+	height = bmInfoHeader.biHeight;
 
 	pPixels = new Color[width * height];
 
@@ -31,7 +32,7 @@ Surface::Surface(const std::string& filename)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			PutPixel(x, y, { r, g, b });
+			PutPixel(x, y, Color(file.get(), file.get(), file.get()));
 		}
 		file.seekg(padding, std::ios::cur);
 	}

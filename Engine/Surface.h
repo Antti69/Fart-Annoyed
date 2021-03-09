@@ -19,4 +19,5 @@ private:
 	Color* pPixels = nullptr;
 	int width;
 	int height;
+
 };

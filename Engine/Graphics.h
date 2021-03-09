@@ -60,6 +60,10 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void DrawSurface(int x, int y, const Surface& s);
+	void DrawSurfaceVec(const Vec2& pos, const Surface& s)
+	{
+		DrawSurface((int)pos.x, (int)pos.y, s);
+	}
 	void DrawRect( int x0,int y0,int x1,int y1,Color c );
 	void DrawRect(const RectF& rect, Color c)
 	{

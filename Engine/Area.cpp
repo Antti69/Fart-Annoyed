@@ -60,6 +60,50 @@ void Area::Life::DrawLife(Graphics& gfx) const
 	}
 }
 
+void Area::Life::DrawLifeTest(Graphics& gfx) const
+{
+	const Vec2 life1 = { 510.0f, 15.0f };
+	const Vec2 life2 = { 550.0f, 15.0f };
+	const Vec2 life3 = { 590.0f, 15.0f };
+	const Vec2 life4 = { 630.0f, 15.0f };
+	const Vec2 life5 = { 670.0f, 15.0f };
+
+	if (life == 6)
+	{
+		gfx.DrawSurfaceVec(life1, surf);
+		gfx.DrawSurfaceVec(life2, surf);
+		gfx.DrawSurfaceVec(life3, surf);
+		gfx.DrawSurfaceVec(life4, surf);
+		gfx.DrawSurfaceVec(life5, surf);
+	}
+	if (life == 5)
+	{
+		gfx.DrawSurfaceVec(life1, surf);
+		gfx.DrawSurfaceVec(life2, surf);
+		gfx.DrawSurfaceVec(life3, surf);
+		gfx.DrawSurfaceVec(life4, surf);
+	}
+	if (life == 4)
+	{
+		gfx.DrawSurfaceVec(life1, surf);
+		gfx.DrawSurfaceVec(life2, surf);
+		gfx.DrawSurfaceVec(life3, surf);
+	}
+	if (life == 3)
+	{
+		gfx.DrawSurfaceVec(life1, surf);
+		gfx.DrawSurfaceVec(life2, surf);
+	}
+	if (life == 2)
+	{
+		gfx.DrawSurfaceVec(life1, surf);
+	}
+	if (life == 1)
+	{
+
+	}
+}
+
 int Area::Life::GetLife() const
 {
 	return life;
