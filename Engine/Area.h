@@ -12,7 +12,6 @@ public:
 	{
 	public:
 		void DrawLife(Graphics& gfx) const;
-		void DrawLifeTest(Graphics& gfx) const;
 		void SetLife(char merkki);
 		int GetLife() const;
 	private:

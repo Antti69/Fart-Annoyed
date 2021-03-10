@@ -17,50 +17,9 @@ RectF Area::GetRect() const
 	return rect;
 }
 
+
+
 void Area::Life::DrawLife(Graphics& gfx) const
-{
-	const RectF life1 = { Vec2(550.0f, 20.0f), Vec2(570.0f, 40.0f) };
-	const RectF life2 = { Vec2(580.0f, 20.0f), Vec2(600.0f, 40.0f) };
-	const RectF life3 = { Vec2(610.0f, 20.0f), Vec2(630.0f, 40.0f) };
-	const RectF life4 = { Vec2(640.0f, 20.0f), Vec2(660.0f, 40.0f) };
-	const RectF life5 = { Vec2(670.0f, 20.0f), Vec2(690.0f, 40.0f) };
-	if (life == 6)
-	{
-		gfx.DrawRect(life1, Colors::Red);
-		gfx.DrawRect(life2, Colors::Red);
-		gfx.DrawRect(life3, Colors::Red);
-		gfx.DrawRect(life4, Colors::Red);
-		gfx.DrawRect(life5, Colors::Red);
-	}
-	if (life == 5)
-	{
-		gfx.DrawRect(life1, Colors::Red);
-		gfx.DrawRect(life2, Colors::Red);
-		gfx.DrawRect(life3, Colors::Red);
-		gfx.DrawRect(life4, Colors::Red);
-	}
-	if (life == 4)
-	{
-		gfx.DrawRect(life1, Colors::Red);
-		gfx.DrawRect(life2, Colors::Red);
-		gfx.DrawRect(life3, Colors::Red);
-	}
-	if (life == 3)
-	{
-		gfx.DrawRect(life1, Colors::Red);
-		gfx.DrawRect(life2, Colors::Red);
-	}
-	if (life == 2)
-	{
-		gfx.DrawRect(life1, Colors::Red);
-	}
-	if (life == 1)
-	{
-
-	}
-}
-
-void Area::Life::DrawLifeTest(Graphics& gfx) const
 {
 	const Vec2 life1 = { 510.0f, 15.0f };
 	const Vec2 life2 = { 550.0f, 15.0f };
@@ -70,33 +29,33 @@ void Area::Life::DrawLifeTest(Graphics& gfx) const
 
 	if (life == 6)
 	{
-		gfx.DrawSurfaceVec(life1, surf);
-		gfx.DrawSurfaceVec(life2, surf);
-		gfx.DrawSurfaceVec(life3, surf);
-		gfx.DrawSurfaceVec(life4, surf);
-		gfx.DrawSurfaceVec(life5, surf);
+		gfx.DrawSurface(life1, surf);
+		gfx.DrawSurface(life2, surf);
+		gfx.DrawSurface(life3, surf);
+		gfx.DrawSurface(life4, surf);
+		gfx.DrawSurface(life5, surf);
 	}
 	if (life == 5)
 	{
-		gfx.DrawSurfaceVec(life1, surf);
-		gfx.DrawSurfaceVec(life2, surf);
-		gfx.DrawSurfaceVec(life3, surf);
-		gfx.DrawSurfaceVec(life4, surf);
+		gfx.DrawSurface(life1, surf);
+		gfx.DrawSurface(life2, surf);
+		gfx.DrawSurface(life3, surf);
+		gfx.DrawSurface(life4, surf);
 	}
 	if (life == 4)
 	{
-		gfx.DrawSurfaceVec(life1, surf);
-		gfx.DrawSurfaceVec(life2, surf);
-		gfx.DrawSurfaceVec(life3, surf);
+		gfx.DrawSurface(life1, surf);
+		gfx.DrawSurface(life2, surf);
+		gfx.DrawSurface(life3, surf);
 	}
 	if (life == 3)
 	{
-		gfx.DrawSurfaceVec(life1, surf);
-		gfx.DrawSurfaceVec(life2, surf);
+		gfx.DrawSurface(life1, surf);
+		gfx.DrawSurface(life2, surf);
 	}
 	if (life == 2)
 	{
-		gfx.DrawSurfaceVec(life1, surf);
+		gfx.DrawSurface(life1, surf);
 	}
 	if (life == 1)
 	{

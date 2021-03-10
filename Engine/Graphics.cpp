@@ -330,6 +330,11 @@ void Graphics::DrawSurface(int x, int y, const Surface& s)
 	}
 }
 
+void Graphics::DrawSurface(const Vec2& pos, const Surface& s)
+{
+	DrawSurface((int)pos.x, (int)pos.y, s);
+}
+
 void Graphics::DrawRect( int x0,int y0,int x1,int y1,Color c )
 {
 	if( x0 > x1 )
@@ -348,6 +353,11 @@ void Graphics::DrawRect( int x0,int y0,int x1,int y1,Color c )
 			PutPixel( x,y,c );
 		}
 	}
+}
+
+void Graphics::DrawRect(const RectF& rect, Color c)
+{
+	DrawRect((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom, c);
 }
 
 void Graphics::DrawRectSpacec(int x0, int y0, int x1, int y1, Color c)
@@ -372,6 +382,11 @@ void Graphics::DrawRectSpacec(int x0, int y0, int x1, int y1, Color c)
 	}
 }
 
+void Graphics::DrawRectSpacec(const RectF& rect, Color c)
+{
+	DrawRectSpacec((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom, c);
+}
+
 void Graphics::DrawCircle( int x,int y,int radius,Color c )
 {
 	const int rad_sq = radius * radius;
@@ -387,6 +402,11 @@ void Graphics::DrawCircle( int x,int y,int radius,Color c )
 			}
 		}
 	}
+}
+
+void Graphics::DrawCircle(const Vec2& pos, int radius, Color c)
+{
+	DrawCircle((int)pos.x, (int)pos.y, radius, c);
 }
 
 

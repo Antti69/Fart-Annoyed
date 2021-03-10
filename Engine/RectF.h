@@ -13,6 +13,8 @@ public:
 	static RectF FromCenter(const Vec2& center, float halfWidth, float halfHeight);
 	RectF Expand(float offset) const;
 	Vec2 GetCenter() const;
+	float GetWidth() const;
+	float GetHeight() const;
 public:
 	float left;
 	float right;

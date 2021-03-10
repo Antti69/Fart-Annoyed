@@ -43,3 +43,13 @@ Vec2 RectF::GetCenter() const
 	return Vec2((left + right) / 2, (top + bottom) / 2);
 }
 
+float RectF::GetWidth() const
+{
+	return right - left;
+}
+
+float RectF::GetHeight() const
+{
+	return bottom - top;
+}
+

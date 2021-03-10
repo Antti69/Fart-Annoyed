@@ -59,26 +59,19 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+
 	void DrawSurface(int x, int y, const Surface& s);
-	void DrawSurfaceVec(const Vec2& pos, const Surface& s)
-	{
-		DrawSurface((int)pos.x, (int)pos.y, s);
-	}
-	void DrawRect( int x0,int y0,int x1,int y1,Color c );
-	void DrawRect(const RectF& rect, Color c)
-	{
-		DrawRect((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom, c);
-	}
+	void DrawSurface(const Vec2& pos, const Surface& s);
+
+	void DrawRect(int x0,int y0,int x1,int y1,Color c );
+	void DrawRect(const RectF& rect, Color c);
+
 	void DrawRectSpacec(int x0, int y0, int x1, int y1, Color c);
-	void DrawRectSpacec(const RectF& rect, Color c)
-	{
-		DrawRectSpacec((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom, c);
-	}
+	void DrawRectSpacec(const RectF& rect, Color c);
+
 	void DrawCircle( int x,int y,int radius,Color c );
-	void DrawCircle(const Vec2& pos, int radius, Color c)
-	{
-		DrawCircle((int)pos.x, (int)pos.y, radius, c);
-	}
+	void DrawCircle(const Vec2& pos, int radius, Color c);
+
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
